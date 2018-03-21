@@ -89,3 +89,27 @@ CREATE TABLE job_cat(
     pay_range_low float(15),
     {ks_code}
     );
+    
+CREATE TABLE requires_cert(
+    prefer varchar
+    );
+    
+CREATE TABLE requires_ks(
+    prefer varchar
+    );
+    
+CREATE TABLE takes(
+    c_code varchar NOT NULL PRIMARY KEY,
+    sec_code varchar NOT NULL PRIMARY KEY
+    );
+    
+CREATE TABLE works(
+    start_date varchar(9) PRIMARY KEY,
+    end_date varchar(9) PRIMARY KEY
+    );
+    
+
+CREATE TABLE prerequisite(
+    c_code varchar NOT NULL PRIMARY KEY,
+    requires_code varchar NOT NULL PRIMARY KEY
+    );
