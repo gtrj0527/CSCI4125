@@ -1,12 +1,11 @@
 CREATE TABLE company(
     comp_id int NOT NULL PRIMARY KEY,
     comp_name varchar(255) NOT NULL,
-    address,        /*Isn't this the smashed thing? How do we properly do this?*/
-        street_num int(20),
-        street varchar(255),
-        city varchar(255),
-        state varchar(2), 
-        zip int(9),
+    street_num int(20),
+    street varchar(255),
+    city varchar(255),
+    state varchar(2), 
+    zip int(9),
     industry varchar(255),
     specialty varchar(255),
     website varchar(255)
@@ -22,17 +21,15 @@ CREATE TABLE position(
     );
     
 CREATE TABLE person(
-    pers_id int NOT NULL PRIMARY KEY,
-    name,
-        last_name varchar(255),
-        first_name varchar(255),
-        mi varchar (1),
-    address,        /*Isn't this the smashed thing? How do we properly do this?*/
-        street_num int(20),
-        street varchar(255),
-        city varchar(255),
-        state varchar(2), 
-        zip int(9),
+    pers_id int(5) NOT NULL PRIMARY KEY,
+    last_name varchar(255),
+    first_name varchar(255),
+    mi varchar (1),
+    street_num int(20),
+    street varchar(255),
+    city varchar(255),
+    state varchar(2), 
+    zip int(9),
     email varchar(255),
     gender varchar(2),
     {phone}
