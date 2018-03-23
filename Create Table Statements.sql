@@ -1,4 +1,5 @@
 drop table company;
+
 CREATE TABLE company(
     comp_id number NOT NULL PRIMARY KEY,
     comp_name varchar(255) NOT NULL,
@@ -20,7 +21,8 @@ CREATE TABLE position(
     pay_type varchar(10),
     pers_id number(10) NOT NULL
     );
-    
+
+drop table person;    
 CREATE TABLE person(
     pers_id number(5) NOT NULL PRIMARY KEY,
     last_name varchar(255),
@@ -68,46 +70,49 @@ CREATE TABLE training_provider(
     );
     
 CREATE TABLE know_skill(
-    ks_code varchar NOT NULL PRIMARY KEY,
-    tool varchar,
-    description varchar,
-    level varchar
+    ks_code varchar (255)NOT NULL PRIMARY KEY,
+    tool varchar(255),
+    description varchar(255),
+    training_level varchar(255)
     );
     
 CREATE TABLE soc(
-    cat_code varchar NOT NULL PRIMARY KEY,
-    description varchar
+    cat_code varchar (255) NOT NULL PRIMARY KEY,
+    description varchar (255)
     );
     
 CREATE TABLE job_cat(
-    cat_code varchar NOT NULL PRIMARY KEY,
-    title varchar,
-    description varchar,
+    cat_code varchar (255) NOT NULL PRIMARY KEY,
+    title varchar (255),
+    description varchar(255),
     pay_range_high float(15),
     pay_range_low float(15),
-    ks_code varchar
+    ks_code varchar (255)
     );
     
 CREATE TABLE requires_cert(
-    prefer varchar
+    prefer varchar (255)
     );
     
 CREATE TABLE requires_ks(
-    prefer varchar
+    prefer varchar (255)
     );
     
 CREATE TABLE takes(
-    c_code varchar NOT NULL PRIMARY KEY,
-    sec_code varchar NOT NULL PRIMARY KEY
+    c_code varchar (255)NOT NULL,
+    sec_code varchar (255)NOT NULL,
+    PRIMARY KEY(c_code, sec_code)
     );
     
 CREATE TABLE works(
-    start_date varchar(9) PRIMARY KEY,
-    end_date varchar(9) PRIMARY KEY
+    start_date varchar(255),
+    end_date varchar(255),
+    PRIMARY KEY (start_date, end_date)
     );
     
 
 CREATE TABLE prerequisite(
-    c_code varchar NOT NULL PRIMARY KEY,
-    requires_code varchar NOT NULL PRIMARY KEY
+    c_code varchar (255) NOT NULL,
+    requires_code varchar(255) NOT NULL,
+    PRIMARY KEY (c_code, requires_code)
     );
