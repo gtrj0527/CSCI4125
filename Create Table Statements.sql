@@ -1,4 +1,3 @@
-drop table company;
 CREATE TABLE company(
     comp_id number NOT NULL PRIMARY KEY,
     comp_name varchar(255) NOT NULL,
@@ -11,16 +10,17 @@ CREATE TABLE company(
     specialty varchar(255),
     website varchar(255)
     );
-/*Need to decide on what types each of the empty ones will be.*/
+
+DROP TABLE position;
 CREATE TABLE position(
     pos_code number(10) NOT NULL PRIMARY KEY,
-    emp_mode number(10),
+    emp_mode varchar(2),        --FT: full time, PT: part time
     ks_code varchar(10),
-    pay_rate number(10),
-    pay_type varchar(10),
-    pers_id number(10) NOT NULL
-    );
-    
+    pay_rate number(10,2),
+    pay_type varchar(1)        --W: wage, S: salary
+);
+
+drop table person;    
 CREATE TABLE person(
     pers_id number(5) NOT NULL PRIMARY KEY,
     last_name varchar(255),
@@ -33,7 +33,7 @@ CREATE TABLE person(
     zip number(9),
     email varchar(255),
     gender varchar(2),
-    phone number(9)
+    phone number(10)
 );
     
 CREATE TABLE section(
@@ -45,11 +45,12 @@ CREATE TABLE section(
     format varchar(255),
     price float(10)
     );
-    
+ 
+DROP TABLE course;    
 CREATE TABLE course(
     c_code number(10) NOT NULL PRIMARY KEY,
     title varchar(255),
-    training_level varchar(10),
+    training_level varchar(12),
     description varchar(255),
     status varchar(10),
     retail_price number(10,2),
@@ -68,46 +69,53 @@ CREATE TABLE training_provider(
     );
     
 CREATE TABLE know_skill(
-    ks_code varchar NOT NULL PRIMARY KEY,
-    tool varchar,
-    description varchar,
-    level varchar
+    ks_code varchar (255)NOT NULL PRIMARY KEY,
+    tool varchar(255),
+    description varchar(255),
+    training_level varchar(255)
     );
     
 CREATE TABLE soc(
-    cat_code varchar NOT NULL PRIMARY KEY,
-    description varchar
+    cat_code varchar (255) NOT NULL PRIMARY KEY,
+    description varchar (255)
     );
     
 CREATE TABLE job_cat(
-    cat_code varchar NOT NULL PRIMARY KEY,
-    title varchar,
-    description varchar,
+    cat_code varchar (255) NOT NULL PRIMARY KEY,
+    title varchar (255),
+    description varchar(255),
     pay_range_high float(15),
     pay_range_low float(15),
-    ks_code varchar
+    ks_code varchar (255)
     );
     
 CREATE TABLE requires_cert(
-    prefer varchar
+    prefer varchar (255)
     );
     
 CREATE TABLE requires_ks(
-    prefer varchar
+    prefer varchar (255)
     );
     
 CREATE TABLE takes(
-    c_code varchar NOT NULL PRIMARY KEY,
-    sec_code varchar NOT NULL PRIMARY KEY
+    c_code varchar (255)NOT NULL,
+    sec_code varchar (255)NOT NULL,
+    PRIMARY KEY(c_code, sec_code)
     );
     
 CREATE TABLE works(
-    start_date varchar(9) PRIMARY KEY,
-    end_date varchar(9) PRIMARY KEY
+    start_date varchar(255),
+    end_date varchar(255),
+    PRIMARY KEY (start_date, end_date)
     );
     
 
 CREATE TABLE prerequisite(
-    c_code varchar NOT NULL PRIMARY KEY,
-    requires_code varchar NOT NULL PRIMARY KEY
+    c_code varchar (255) NOT NULL,
+    requires_code varchar(255) NOT NULL,
+    PRIMARY KEY (c_code, requires_code)
     );
+
+/*
+ * NEED TO ADD GICS TABLE!!!!!!!
+ */
