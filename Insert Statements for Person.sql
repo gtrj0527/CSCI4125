@@ -36,7 +36,7 @@ select * from position;
 CREATE TABLE course(
     c_code number(10) NOT NULL PRIMARY KEY,
     title varchar(255),
-    training_level varchar(10),     --Beginnner, Intermediate, Advanced
+    training_level varchar(12),     --Beginnner, Intermediate, Advanced
     description varchar(255),
     status varchar(10),             --Active, Expired
     retail_price number(10,2),
