@@ -1,5 +1,5 @@
 CREATE TABLE company(
-    comp_id number NOT NULL PRIMARY KEY,
+    comp_id number(8) NOT NULL PRIMARY KEY,
     comp_name varchar(255) NOT NULL,
     street_num number(20),
     street varchar(255),
@@ -103,8 +103,10 @@ CREATE TABLE takes(
     PRIMARY KEY(c_code, sec_code)
     );
     
+/*Added attribute "job_title" to this table*/	
 CREATE TABLE works(
-    start_date varchar(255),
+    job_title varchar(255),
+	start_date varchar(255),
     end_date varchar(255),
     PRIMARY KEY (start_date, end_date)
     );
