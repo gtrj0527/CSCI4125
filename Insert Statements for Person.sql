@@ -43,6 +43,7 @@ CREATE TABLE course(
     train_type varchar(255)         --Online, Classroom
     );
 */
+DELETE FROM course; 
 INSERT into course VALUES(014568,'Advanced DB Design Principles','Advanced','How to improve existing DB with minimal disruption to 
     your business','Active',560,'Class');
 INSERT into course VALUES(021977,'SQL for Beginners','Beginner','Learn how to query your work database','Expired',475,'Online');
@@ -67,40 +68,44 @@ select * from course;
 /*Insert 30 skills into know_skill
 CREATE TABLE know_skill(
     ks_code varchar (255)NOT NULL PRIMARY KEY,
-    tool varchar(255),
+    title varchar(255),
     description varchar(255),
-    training_level varchar(255)
+    training_level varchar(255) --Beginner, Intermediate, Advanced
     );
 */
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
-INSERT into know_skill VALUES();
+DELETE FROM know_skill;
+INSERT into know_skill VALUES(601, 'Java', 'Basics of Java programming language', 'Beginner');
+INSERT into know_skill VALUES(602, 'Java', 'Intermediate skills of Java programming language', 'Intermediate');
+INSERT into know_skill VALUES(603,'C', 'Basics of C programming language', 'Beginner' );
+INSERT into know_skill VALUES(604,'C', 'Intermediate skills of C programming language', 'Intermediate' );
+INSERT into know_skill VALUES(605, 'JavaScript','Basics of JavaScript language','Beginner');
+INSERT into know_skill VALUES(606,'JavaScript','Intermediate skills of JavaScript ','Intermediate');
+INSERT into know_skill VALUES(607, '.NET', 'Understands basic .NET development', 'Beginner');
+INSERT into know_skill VALUES(608,'.NET', 'Understands interemediate .NET development', 'Intermediate');
+INSERT into know_skill VALUES(609,'.NET', 'Understands advanced .NET development', 'Advanced');
+INSERT into know_skill VALUES(610,'SQL', 'Basic SQL skills', 'Beginner' );
+INSERT into know_skill VALUES(611, 'SQL', 'Intermediate SQL skills', 'Intermediate');
+INSERT into know_skill VALUES(612, 'SQL', 'Advanced SQL skills', 'Advanced');
+INSERT into know_skill VALUES(613, 'Git', 'Experience with git version control','Advanced' );
+INSERT into know_skill VALUES(614, 'AWS', 'Experience with AWS', 'Advanced');
+INSERT into know_skill VALUES(615, 'REST', 'Experience with RESTful Web Services', 'Intermediate');
+INSERT into know_skill VALUES(616,'OOP','Basic experience with any Object Oriented Programming Language','Beginner');
+INSERT into know_skill VALUES(617, 'OOP','Intermediate experience with any Object Oriented Programming Language','Intermediate' );
+INSERT into know_skill VALUES(618,'OOP','Advanced experience with any Object Oriented Programming Language','Intermediate');
+INSERT into know_skill VALUES(619, 'Agile', 'Knowledge of Agile Development methodologies','Beginner');
+INSERT into know_skill VALUES(620, 'Angular','Basic knowledge of Angular development','Beginner');
+INSERT into know_skill VALUES(621, 'Angular','Intermediate knowledge of Angular development','Intermediate');
+INSERT into know_skill VALUES(622,'Angular', 'Advanced knowledge of Angular development', 'Advanced');
+INSERT into know_skill VALUES(623, 'Spring','Basic knowledge of Spring framework','Beginner');
+INSERT into know_skill VALUES(624, 'Spring','Intermediate knowledge of Spring framework','Intermediate');
+INSERT into know_skill VALUES(625, 'Spring','Advanced knowledge of Spring framework','Advanced');
+INSERT into know_skill VALUES(626, 'HTML','Basic knowledge of HTML','Beginner');
+INSERT into know_skill VALUES(627, 'HTML','Intermediate knowledge of HTML','Intermediate');
+INSERT into know_skill VALUES(628, 'HTML','Advanced knowledge of HTML','Advanced' );
+INSERT into know_skill VALUES(629, 'Unix','Basic knowledge of Unix systems','Beginner');
+INSERT into know_skill VALUES(630, 'Unix','Intermediate knowledge of Unix systems','Intermediate');
+INSERT into know_skill VALUES(631, 'Unix', 'Advanced knowledge of Unix systems', 'Advanced');
+INSERT into know_skill VALUES(632, 'Python', 'Basic knowledge of Python programming language','Beginner');
+
 /*Test know_skill*/
 select * from know_skill;
