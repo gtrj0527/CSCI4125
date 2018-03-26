@@ -21,6 +21,7 @@ CREATE TABLE position(
     pay_type varchar(1)        --W: wage, S: salary
 );
 
+
 DROP TABLE person;   
 CREATE TABLE person(
     pers_id number(5) NOT NULL PRIMARY KEY,
@@ -99,6 +100,32 @@ CREATE TABLE job_cat(
 DROP TABLE requires_cert;    
 CREATE TABLE requires_cert(
     prefer varchar (255)
+    );
+    
+DROP TABLE requires_ks;
+CREATE TABLE requires_ks(
+    prefer varchar (255)
+    );
+    
+DROP TABLE takes;
+CREATE TABLE takes(
+    c_code varchar (255)NOT NULL,
+    sec_code varchar (255)NOT NULL,
+    PRIMARY KEY(c_code, sec_code)
+    );
+    
+/*Added attribute "job_title" to this table*/	
+DROP TABLE works;
+CREATE TABLE works(
+    job_title varchar(255),
+	start_date varchar(255),
+    end_date varchar(255),
+    PRIMARY KEY (start_date, end_date)
+    );
+    
+DROP TABLE requires_cert;    
+CREATE TABLE requires_cert(
+    prefer varchar (255)
 );
 
 DROP TABLE requires_ks;    
@@ -128,7 +155,6 @@ CREATE TABLE prerequisite(
     requires_code varchar(255) NOT NULL,
     PRIMARY KEY (c_code, requires_code)
 );
-
 /*
  * NEED TO ADD GICS TABLE!!!!!!!
  */
