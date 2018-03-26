@@ -43,6 +43,7 @@ CREATE TABLE course(
     train_type varchar(255)         --Online, Classroom
     );
 */
+DELETE FROM course; 
 INSERT into course VALUES(014568,'Advanced DB Design Principles','Advanced','How to improve existing DB with minimal disruption to 
     your business','Active',560,'Class');
 INSERT into course VALUES(021977,'SQL for Beginners','Beginner','Learn how to query your work database','Expired',475,'Online');
