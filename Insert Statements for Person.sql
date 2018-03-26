@@ -109,3 +109,18 @@ INSERT into know_skill VALUES(632, 'Python', 'Basic knowledge of Python programm
 
 /*Test know_skill*/
 select * from know_skill;
+
+/*Insert five values into company*/
+DELETE FROM company;
+INSERT into company VALUES(37829, 'General Electric','34','Edison Parkway','Crotonville','NY',10562,'Information Technology','Digital Services','ge.com');
+--INSERT into company VALUES(10002, 'Benavides', 'Ricardo', 'M', 564, 'Canal', 'New Orleans', 'LA', 70123, 'ricardo.benavides@hotmail.com', 'M', 5045489723);
+--INSERT into company VALUES(10003, 'Chung', 'Connie', ' ', 123, 'Carlisle','New Orleans', 'LA', 70130, 'connie.chung@aol.com', 'F', 5049564785);
+--INSERT into company VALUES(10004, 'Dumas', 'Alexandra', 'J', 3259, 'Manhattan','Gretna', 'LA', 70124, 'alexandra.dumas@gmail.com', 'F', 5048725695);
+--INSERT into company VALUES(10005, 'Eccleston', 'Christoper', 'J', 5148, 'Napolean', 'New Orleans', 'LA', 70110, 'chris.eccleston@outlook.com', 'M', 5045697845);
+
+/*Test company*/
+select comp_name
+from company;
+
+select * from company;
+
