@@ -1,3 +1,4 @@
+DROP TABLE company;
 CREATE TABLE company(
     comp_id number(8) NOT NULL PRIMARY KEY,
     comp_name varchar(255) NOT NULL,
@@ -9,7 +10,7 @@ CREATE TABLE company(
     industry varchar(255),
     specialty varchar(255),
     website varchar(255)
-    );
+);
 
 DROP TABLE position;
 CREATE TABLE position(
@@ -20,7 +21,7 @@ CREATE TABLE position(
     pay_type varchar(1)        --W: wage, S: salary
 );
 
-drop table person;    
+DROP TABLE person;   
 CREATE TABLE person(
     pers_id number(5) NOT NULL PRIMARY KEY,
     last_name varchar(255),
@@ -35,7 +36,8 @@ CREATE TABLE person(
     gender varchar(2),
     phone number(10)
 );
-    
+
+DROP TABLE section;    
 CREATE TABLE section(
     c_code number NOT NULL,
     sec_code number NOT NULL,
@@ -44,7 +46,7 @@ CREATE TABLE section(
     offered_by varchar(255),
     format varchar(255),
     price float(10)
-    );
+);
  
 DROP TABLE course;    
 CREATE TABLE course(
@@ -55,31 +57,36 @@ CREATE TABLE course(
     status varchar(10),
     retail_price number(10,2),
     train_type varchar(255)
-    );
-    
+);
+
+DROP TABLE cert;    
 CREATE TABLE cert(
     ks_code number(10) NOT NULL PRIMARY KEY,
     issued_by varchar(255),
     tool varchar(255)
-    );
+);
 
+DROP TABLE training_provider;
 CREATE TABLE training_provider(
     prov_id varchar(10) NOT NULL PRIMARY KEY,
     train_type varchar(255)
-    );
-    
+);
+
+DROP TABLE know_skill;    
 CREATE TABLE know_skill(
     ks_code varchar (255)NOT NULL PRIMARY KEY,
     tool varchar(255),
     description varchar(255),
     training_level varchar(255)
-    );
+);
     
+DROP TABLE soc;    
 CREATE TABLE soc(
     cat_code varchar (255) NOT NULL PRIMARY KEY,
     description varchar (255)
-    );
-    
+);
+
+DROP TABLE job_cat;    
 CREATE TABLE job_cat(
     cat_code varchar (255) NOT NULL PRIMARY KEY,
     title varchar (255),
@@ -87,36 +94,40 @@ CREATE TABLE job_cat(
     pay_range_high float(15),
     pay_range_low float(15),
     ks_code varchar (255)
-    );
-    
+);
+
+DROP TABLE requires_cert;    
 CREATE TABLE requires_cert(
     prefer varchar (255)
-    );
-    
+);
+
+DROP TABLE requires_ks;    
 CREATE TABLE requires_ks(
     prefer varchar (255)
-    );
-    
+);
+
+DROP TABLE takes;    
 CREATE TABLE takes(
     c_code varchar (255)NOT NULL,
     sec_code varchar (255)NOT NULL,
     PRIMARY KEY(c_code, sec_code)
-    );
+);
     
 /*Added attribute "job_title" to this table*/	
+DROP TABLE works;
 CREATE TABLE works(
     job_title varchar(255),
 	start_date varchar(255),
     end_date varchar(255),
     PRIMARY KEY (start_date, end_date)
-    );
+);
     
-
+DROP TABLE prerequisite;
 CREATE TABLE prerequisite(
     c_code varchar (255) NOT NULL,
     requires_code varchar(255) NOT NULL,
     PRIMARY KEY (c_code, requires_code)
-    );
+);
 
 /*
  * NEED TO ADD GICS TABLE!!!!!!!
