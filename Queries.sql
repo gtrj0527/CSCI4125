@@ -1,7 +1,10 @@
 /*1. List a specific company’s workers by names.*/
 SELECT pers_id,last_name,first_name,mi
-FROM person NATURAL JOIN works NATURAL JOIN company
-WHERE comp_id = 012659 AND end_date IS NULL
+FROM works w
+JOIN person pers ON pers.person_id =w.pers_id
+JOIN position p ON p.pos_code=w.pos_code
+WHERE comp_id = '8932%' 
+AND end_date IS NULL
 ORDER BY last_name;
 
 --We need to insert information into all the tables; this is just my brainstorming attempt at queries.

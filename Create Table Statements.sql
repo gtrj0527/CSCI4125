@@ -12,15 +12,31 @@ CREATE TABLE company(
     website varchar(255)
 );
 
+    
+DROP TABLE gics;    
+CREATE TABLE gics(
+    prime_sector_code varchar(255) NOT NULL PRIMARY KEY,
+    code_name varchar(255),
+    code_description varchar(255),
+    parent_code varchar(255)
+);
+
 DROP TABLE position;
 CREATE TABLE position(
     pos_code number(10) NOT NULL PRIMARY KEY,
+    pos_title varchar(255) NOT NULL,
+    --comp_id number(8) NOT NULL,    --Still thinking about whether we want to include this attribute.
     emp_mode varchar(2),        --FT: full time, PT: part time
     ks_code varchar(10),
     pay_rate number(10,2),
     pay_type varchar(1)        --W: wage, S: salary
 );
 
+/*NWCET takes the place of SOC*/
+DROP TABLE nwcet;
+CREATE TABLE nwcet(
+    category_description varchar(255);
+);
 
 DROP TABLE person;   
 CREATE TABLE person(
@@ -64,7 +80,7 @@ DROP TABLE cert;
 CREATE TABLE cert(
     ks_code number(10) NOT NULL PRIMARY KEY,
     issued_by varchar(255),
-    tool varchar(255)
+    tool varchar(255)   --e.g., MS Office Suite, SQL, Java, etc.
 );
 
 DROP TABLE training_provider;
@@ -76,15 +92,9 @@ CREATE TABLE training_provider(
 DROP TABLE know_skill;    
 CREATE TABLE know_skill(
     ks_code varchar (255)NOT NULL PRIMARY KEY,
-    tool varchar(255),
+    title varchar(255),      --e.g., MS Office Suite, SQL, Java, etc.
     description varchar(255),
     training_level varchar(255)
-);
-    
-DROP TABLE soc;    
-CREATE TABLE soc(
-    cat_code varchar (255) NOT NULL PRIMARY KEY,
-    description varchar (255)
 );
 
 DROP TABLE job_cat;    
@@ -155,6 +165,16 @@ CREATE TABLE prerequisite(
     requires_code varchar(255) NOT NULL,
     PRIMARY KEY (c_code, requires_code)
 );
-/*
- * NEED TO ADD GICS TABLE!!!!!!!
- */
+
+DROP TABLE provides_skill;
+CREATE TABLE provides_skill(
+    c_code varchar(255) NOT NULL,
+    ks_code varchar(255) NOT NULL;
+);
+
+DROP TABLE has_skill;
+CREATE TABLE has_skill(
+    pers_id number(255) NOT NULL,
+    ks_code varchar(255) NOT NULL;
+);
+
