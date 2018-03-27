@@ -113,14 +113,17 @@ select * from know_skill;
 /*Insert five values into company*/
 DELETE FROM company;
 INSERT into company VALUES(37829, 'General Electric','34','Edison Parkway','Crotonville','NY',10562,'Information Technology','Digital Services','ge.com');
---INSERT into company VALUES(10002, 'Benavides', 'Ricardo', 'M', 564, 'Canal', 'New Orleans', 'LA', 70123, 'ricardo.benavides@hotmail.com', 'M', 5045489723);
---INSERT into company VALUES(10003, 'Chung', 'Connie', ' ', 123, 'Carlisle','New Orleans', 'LA', 70130, 'connie.chung@aol.com', 'F', 5049564785);
---INSERT into company VALUES(10004, 'Dumas', 'Alexandra', 'J', 3259, 'Manhattan','Gretna', 'LA', 70124, 'alexandra.dumas@gmail.com', 'F', 5048725695);
---INSERT into company VALUES(10005, 'Eccleston', 'Christoper', 'J', 5148, 'Napolean', 'New Orleans', 'LA', 70110, 'chris.eccleston@outlook.com', 'M', 5045697845);
+INSERT into company VALUES(382939, 'Lucid','2839','St Charles Avenue','New Orleans','LA',70447,'Information Technology','Digital Services','lucid.com');
+INSERT into company VALUES(89324987, 'DXC Technology','384','Poydras Street','New Orleans','LA',70112,'Information Technology','Software Engineering','dxctechnology.com');
+INSERT into company VALUES(384829, 'TurboSquid','3837','Marina Avenue','Dallas','TX',75001,'Digital Media','3D Modeling','turbosquid.com');
+INSERT into company VALUES(74817, 'IBM','93','Computer Parkway','Baton Rouge','LA',70813,'Information Technology','Cloud Computing','ibm.com');
+
 
 /*Test company*/
 select comp_name
 from company;
 
 select * from company;
+
+
 
