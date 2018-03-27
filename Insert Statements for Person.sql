@@ -12,23 +12,26 @@ from person;
 /*Insert 10 job positions into position
 CREATE TABLE position(
     pos_code number(10) NOT NULL PRIMARY KEY,
+    comp_id (8) NOT NULL
     emp_mode varchar(2),    --FT or PT
     ks_code varchar(10),    --Do we need various ks_codes? We'll need some overlap on some of these positions.
     pay_rate number(10,2),
     pay_type varchar(10),   --W (hr),S (ann)
     );
     */
+    
+    /*implement primary_skill varchar (10),*/
 DELETE FROM position;
-INSERT into position VALUES(451020100,'FT',0156,56000,'S');
-INSERT into position VALUES(451020200,'FT',0253,64000,'S');
-INSERT into position VALUES(451030100,'FT',0364,68000,'S');
-INSERT into position VALUES(451030101,'PT',0452,12.50,'W');     --Sophomore intern
-INSERT into position VALUES(451030102,'PT',0549,13.25,'W');     --Junior intern
-INSERT into position VALUES(451030103,'PT',0655,14.00,'W');     --Senior intern
-INSERT into position VALUES(202020100,'FT',0748,72000,'S');     --Mgmt position
-INSERT into position VALUES(202020101,'FT',0896,96000,'S');     --Executive position
-INSERT into position VALUES(202020102,'FT',0948,45000,'S');     --Admin position
-INSERT into position VALUES(402010201,'FT',1076,63000,'S');     --Finance position
+INSERT into position VALUES(451020100,37829,'FT',0156,56000,'S');  --general electric comp_id
+INSERT into position VALUES(451020200,382939,'FT',0253,64000,'S'); --lucid comp_id
+INSERT into position VALUES(451030100,89324987,'FT',0364,68000,'S'); --dxc comp id
+INSERT into position VALUES(451030101,89324987,'PT',0452,12.50,'W');     --Sophomore intern, dxc
+INSERT into position VALUES(451030102,89324987,'PT',0549,13.25,'W');     --Junior intern, dxc
+INSERT into position VALUES(451030103,89324987,'PT',0655,14.00,'W');     --Senior intern, dxc
+INSERT into position VALUES(202020100,384829,'FT',0748,72000,'S');     --Mgmt position, turbosquid
+INSERT into position VALUES(202020101,384829,'FT',0896,96000,'S');     --Executive position, turbosquid
+INSERT into position VALUES(202020102,74817,'FT',0948,45000,'S');     --Admin position, ibm
+INSERT into position VALUES(402010201,74817,'FT',1076,63000,'S');     --Finance position, ibm
 /*Test position*/
 select * from position;
 
@@ -110,6 +113,19 @@ INSERT into know_skill VALUES(632, 'Python', 'Basic knowledge of Python programm
 /*Test know_skill*/
 select * from know_skill;
 
+
+/*CREATE TABLE company(
+    comp_id number(8) NOT NULL PRIMARY KEY,
+    comp_name varchar(255) NOT NULL,
+    street_num number(20),
+    street varchar(255),
+    city varchar(255),
+    state varchar(2), 
+    zip number(9),
+    primary_sector_code varchar(8), --References GICS
+    specialty varchar(255),
+    website varchar(255)*/
+
 /*Insert five values into company*/
 DELETE FROM company;
 INSERT into company VALUES(37829, 'General Electric','34','Edison Parkway','Crotonville','NY',10562,'Information Technology','Digital Services','ge.com');
@@ -124,6 +140,60 @@ select comp_name
 from company;
 
 select * from company;
+
+
+
+/*
+DROP TABLE works;
+CREATE TABLE works(
+    pos_code number (10),
+    pers_id number(5),
+    job_title varchar(255),
+	start_date varchar(255),
+    end_date varchar(255),
+    --PRIMARY KEY (start_date, end_date)  --CANNOT QUERY end_date IS NULL if end_date is primary key! -jtm
+    PRIMARY KEY (start_date, pos_code)
+    
+    ); */
+
+---I think we need pos_code in works
+/*Insert 5 values into works*/
+DELETE FROM works;
+INSERT into works VALUES(838,null,'Junior Software Developer','11/06/2010', '');--we've got to do some thinking about end date as a primary key - jtm
+INSERT into works VALUES(839,null, 'Entry Level Software Developer','9/2/2016', '3/2/2017'); 
+INSERT into works VALUES(840,null,'Database Administrator II','3/06/2006', ''); 
+INSERT into works VALUES(850, null,'Senior Quality Assurance Engineer','8/18/2012', '10/09/2017'); 
+INSERT into works VALUES(860,10001,'DevOps Engineer','7/09/2017', ''); 
+INSERT into works VALUES (451030100,10002,'DevOps Engineer', '7/09/2017','');
+INSERT into works VALUES (451030101,10003,'Sophomore Intern', '7/09/2017','');
+INSERT into works VALUES (451030102,10004,'Junior Intern', '7/09/2017','');
+
+/*INSERT into position VALUES(451030100,89324987,'FT',0364,68000,'S'); --dxc comp id
+INSERT into position VALUES(451030101,89324987,'PT',0452,12.50,'W');     --Sophomore intern, dxc
+INSERT into position VALUES(451030102,89324987,'PT',0549,13.25,'W');     --Junior intern, dxc
+INSERT into position VALUES(451030103,89324987,'PT',0655,14.00,'W');     --Senior intern, dxc*/
+
+
+
+/*Test works*/
+select job_title
+from works;
+
+select * from works;
+
+/*SELECT pers_id,last_name,first_name,mi
+FROM person NATURAL JOIN works NATURAL JOIN position NATURAL JOIN company
+WHERE comp_id = 89324987 AND end_date IS NULL
+ORDER BY last_name;*/
+
+/*query1*/
+SELECT *
+FROM works w
+JOIN person pers on pers.pers_id = w.pers_id
+JOIN position p on w.pos_code = p.pos_code
+WHERE comp_id = 89324987
+AND end_date IS NULL
+ORDER BY last_name;
 
 
 
