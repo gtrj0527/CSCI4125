@@ -1,11 +1,25 @@
-/*1. List a specific company’s workers by names.*/
-SELECT pers_id,last_name,first_name,mi
+/*1. List a specific companyï¿½s workers by names.*/
+/*SELECT pers_id,last_name,first_name,mi
 FROM person NATURAL JOIN works NATURAL JOIN company
-WHERE comp_id = 012659 AND end_date IS NULL
+WHERE comp_id = 012659 AND end_date IS NULL   --END DATE IS CURRENTLY PRIMARY KEY--IT CANNOT BE NULL --jtm
+ORDER BY last_name;*/
+
+/*JTM* refactor*/
+SELECT *
+FROM works w
+JOIN person pers on pers.pers_id = w.pers_id
+JOIN position p on w.pos_code = p.pos_code
+WHERE comp_id = 89324987
+AND end_date IS NULL
 ORDER BY last_name;
 
+
+
+
+
+
 --We need to insert information into all the tables; this is just my brainstorming attempt at queries.
-/*2. List a specific company’s staff by salary in descending order.*/
+/*2. List a specific companyï¿½s staff by salary in descending order.*/
 SELECT pers_id,last_name,first_name,mi
 FROM person NATURAL JOIN works NATURAL JOIN company NATURAL JOIN position
 WHERE comp_id = 012659 
@@ -13,7 +27,7 @@ WHERE comp_id = 012659
     AND pay_type = 'S'
 ORDER BY pay_rate DESC;
 
-/*3. List companies’ labor cost (total salaries and wage rates by 1920 hours) in descending order.*/
+/*3. List companiesï¿½ labor cost (total salaries and wage rates by 1920 hours) in descending order.*/
 CREATE VIEW comp_sal_exp AS (
     SELECT comp_id, comp_name, SUM(pay_rate) AS sal_cost
     FROM   company NATURAL JOIN works NATURAL JOIN position
@@ -32,17 +46,17 @@ FROM comp_sal_exp NATURAL JOIN comp_wage_exp
 GROUP BY comp_id, comp_name
 ORDER BY final_cost;
 
-/*4. Given a person’s identifier, find all the job positions this person is currently holding and worked in the past.*/
+/*4. Given a personï¿½s identifier, find all the job positions this person is currently holding and worked in the past.*/
 SELECT pos_code, title
 FROM person NATURAL JOIN position NATURAL JOIN works
 WHERE pers_id = 012569;
 
-/*5. Given a person’s identifier, list this person’s knowledge/skills in a readable format.*/
+/*5. Given a personï¿½s identifier, list this personï¿½s knowledge/skills in a readable format.*/
 SELECT ks_code,description,training_level
 FROM position NATURAL JOIN know_skill
 WHERE pers_id = 012569;
 
-/*6. Given a person’s identifier, list the skill gap between the requirements of this worker’s job position(s) and his/her
+/*6. Given a personï¿½s identifier, list the skill gap between the requirements of this workerï¿½s job position(s) and his/her
 skills.*/
 /*I think we need to include the "has_skill" relation as a table. I 
 can't think of another way to make this work.*/
@@ -67,7 +81,7 @@ SELECT  prime_sector_code,code_name,code_description
 FROM    gics NATURAL JOIN nwcet
 WHERE   prime_sector_code = 999999;
 
-/*8. Given a person’s identifier, list a person’s missing knowledge/skills for a specific pos_code in a readable format.*/
+/*8. Given a personï¿½s identifier, list a personï¿½s missing knowledge/skills for a specific pos_code in a readable format.*/
 /*I think "has_skill" is another very useful table here.*/
 SELECT ks_code,description
 FROM know_skill NATURAL JOIN (
@@ -79,7 +93,7 @@ FROM know_skill NATURAL JOIN (
                                FROM has_skill
                                WHERE pers_id = 012569);
 
-/*9. Given a person’s identifier and a pos_code, list the courses (course id and title) that each alone teaches all the
+/*9. Given a personï¿½s identifier and a pos_code, list the courses (course id and title) that each alone teaches all the
 missing knowledge/skills for this person to pursue the specific job position.*/
 --I'm going to use views as the execution method for this. I'm sure there's a better way, but I can't think of it.
 --I'm using the has_skill & provides_skill relations because I can't think of how else to do this (again).
@@ -105,7 +119,7 @@ WHERE NOT EXISTS(
 );
 
 /*10. Suppose the skill gap of a worker and the requirement of a desired job position can be covered by one course.
-Find the “quickest” solution for this worker. Show the course, section information and the completion date.*/
+Find the ï¿½quickestï¿½ solution for this worker. Show the course, section information and the completion date.*/
 --I'm going to use views as the execution method for this. I'm sure there's a better way, but I can't think of it.
 /*Set up the missing knowledge/skill set*/
 CREATE VIEW AS missing_ks(
@@ -139,7 +153,7 @@ WHERE   complete_date = (
                          FROM course_needed);
 
 /*11. Suppose the skill gap of a worker and the requirement of a desired job position can be covered by one course.
-Find the cheapest course to make up one’s skill gap by showing the course to take and the cost (of the section
+Find the cheapest course to make up oneï¿½s skill gap by showing the course to take and the cost (of the section
 price).*/
 --I'm going to use views as the execution method for this. I'm sure there's a better way, but I can't think of it.
 /*Set up the missing knowledge/skill set*/
@@ -177,10 +191,10 @@ WHERE   price = (
 If query #9 returns nothing, then find the course sets that their combination covers all the missing knowledge/
 skills for a person to pursue a pos_code. The considered course sets will not include more than three courses. If
 multiple course sets are found, list the course sets (with their course IDs) in the order of the ascending order of the
-course sets’ total costs.*/
+course setsï¿½ total costs.*/
 
 
-/*13. Given a person’s identifier, list all the job categories that a person is qualified for.*/
+/*13. Given a personï¿½s identifier, list all the job categories that a person is qualified for.*/
 --I'm not 100% on this one. The GICS table is still a bit nebulous in my head.
 SELECT  ks_code,title
 FROM    know_skill
@@ -194,7 +208,7 @@ WHERE NOT EXISTS(
                   WHERE     job_cat.cat_code = gics.prime_sector_code)
                  );
 
-/*14. Given a person’s identifier, find the job position with the highest pay rate for this person according to his/her skill
+/*14. Given a personï¿½s identifier, find the job position with the highest pay rate for this person according to his/her skill
 possession.*/
 /*Using views again. I ***COULD*** use "WITH", but those things scare me.*/
 /*Set up the person's job skills*/
@@ -258,7 +272,7 @@ AND NOT EXISTS(
               );
 
 /*16. When a company cannot find any qualified person for a job position, a secondary solution is to find a person who
-is almost qualified to the job position. Make a “missing-one” list that lists people who miss only one skill for a
+is almost qualified to the job position. Make a ï¿½missing-oneï¿½ list that lists people who miss only one skill for a
 specified pos_code.*/
 
 
@@ -267,10 +281,10 @@ given position code in the ascending order of the people counts.*/
 
 
 /*18. Suppose there is a new position that has nobody qualified. List the persons who miss the least number of skills
-that are required by this pos_code and report the “least number”.*/
+that are required by this pos_code and report the ï¿½least numberï¿½.*/
 
 
-/*19. For a specified position code and a given small number k, make a “missing-k” list that lists the people’s IDs and
+/*19. For a specified position code and a given small number k, make a ï¿½missing-kï¿½ list that lists the peopleï¿½s IDs and
 the number of missing skills for the people who miss only up to k skills in the ascending order of missing skills.*/
 
 
@@ -296,10 +310,10 @@ and the total amount of salaries and wages paid to employees. (Two queries)*/
 
 /*25. Find out (1) the number of the people whose earnings increased, (2) the number of those whose earnings
 decreased, (3) the ratio of (# of earning increased : # of earning decreased), (4) the average earning changing rate
-of for the workers in a specific business sector (use attribute “primary sector” in table Company. [Hint: earning
-change = the sum of a person’s current income – the sum of the person’s earning when he/she was holding his/her
-the latest previous job position. For (4), only count the earning from the specified sector (companies’ “primary
-sector”)]*/
+of for the workers in a specific business sector (use attribute ï¿½primary sectorï¿½ in table Company. [Hint: earning
+change = the sum of a personï¿½s current income ï¿½ the sum of the personï¿½s earning when he/she was holding his/her
+the latest previous job position. For (4), only count the earning from the specified sector (companiesï¿½ ï¿½primary
+sectorï¿½)]*/
 
 
 /*BONUS: NOT REQUIRED FOR 05APR18 TURN IN*/
