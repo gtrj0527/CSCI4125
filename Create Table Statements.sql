@@ -7,7 +7,7 @@ CREATE TABLE company(
     city varchar(255),
     state varchar(2), 
     zip number(9),
-    industry varchar(255),
+    primary_sector_code varchar(8), --References GICS
     specialty varchar(255),
     website varchar(255)
 );
@@ -15,6 +15,8 @@ CREATE TABLE company(
 DROP TABLE position;
 CREATE TABLE position(
     pos_code number(10) NOT NULL PRIMARY KEY,
+    comp_id number(8) NOT NULL,
+    primary_skill varchar (10),
     emp_mode varchar(2),        --FT: full time, PT: part time
     ks_code varchar(10),
     pay_rate number(10,2),
@@ -114,13 +116,19 @@ CREATE TABLE takes(
     PRIMARY KEY(c_code, sec_code)
     );
     
-/*Added attribute "job_title" to this table*/	
+/*Added attribute "job_title" to this table*/
+/*Added attribute "pos_code" to works -jtm */
+/*Added attribute "pers_id" to works - jtm*/
 DROP TABLE works;
 CREATE TABLE works(
+    pos_code number (10),
+    pers_id number(5),
     job_title varchar(255),
 	start_date varchar(255),
     end_date varchar(255),
-    PRIMARY KEY (start_date, end_date)
+    --PRIMARY KEY (start_date, end_date)  --CANNOT QUERY end_date IS NULL if end_date is primary key! -jtm
+    PRIMARY KEY (start_date, pos_code)
+    
     );
     
 DROP TABLE requires_cert;    
