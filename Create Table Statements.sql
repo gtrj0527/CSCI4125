@@ -1,6 +1,6 @@
 DROP TABLE company;
 CREATE TABLE company(
-    comp_id number(8) NOT NULL PRIMARY KEY,
+    comp_id number(8) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     comp_name varchar(255) NOT NULL,
     address1 varchar(255) NOT NULL,
     address2 varchar(255),
@@ -23,7 +23,7 @@ CREATE TABLE company_specialty (
 
 DROP TABLE position;
 CREATE TABLE position(
-    pos_code number(10) NOT NULL PRIMARY KEY,
+    pos_code number(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     comp_id number(8) NOT NULL,
     pos_title varchar(255) NOT NULL,
     emp_mode varchar(2) NOT NULL,        --FT: full time, PT: part time
@@ -46,7 +46,7 @@ CREATE TABLE position_skills (
 
 DROP TABLE person;   
 CREATE TABLE person(
-    pers_id number(5) NOT NULL PRIMARY KEY,
+    pers_id number(5) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     last_name varchar(255) NOT NULL,
     first_name varchar(255) NOT NULL,
     mi varchar(1),
@@ -62,9 +62,9 @@ CREATE TABLE person(
 
 DROP TABLE person_phone_numbers;
 CREATE TABLE person_phone_numbers(
-    pers_id number(5) NOT NULL PRIMARY KEY,
+    pers_id number(5) NOT NULL,
     phone varchar(10) NOT NULL,
-    phone_number_type varchar(6), -- Mobile, Home, Work
+    phone_number_type varchar(6) NOT NULL, -- Mobile, Home, Work
     CONSTRAINT person_ph_pk PRIMARY KEY (pers_id, phone),
     CONSTRAINT person_ph_fk FOREIGN KEY (pers_id) REFERENCES person(pers_id)
 );
@@ -84,7 +84,7 @@ CREATE TABLE section(
  
 DROP TABLE course;    
 CREATE TABLE course(
-    c_code number(10) NOT NULL PRIMARY KEY,
+    c_code number(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title varchar(255) NOT NULL,
     training_level varchar(12), -- Beginner, Intermediate, Advanced
     description varchar(255),
@@ -104,7 +104,8 @@ CREATE TABLE prerequisite (
 
 DROP TABLE cert;    
 CREATE TABLE cert(
-    cert_code number(10) NOT NULL PRIMARY KEY,
+    cert_code number(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    cert_name varchar(255) NOT NULL,
     issued_by number(8) NOT NULL,
     tool varchar(255), -- Description of what you're getting the cert in...
     CONSTRAINT issued_by FOREIGN KEY issued_by REFERENCES training_provider (comp_id)
@@ -112,8 +113,8 @@ CREATE TABLE cert(
 
 DROP TABLE position_cert;
 CREATE TABLE position_cert (
-    cert_code number(10) NOT NULL PRIMARY KEY,
-    pos_code number(10) NOT NULL PRIMARY KEY,
+    cert_code number(10) NOT NULL,
+    pos_code number(10) NOT NULL,
     prefer varchar(2), -- R: Required, P: Preferred
     CONSTRAINT position_cert PRIMARY KEY (cert_code, pos_code),
     CONSTRAINT cert_fk FOREIGN KEY cert_code REFERENCES cert (cert_code),
@@ -135,6 +136,33 @@ CREATE TABLE know_skill(
     ks_description varchar(255),
     training_level varchar(255) NOT NULL, -- Beginner, Intermediate, Advanced
     CONSTRAINT ks_nwcet_fk FOREIGN KEY nwcet_code REFERENCES NWCET (nwcet_code)
+);
+
+DROP TABLE has_skill;
+CREATE TABLE has_skill (
+    pers_id number(5) NOT NULL,
+    ks_code varchar (255) NOT NULL,
+    CONSTRAINT has_skill_pk PRIMARY KEY (pers_id, ks_code),
+    CONSTRAINT pers_skill_fk FOREIGN KEY pers_id REFERENCES person (pers_id),
+    CONSTRAINT ks_skill_fk FOREIGN KEY ks_code REFERENCES know_skill (ks_code)
+);
+
+DROP TABLE has_cert;
+CREATE TABLE has_cert (
+    pers_id number(5) NOT NULL,
+    cert_code varchar (255) NOT NULL,
+    CONSTRAINT has_cert_pk PRIMARY KEY (pers_id, cert_code),
+    CONSTRAINT pers_cert_fk FOREIGN KEY pers_id REFERENCES person (pers_id),
+    CONSTRAINT has_cert_fk FOREIGN KEY cert_code REFERENCES cert (cert_code)
+);
+
+DROP TABLE course_cert;
+CREATE TABLE course_cert (
+    cert_code number(10) NOT NULL,
+    c_code number(10) NOT NULL,
+    CONSTRAINT course_cert_pk PRIMARY KEY (cert_code, c_code),
+    CONSTRAINT cert_requires_pk FOREIGN KEY cert_code REFERENCES cert (cert_code),
+    CONSTRAINT course_required_pk FOREIGN KEY c_code REFERENCES course (c_code)
 );
 
 DROP TABLE NWCET;  -- Manually entering
