@@ -148,7 +148,7 @@ DROP TABLE works;
 CREATE TABLE works(
     pos_code number (10),
     pers_id number(5),
-    job_title varchar(255),
+    job_title varchar(255),  --TAKE JOB TITLE OUT OF WORKS!!!
 	start_date varchar(255),
     end_date varchar(255),
     --PRIMARY KEY (start_date, end_date)  --CANNOT QUERY end_date IS NULL if end_date is primary key! -jtm

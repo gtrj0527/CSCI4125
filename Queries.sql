@@ -5,7 +5,7 @@ WHERE comp_id = 012659 AND end_date IS NULL   --END DATE IS CURRENTLY PRIMARY KE
 ORDER BY last_name;*/
 
 /*JTM* refactor*/
-SELECT *
+SELECT last_name, first_name, mi
 FROM works w
 JOIN person pers on pers.pers_id = w.pers_id
 JOIN position p on w.pos_code = p.pos_code
