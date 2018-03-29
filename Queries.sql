@@ -19,53 +19,99 @@ AND pay_type = 'S'
 ORDER BY pay_rate DESC;
 
 /*3. List companies’ labor cost (total salaries and wage rates by 1920 hours) in descending order.*/
-DROP VIEW comp_sal_exp;
-CREATE VIEW comp_sal_exp AS (
-    SELECT c.comp_id, c.comp_name, SUM(p.pay_rate) AS sal_cost
-    FROM   company c
-    JOIN position p on c.comp_id = p.comp_id
-    WHERE  p.pay_type = 'S'
-    GROUP BY c.comp_id,c.comp_name);
-/*Test the view*/
-select * from comp_sal_exp;    
---The wage rate is going to be more difficult because it's just for the PT emp.
---How do we determine how much time they'll work? Here, I'm assuming 20 hr/wk.
-CREATE VIEW comp_wage_exp AS (
-    SELECT comp_id, comp_name, SUM(pay_rate * (1920/2)) AS wage_cost
-    FROM   company NATURAL JOIN works NATURAL JOIN position
-    WHERE  pay_type = 'W'
-    GROUP BY comp_id,comp_name);
-/*Test the view */    
-select * from comp_wage_exp;    
+/*Option 1: Doesn't return anything, and I think it needs works included.*/
+--DROP VIEW comp_sal_exp;
+--CREATE VIEW comp_sal_exp AS (
+--    SELECT c.comp_id, c.comp_name, SUM(p.pay_rate) AS sal_cost
+--    FROM   company c
+--    LEFT JOIN position p on c.comp_id = p.comp_id
+--    WHERE  p.pay_type = 'S'
+--    GROUP BY c.comp_id,c.comp_name);
+--/*Test the view*/
+--select * from comp_sal_exp;    
+----The wage rate is going to be more difficult because it's just for the PT emp.
+----How do we determine how much time they'll work? Here, I'm assuming 20 hr/wk.
+--DROP VIEW comp_wage_exp;
+--CREATE VIEW comp_wage_exp AS (
+--    SELECT comp_id, comp_name, SUM(pay_rate * (1920/2)) AS wage_cost
+--    FROM   company NATURAL JOIN works NATURAL JOIN position
+--    WHERE  pay_type = 'W'
+--    GROUP BY comp_id,comp_name);
+--/*Test the view */    
+--select * from comp_wage_exp;    
+--
+--/*Final query*/
+--SELECT comp_id, comp_name, (SUM(sal_cost) + SUM(wage_cost)) AS total_cost
+--FROM comp_sal_exp NATURAL JOIN comp_wage_exp
+--GROUP BY comp_id, comp_name
+--ORDER BY final_cost DESC;
 
-/*Final query*/
-SELECT comp_id, comp_name, (SUM(sal_cost) + SUM(wage_cost)) AS total_cost
-FROM comp_sal_exp NATURAL JOIN comp_wage_exp
-GROUP BY comp_id, comp_name
-ORDER BY final_cost DESC;
+/*Option 2: Can't test because position isn't working*/
+--create view salary_cost as (
+--	select comp_id,select c.comp_id,comp_name,sum(pay_rate) total_cost
+--	from company natural join works
+--	where pay_type = 'S'
+--);
+--create view wage_cost as (
+--	select comp_id,select c.comp_id,comp_name,sum(pay_rate*1920) total_cost 
+--	from company natural join works
+--	where pay_type = 'W'
+--);
+--select comp_id, comp_name, sum(total_cost) 
+--from (wage_cost natural join salary_cost) comp_total_cost
+--join position on comp_total_cost.comp_id = position.comp_id
+--group by comp_id, comp_name
+--order by total_cost desc;
 
 /*4. Given a person’s identifier, find all the job positions this person is currently holding and worked in the past.*/
-SELECT pos_code, title
-FROM person NATURAL JOIN position NATURAL JOIN works
-WHERE pers_id = 012569;
+/*Option 1: Can't run b/c position isn't working*/
+--SELECT pos_code, title
+--FROM person NATURAL JOIN position NATURAL JOIN works
+--WHERE pers_id = 10;
+
+/*Option 2: Can't run b/c position isn't working*/
+--select first_name,mi,last_name,pos_code
+--from person p
+--left join works w on p.pers_id = w.pers_id
+--where pers_id = 10
+--UNION
+--select pos.pos_code,pos_title,start_date, end_date
+--from position pos 
+--left join works w on pos.pos_code = w.pos_code
+--where pers_id = 10;
 
 /*5. Given a person’s identifier, list this person’s knowledge/skills in a readable format.*/
-SELECT ks_code,description,training_level
-FROM position NATURAL JOIN know_skill
-WHERE pers_id = 012569;
+/*Option 1: Can't run b/c position isn't working*/
+--SELECT ks_code,description,training_level
+--FROM position NATURAL JOIN know_skill
+--WHERE pers_id = 10;
+
+/*Option 2: Can't run because we haven't given has_skill values yet*/
+--create view person_skills as(
+--	select pers_id, first_name, mi, last_name, ks_code
+--	from person p
+--	left join has_skill h_s on p.pers_id = h_s.pers_id
+--	where pers_id = 10
+--);
+--
+--select ks_code,ks_title,description
+--from know_skill k_s
+--left join person_skills p_s on k_s.ks_code = p_s.ks_code
+--where pers_id = 10;
 
 /*6. Given a person’s identifier, list the skill gap between the requirements of this worker’s job position(s) and his/her
 skills.*/
-/*I think we need to include the "has_skill" relation as a table. I 
-can't think of another way to make this work.*/
-(SELECT prefer,description
- FROM requires_ks NATURAL JOIN know_skill NATURAL JOIN works
- WHERE pers_id = 012569
-    AND end_date IS NULL)
-MINUS
-(SELECT ks_code,description 
- FROM has_skill NATURAL JOIN know_skill      --Alternatively, could use "FROM person, know_skill"
- WHERE pers_id = 012569);
+(SELECT ks_code,pos_code,prefer
+FROM position_skills p_s
+LEFT JOIN works w on p_s.pos_code = w.pos_code
+WHERE pers_id = 10
+	AND end_date IS NULL)
+MINUS 
+(SELECT ks_code
+FROM has_skill h_s
+LEFT JOIN know_skill k_s on h_s.ks_code = k_s.ks_code
+WHERE pers_id = 10;
+);
 
 /*7. List the required knowledge/skills of a pos_code and a job category code in a readable format. (Two queries)*/
 /*First query*/
