@@ -118,7 +118,8 @@ LEFT JOIN position p on ks.ks_code = p.primary_skill
 WHERE   n.nwcet_code = 'WDA';
 
 /*8. Given a person’s identifier, list a person’s missing knowledge/skills for a specific pos_code in a readable format.*/
---I IZ WERKING!!!
+--Even though has_skill isn't populated yet, I IZ WERKING!!!
+DROP VIEW missing_skill;
 CREATE VIEW missing_skill AS (
     (SELECT pers_id,first_name,mi,last_name,ks_code
     FROM position_skills NATURAL JOIN PERSON
@@ -136,27 +137,28 @@ WHERE pers_id = 1;
 
 /*9. Given a person’s identifier and a pos_code, list the courses (course id and title) that each alone teaches all the
 missing knowledge/skills for this person to pursue the specific job position.*/
---I'm going to use views as the execution method for this. I'm sure there's a better way, but I can't think of it.
---I'm using the has_skill & provides_skill relations because I can't think of how else to do this (again).
-CREATE VIEW AS missing_ks(
-                         (SELECT prefer
-                          FROM   requires_ks
-                          WHERE  pos_code = 99999;)
-                         MINUS
-                         (SELECT ks_code
-                          FROM   has_skill
-                          WHERE  pers_id = 9999;)
-);
+--I COMPILE, but has_skill isn't populated yet, so I can't be fully tested.
+DROP VIEW missing_skill;
+CREATE VIEW missing_skill AS (
+    (SELECT pers_id,first_name,mi,last_name,ks_code
+    FROM position_skills NATURAL JOIN PERSON
+    WHERE pos_code = 3
+    AND prefer = 'R'
+    AND pers_id = 1)
+    MINUS
+    (SELECT pers_id,first_name,mi,last_name,ks_code
+    FROM has_skill NATURAL JOIN person
+    WHERE pers_id = 1));
 
 SELECT  c_code,course.title
 FROM    course
 WHERE NOT EXISTS(
                 (SELECT ks_code
-                 FROM   provides_skill
-                 WHERE  provides_skill.c_code = course.c_code)
+                 FROM   position_skills
+                 WHERE prefer = 'R')
                 MINUS
-                (SELECT *
-                 FROM   missing_ks)
+                (SELECT ks_code
+                 FROM   missing_skill)
 );
 
 /*10. Suppose the skill gap of a worker and the requirement of a desired job position can be covered by one course.
