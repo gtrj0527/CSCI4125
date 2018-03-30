@@ -87,7 +87,7 @@ WHERE p.pers_id = 7;
 
 /*6. Given a person’s identifier, list the skill gap between the requirements of this worker’s job position(s) and his/her
 skills.*/
---I DON'T HAVE INSERTION DATA YET
+--I WORK!!!
 (SELECT ks_code,ps.pos_code,prefer
 FROM position_skills ps
 LEFT JOIN works w on ps.pos_code = w.pos_code
