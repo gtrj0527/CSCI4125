@@ -164,26 +164,36 @@ WHERE NOT EXISTS(
 /*10. Suppose the skill gap of a worker and the requirement of a desired job position can be covered by one course.
 Find the “quickest” solution for this worker. Show the course, section information and the completion date.*/
 --I'm going to use views as the execution method for this. I'm sure there's a better way, but I can't think of it.
-/*Set up the missing knowledge/skill set*/
-CREATE VIEW AS missing_ks(
-                         (SELECT prefer
-                          FROM   requires_ks
-                          WHERE  pos_code = 99999;)
+/*I NEED has_skill and course_cert data insertion for testing*/
+CREATE VIEW missing_ks AS(
+                         (SELECT prefer ks_code
+                          FROM   position_skills
+                          WHERE  pos_code = 1)
                          MINUS
                          (SELECT ks_code
                           FROM   has_skill
-                          WHERE  pers_id = 9999;)
+                          WHERE  pers_id = 3)
 );
+
+/*Get the course-to-position information*/
+CREATE VIEW course2pos AS(
+    SELECT c.c_code,title,ps.pos_code,pos_title,ps.ks_code,ks_title
+    FROM course_cert cc
+    LEFT JOIN position_cert pc ON cc.cert_code = pc.cert_code
+    LEFT JOIN position_skills ps ON pc.pos_code = ps.pos_code
+    LEFT JOIN position ON p.pos_code = pc.pos_code
+    LEFT JOIN course c ON cc.c_code = c.c_code)
+    LEFT JOIN know_skill ks ON ps.ks_code = ks.ks_code;
+
 /*Set up the courses needed for the position*/
 CREATE VIEW AS course_needed(
                         (SELECT c_code,sec_code,complete_date
                          FROM   section
                          WHERE NOT EXISTS(
                                           (SELECT ks_code
-                                           FROM provides_skill
-                                           WHERE provides_skill.c_code = section.c_code)
+                                           FROM course2pos)
                                           MINUS
-                                          (SELECT *
+                                          (SELECT ks_code
                                            FROM missing_ks)
                                           )
                         )
