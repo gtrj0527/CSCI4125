@@ -139,6 +139,13 @@ CREATE TABLE position_skills (
     CONSTRAINT ps_ks_fk FOREIGN KEY (ks_code) REFERENCES know_skill(ks_code),
     CONSTRAINT ps_pos_fk FOREIGN KEY (pos_code) REFERENCES position(pos_code)
 );
+INSERT into position_skills VALUES ('Java2','10','R');
+    INSERT into position_skills VALUES ('Java2','15','R');
+    INSERT into position_skills VALUES ('Angular3','7','R');
+    INSERT into position_skills VALUES ('Angular1','8','P');     I
+    INSERT into position_skills VALUES ('HTML2','12','P');
+    
+    Select* from position_skills;
 
 CREATE TABLE section (
     c_code number NOT NULL,
