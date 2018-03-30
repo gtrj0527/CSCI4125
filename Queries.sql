@@ -1,123 +1,112 @@
 /*1. List a specific company’s workers by names.*/
-SELECT last_name,first_name,mi
+--I WORK!!!
+--Rachel: W/O "Distinct", this returns several copies of the same worker. What's the logic flaw?
+SELECT DISTINCT last_name,first_name,mi
 FROM works w
-JOIN person pers on w.pers_id = pers.pers_id
-JOIN position p on w.pos_code = p.pos_code
-WHERE comp_id = 89324987
+LEFT JOIN person pers on w.pers_id = pers.pers_id
+LEFT JOIN position p on w.pos_code = p.pos_code
+WHERE comp_id = 1113
 AND end_date IS NULL
 ORDER BY last_name;
 
---We need to insert information into all the tables; this is just my brainstorming attempt at queries.
 /*2. List a specific company’s staff by salary in descending order.*/
+--I WORK!!!
 SELECT last_name,first_name,mi,pay_rate
 FROM works w
 JOIN person pers on w.pers_id = pers.pers_id
 JOIN position p on w.pos_code = p.pos_code
-WHERE comp_id = 89324987
+WHERE comp_id = 1111
 AND end_date IS NULL
 AND pay_type = 'S'
 ORDER BY pay_rate DESC;
 
 /*3. List companies’ labor cost (total salaries and wage rates by 1920 hours) in descending order.*/
-/*Option 1: Doesn't return anything, and I think it needs works included.*/
---DROP VIEW comp_sal_exp;
---CREATE VIEW comp_sal_exp AS (
---    SELECT c.comp_id, c.comp_name, SUM(p.pay_rate) AS sal_cost
---    FROM   company c
---    LEFT JOIN position p on c.comp_id = p.comp_id
---    WHERE  p.pay_type = 'S'
---    GROUP BY c.comp_id,c.comp_name);
---/*Test the view*/
---select * from comp_sal_exp;    
-----The wage rate is going to be more difficult because it's just for the PT emp.
-----How do we determine how much time they'll work? Here, I'm assuming 20 hr/wk.
---DROP VIEW comp_wage_exp;
---CREATE VIEW comp_wage_exp AS (
---    SELECT comp_id, comp_name, SUM(pay_rate * (1920/2)) AS wage_cost
---    FROM   company NATURAL JOIN works NATURAL JOIN position
---    WHERE  pay_type = 'W'
---    GROUP BY comp_id,comp_name);
---/*Test the view */    
---select * from comp_wage_exp;    
---
---/*Final query*/
---SELECT comp_id, comp_name, (SUM(sal_cost) + SUM(wage_cost)) AS total_cost
---FROM comp_sal_exp NATURAL JOIN comp_wage_exp
---GROUP BY comp_id, comp_name
---ORDER BY final_cost DESC;
+--I'M BROKEN
+/*Option 1: Returns only one result.*/
+drop view total_cost;
+drop view wage_cost;
+drop view salary_cost;
 
-/*Option 2: Can't test because position isn't working*/
---create view salary_cost as (
---	select comp_id,select c.comp_id,comp_name,sum(pay_rate) total_cost
---	from company natural join works
---	where pay_type = 'S'
---);
---create view wage_cost as (
---	select comp_id,select c.comp_id,comp_name,sum(pay_rate*1920) total_cost 
---	from company natural join works
---	where pay_type = 'W'
---);
---select comp_id, comp_name, sum(total_cost) 
---from (wage_cost natural join salary_cost) comp_total_cost
---join position on comp_total_cost.comp_id = position.comp_id
---group by comp_id, comp_name
---order by total_cost desc;
+create view salary_cost as (
+	select c.comp_id,comp_name,sum(pay_rate) sal_cost
+	from company c
+	left join position p on c.comp_id = p.comp_id
+	left join works w on p.pos_code = w.pos_code
+	where pay_type = 'S' 
+    and end_date is null
+    group by c.comp_id,comp_name
+);
+/*This results in entries from comp_id 1111 and 1113.*/
+select * from salary_cost; 
+
+create view wage_cost as (
+	select c.comp_id,comp_name,sum(pay_rate*1920) wg_cost 
+	from company c
+	left join position p on c.comp_id = p.comp_id
+	left join works w on p.pos_code = w.pos_code
+	where pay_type = 'W'
+    and end_date is null
+    group by c.comp_id,comp_name
+);
+/*This results in entries from comp_id 1112 and 1113.*/
+select * from wage_cost;
+
+create view total_cost as (
+    select sc.comp_id,sc.comp_name, sum(sal_cost + wg_cost) ttl_cost
+    from salary_cost sc
+    left join wage_cost wc on sc.comp_id = wc.comp_id
+    group by sc.comp_id,sc.comp_name);
+
+/*This results in entries from comp_id 1111 (null) and 1113. They are not what I was expecting.*/    
+select * 
+from total_cost 
+order by ttl_cost desc;
+
+/*Option 2:*/
+select c.comp_id,comp_name,sum(pay_rate)
+from company c
+left join position p on c.comp_id = p.comp_id
+left join works w on p.pos_code = w.pos_code
+where (if pay_type = 'W' (pay_rate * 1920))
+group by c.comp_id,comp_name
+order by pay_rate desc;
 
 /*4. Given a person’s identifier, find all the job positions this person is currently holding and worked in the past.*/
-/*Option 1: Can't run b/c position isn't working*/
---SELECT pos_code, title
---FROM person NATURAL JOIN position NATURAL JOIN works
---WHERE pers_id = 10;
-
-/*Option 2: Can't run b/c position isn't working*/
---select first_name,mi,last_name,pos_code
---from person p
---left join works w on p.pers_id = w.pers_id
---where pers_id = 10
---UNION
---select pos.pos_code,pos_title,start_date, end_date
---from position pos 
---left join works w on pos.pos_code = w.pos_code
---where pers_id = 10;
+--I WORK!!!
+SELECT pers_id,first_name,mi,last_name,pos_code, pos_title,start_date,end_date
+FROM person NATURAL JOIN position NATURAL JOIN works
+WHERE pers_id = 3;
 
 /*5. Given a person’s identifier, list this person’s knowledge/skills in a readable format.*/
-/*Option 1: Can't run b/c position isn't working*/
---SELECT ks_code,description,training_level
---FROM position NATURAL JOIN know_skill
---WHERE pers_id = 10;
-
-/*Option 2: Can't run because we haven't given has_skill values yet*/
---create view person_skills as(
---	select pers_id, first_name, mi, last_name, ks_code
---	from person p
---	left join has_skill h_s on p.pers_id = h_s.pers_id
---	where pers_id = 10
---);
---
---select ks_code,ks_title,description
---from know_skill k_s
---left join person_skills p_s on k_s.ks_code = p_s.ks_code
---where pers_id = 10;
+--I WORK!!!
+SELECT first_name,mi,last_name,ks_title,description,training_level
+FROM person p
+LEFT JOIN has_skill hs on p.pers_id = hs.pers_id
+LEFT JOIN know_skill ks on hs.ks_code = ks.ks_code
+WHERE p.pers_id = 7;
 
 /*6. Given a person’s identifier, list the skill gap between the requirements of this worker’s job position(s) and his/her
 skills.*/
-(SELECT ks_code,pos_code,prefer
-FROM position_skills p_s
-LEFT JOIN works w on p_s.pos_code = w.pos_code
-WHERE pers_id = 10
+--I DON'T HAVE INSERTION DATA YET
+(SELECT ks_code,ps.pos_code,prefer
+FROM position_skills ps
+LEFT JOIN works w on ps.pos_code = w.pos_code
+WHERE pers_id = 3
 	AND end_date IS NULL)
 MINUS 
-(SELECT ks_code
-FROM has_skill h_s
-LEFT JOIN know_skill k_s on h_s.ks_code = k_s.ks_code
-WHERE pers_id = 10;
-);
+(SELECT hs.ks_code,pos_code, prefer
+FROM has_skill hs
+LEFT JOIN know_skill ks on hs.ks_code = ks.ks_code
+LEFT JOIN position_skills ps on hs.ks_code = ps.ks_code
+WHERE pers_id = 3);
 
 /*7. List the required knowledge/skills of a pos_code and a job category code in a readable format. (Two queries)*/
 /*First query*/
-SELECT prefer, title, description
-FROM   know_skill NATURAL JOIN position NATURAL JOIN requires_ks
-WHERE  pos_code = 451020100;
+--I WORK!!!
+SELECT pos_code, pos_title, primary_skill, ks_title, description
+FROM   position p
+LEFT JOIN know_skill ks on p.primary_skill = ks.ks_code
+WHERE  pos_code = 10;
 
 /*Second query*/
 --I ***think*** this is the way we'll use these tables.
