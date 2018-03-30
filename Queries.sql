@@ -100,31 +100,39 @@ LEFT JOIN know_skill ks on hs.ks_code = ks.ks_code
 LEFT JOIN position_skills ps on hs.ks_code = ps.ks_code
 WHERE pers_id = 3);
 
-/*7. List the required knowledge/skills of a pos_code and a job category code in a readable format. (Two queries)*/
+/*7. List the required knowledge/skills of a pos_code and a job category code in a readable format. 
+     (Two queries)*/
 /*First query*/
 --I WORK!!!
-SELECT pos_code, pos_title, primary_skill, ks_title, description
+SELECT pos_code, pos_title, primary_skill, ks_title title, description
 FROM   position p
 LEFT JOIN know_skill ks on p.primary_skill = ks.ks_code
 WHERE  pos_code = 10;
 
 /*Second query*/
---I ***think*** this is the way we'll use these tables.
-SELECT  prime_sector_code,code_name,code_description
-FROM    gics NATURAL JOIN nwcet
-WHERE   prime_sector_code = 999999;
+--I WORK!!!
+SELECT  DISTINCT pos_code, pos_title, n.nwcet_code job_cat_code, n.nwcet_title cat_title, n.description 
+FROM    nwcet n
+LEFT JOIN know_skill ks on n.nwcet_code = ks.nwcet_code 
+LEFT JOIN position p on ks.ks_code = p.primary_skill
+WHERE   n.nwcet_code = 'WDA';
 
 /*8. Given a person’s identifier, list a person’s missing knowledge/skills for a specific pos_code in a readable format.*/
-/*I think "has_skill" is another very useful table here.*/
-SELECT ks_code,description
-FROM know_skill NATURAL JOIN (
-                              (SELECT prefer
-                               FROM requires_ks
-                               WHERE pos_id = 014532)
-                               MINUS
-                              (SELECT ks_code
-                               FROM has_skill
-                               WHERE pers_id = 012569);
+--I IZ WERKING!!!
+CREATE VIEW missing_skill AS (
+    (SELECT pers_id,first_name,mi,last_name,ks_code
+    FROM position_skills NATURAL JOIN PERSON
+    WHERE prefer = 'R'
+    AND pers_id = 1)
+    MINUS
+    (SELECT pers_id,first_name,mi,last_name,ks_code
+    FROM has_skill NATURAL JOIN person
+    WHERE pers_id = 1));
+    
+SELECT pers_id,first_name,mi,last_name,ks_title missing_skill, description missing_skill_desc
+FROM know_skill ks 
+LEFT JOIN missing_skill ms on ks.ks_code = ms.ks_code
+WHERE pers_id = 1;
 
 /*9. Given a person’s identifier and a pos_code, list the courses (course id and title) that each alone teaches all the
 missing knowledge/skills for this person to pursue the specific job position.*/
