@@ -267,18 +267,17 @@ course sets’ total costs.*/
 
 
 /*13. Given a person’s identifier, list all the job categories that a person is qualified for.*/
---I'm not 100% on this one. The GICS table is still a bit nebulous in my head.
-SELECT  ks_code,title
-FROM    know_skill
-WHERE NOT EXISTS(
-                 (SELECT    ks_code
-                  FROM      has_skill NATURAL JOIN know_skill
-                  WHERE     pers_id = 99999)
-                 MINUS
-                 (SELECT    cat_code
-                  FROM      job_cat NATURAL JOIN gics
-                  WHERE     job_cat.cat_code = gics.prime_sector_code)
-                 );
+
+SELECT ks_code
+FROM has_skill hs
+LEFT JOIN person p on hs.pers_id = p.pers_id 
+LEFT JOIN position_skills ps on hs.ks_code = ps.ks_code
+WHERE pers_id = 2
+AND prefer = 'R'
+UNION
+SELECT job_category_title,description
+FROM job_category jc
+LEFT JOIN position p on jc.core_skill = p.primary_skill);
 
 /*14. Given a person’s identifier, find the job position with the highest pay rate for this person according to his/her skill
 possession.*/
