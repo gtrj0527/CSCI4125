@@ -50,12 +50,18 @@ create view wage_cost as (
 );
 /*This results in entries from comp_id 1112 and 1113.*/
 select * from wage_cost;
-
+drop view total_cost;
 create view total_cost as (
-    select sc.comp_id,sc.comp_name, sum(sal_cost + wg_cost) ttl_cost
-    from salary_cost sc
-    left join wage_cost wc on sc.comp_id = wc.comp_id
-    group by sc.comp_id,sc.comp_name);
+    select *
+    from salary_cost 
+    full outer join wage_cost
+    );
+select * from total_cost;
+--create view total_cost as (
+--    select sc.comp_id,sc.comp_name, sum(sal_cost + wg_cost) ttl_cost
+--    from salary_cost sc
+--    left join wage_cost wc on sc.comp_id = wc.comp_id
+--    group by sc.comp_id,sc.comp_name);
 
 /*This results in entries from comp_id 1111 (null) and 1113. They are not what I was expecting.*/    
 select * 
@@ -138,6 +144,7 @@ WHERE pers_id = 1;
 /*9. Given a person’s identifier and a pos_code, list the courses (course id and title) that each alone teaches all the
 missing knowledge/skills for this person to pursue the specific job position.*/
 --I COMPILE, but has_skill isn't populated yet, so I can't be fully tested.
+/*Set up the missing knowledge/skill set*/
 DROP VIEW missing_skill;
 CREATE VIEW missing_skill AS (
     (SELECT pers_id,first_name,mi,last_name,ks_code
@@ -149,7 +156,7 @@ CREATE VIEW missing_skill AS (
     (SELECT pers_id,first_name,mi,last_name,ks_code
     FROM has_skill NATURAL JOIN person
     WHERE pers_id = 1));
-
+/*Final query*/
 SELECT  c_code,course.title
 FROM    course
 WHERE NOT EXISTS(
@@ -163,8 +170,9 @@ WHERE NOT EXISTS(
 
 /*10. Suppose the skill gap of a worker and the requirement of a desired job position can be covered by one course.
 Find the “quickest” solution for this worker. Show the course, section information and the completion date.*/
---I'm going to use views as the execution method for this. I'm sure there's a better way, but I can't think of it.
-/*I NEED has_skill and course_cert data insertion for testing*/
+/*I NEED has_skill AND course_cert DATA INSERTION FOR TESTING*/
+DROP VIEW course_needed; DROP VIEW course2pos; DROP VIEW missing_ks;
+/*Set up the missing knowledge/skill set*/
 CREATE VIEW missing_ks AS(
                          (SELECT prefer ks_code
                           FROM   position_skills
@@ -181,12 +189,12 @@ CREATE VIEW course2pos AS(
     FROM course_cert cc
     LEFT JOIN position_cert pc ON cc.cert_code = pc.cert_code
     LEFT JOIN position_skills ps ON pc.pos_code = ps.pos_code
-    LEFT JOIN position ON p.pos_code = pc.pos_code
-    LEFT JOIN course c ON cc.c_code = c.c_code)
-    LEFT JOIN know_skill ks ON ps.ks_code = ks.ks_code;
+    LEFT JOIN position p ON p.pos_code = pc.pos_code
+    LEFT JOIN course c ON cc.c_code = c.c_code
+    LEFT JOIN know_skill ks ON ps.ks_code = ks.ks_code);
 
 /*Set up the courses needed for the position*/
-CREATE VIEW AS course_needed(
+CREATE VIEW course_needed AS (
                         (SELECT c_code,sec_code,complete_date
                          FROM   section
                          WHERE NOT EXISTS(
@@ -199,7 +207,7 @@ CREATE VIEW AS course_needed(
                         )
 );
 /*Final query*/
-SELECT  course.c_code,sec_code,complete_date
+SELECT  c_code,sec_code,complete_date
 FROM    course_needed NATURAL JOIN course
 WHERE   complete_date = (
                          SELECT MIN(complete_date)
@@ -208,36 +216,47 @@ WHERE   complete_date = (
 /*11. Suppose the skill gap of a worker and the requirement of a desired job position can be covered by one course.
 Find the cheapest course to make up one’s skill gap by showing the course to take and the cost (of the section
 price).*/
---I'm going to use views as the execution method for this. I'm sure there's a better way, but I can't think of it.
+--I COMPILE BUT NEED INSERTS FOR TESTING.
+DROP VIEW course_needed; DROP VIEW course2pos; DROP VIEW missing_ks;
 /*Set up the missing knowledge/skill set*/
-CREATE VIEW AS missing_ks(
-                         (SELECT prefer
-                          FROM   requires_ks
-                          WHERE  pos_code = 99999;)
+CREATE VIEW missing_ks AS(
+                         (SELECT prefer ks_code
+                          FROM   position_skills
+                          WHERE  pos_code = 1)
                          MINUS
                          (SELECT ks_code
                           FROM   has_skill
-                          WHERE  pers_id = 9999;)
+                          WHERE  pers_id = 3)
 );
+
+/*Get the course-to-position information*/
+CREATE VIEW course2pos AS(
+    SELECT c.c_code,title,ps.pos_code,pos_title,ps.ks_code,ks_title
+    FROM course_cert cc
+    LEFT JOIN position_cert pc ON cc.cert_code = pc.cert_code
+    LEFT JOIN position_skills ps ON pc.pos_code = ps.pos_code
+    LEFT JOIN position p ON p.pos_code = pc.pos_code
+    LEFT JOIN course c ON cc.c_code = c.c_code
+    LEFT JOIN know_skill ks ON ps.ks_code = ks.ks_code);
+
 /*Set up the courses needed for the position*/
-CREATE VIEW AS course_needed(
-                        (SELECT c_code,sec_code,price
+CREATE VIEW course_needed AS (
+                        (SELECT c_code,sec_code,complete_date
                          FROM   section
                          WHERE NOT EXISTS(
                                           (SELECT ks_code
-                                           FROM provides_skill
-                                           WHERE provides_skill.c_code = section.c_code)
+                                           FROM course2pos)
                                           MINUS
-                                          (SELECT *
+                                          (SELECT ks_code
                                            FROM missing_ks)
                                           )
                         )
 );
+
 /*Final query*/
-SELECT  c_code,course.title,sec_code,price
+SELECT  c_code,course.title,sec_code,retail_price
 FROM    course_needed NATURAL JOIN course
-WHERE   price = (
-                 SELECT MIN(price)
+WHERE   retail_price = (SELECT MIN(retail_price)
                  FROM   course_needed);
                  
 /*12. NOT REQUIRED FOR 05APR18 TURN IN
