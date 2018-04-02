@@ -28,27 +28,42 @@ drop view wage_cost;
 drop view salary_cost;
 
 create view salary_cost as (
-	select c.comp_id,comp_name,sum(pay_rate) sal_cost
+	select comp_id,comp_name, sum(pay_rate) AS cost
 	from company c
-	left join position p on c.comp_id = p.comp_id
-	left join works w on p.pos_code = w.pos_code
+	natural join position p
+	natural join works w
+	--left join position p on c.comp_id = p.comp_id
+	--left join works w on p.pos_code = w.pos_code
 	where pay_type = 'S' 
     and end_date is null
-    group by c.comp_id,comp_name
+    group by comp_id, comp_name
 );
 /*This results in entries from comp_id 1111 and 1113.*/
 select * from salary_cost; 
 
 create view wage_cost as (
-	select c.comp_id,comp_name,sum(pay_rate*1920) wg_cost 
+	select comp_id,comp_name, sum(pay_rate*1920) AS cost 
 	from company c
-	left join position p on c.comp_id = p.comp_id
-	left join works w on p.pos_code = w.pos_code
+	natural join position p
+	natural join works w
+	--left join position p on c.comp_id = p.comp_id
+	--left join works w on p.pos_code = w.pos_code
 	where pay_type = 'W'
     and end_date is null
-    group by c.comp_id,comp_name
+    group by comp_id, comp_name
 );
+
+/* This appears to work. */
+WITH costs AS (SELECT * FROM wage_cost UNION SELECT * FROM salary_cost)
+SELECT comp_id, comp_name, SUM(cost) FROM costs GROUP BY comp_id, comp_name;
+
+
+
+
+
+
 /*This results in entries from comp_id 1112 and 1113.*/
+
 select * from wage_cost;
 drop view total_cost;
 create view total_cost as (
