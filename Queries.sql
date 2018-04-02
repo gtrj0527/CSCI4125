@@ -267,50 +267,53 @@ course sets’ total costs.*/
 
 
 /*13. Given a person’s identifier, list all the job categories that a person is qualified for.*/
-
-SELECT ks_code
-FROM has_skill hs
-LEFT JOIN person p on hs.pers_id = p.pers_id 
-LEFT JOIN position_skills ps on hs.ks_code = ps.ks_code
-WHERE pers_id = 2
-AND prefer = 'R'
-UNION
+DROP VIEW pers_skills;
+CREATE VIEW pers_skills AS(
+    SELECT hs.ks_code,ps.pos_code
+    FROM has_skill hs
+    LEFT JOIN person p on hs.pers_id = p.pers_id 
+    LEFT JOIN position_skills ps on hs.ks_code = ps.ks_code
+    LEFT JOIN position_cert pc on ps.pos_code = pc.pos_code
+    WHERE p.pers_id = 2
+    AND ps.prefer = 'R'
+    AND pc.prefer = 'R');
+    
 SELECT job_category_title,description
 FROM job_category jc
-LEFT JOIN position p on jc.core_skill = p.primary_skill);
+LEFT JOIN position p on jc.core_skill = p.primary_skill
+NATURAL JOIN pers_skills;
 
 /*14. Given a person’s identifier, find the job position with the highest pay rate for this person according to his/her skill
 possession.*/
-/*Using views again. I ***COULD*** use "WITH", but those things scare me.*/
-/*Set up the person's job skills*/
-CREATE VIEW AS qualified_job_skills(
+--I COMPILE BUT NEED INSERTS SO I CAN PRODUCE DATA
+CREATE VIEW qualified_job_skills AS(
                                     SELECT	pos_code, pos_title, pay_rate
                                     FROM	position
                                     WHERE NOT EXISTS (
-                                            SELECT	prefer      --AKA the ks_code
-                                            FROM	requires_ks
-                                            WHERE	req_ks.job_ID = jobs.job_ID
+                                            (SELECT	ks_code      
+                                            FROM	position_skills
+                                            WHERE	pos_code = 3)
                                             MINUS
-                                            SELECT	ks_code
+                                            (SELECT	ks_code
                                             FROM	has_skill
-                                            WHERE	per_ID = 99999)
+                                            WHERE	pers_id = 3)
+                                            )
                                     );
 /*Set up the wage cost for the company*/
-CREATE VIEW AS wage_cost(    
-                        SELECT		pos_code, pos_title, SUM(pay_rate * 1920)
+DROP VIEW wage_cost;
+CREATE VIEW wage_cost AS(    
+                        SELECT		pos_code, pos_title, (pay_rate * 1920) pay_rate
                         FROM		position
                         WHERE       pay_type = 'W' 
-                        GROUP BY    pos_code, pos_title
                         );
 /*Set up the salary_cost for the company*/    
-CREATE VIEW AS salary_cost(    
-                        SELECT		pos_code, pos_title, SUM(pay_rate * 1920)
+DROP VIEW salary_cost;
+CREATE VIEW salary_cost AS(    
+                        SELECT		pos_code, pos_title, pay_rate
                         FROM		position
                         WHERE       pay_type = 'S' 
-                        GROUP BY    pos_code, pos_title
                         );
 /*Final query*/  
---I'm not sure I got the final WHERE statement correct. Something looks wonky there.
 SELECT  pos_code, pos_title,pay_rate     
 FROM    qualified_job_skills NATURAL JOIN wage_cost NATURAL JOIN salary_cost 
 WHERE   pay_rate = (
@@ -319,28 +322,19 @@ WHERE   pay_rate = (
                     );
 
 /*15. Given a position code, list all the names along with the emails of the persons who are qualified for this position.*/
+--I COMPILE BUT DIDN'T PRODUCE DATA
 SELECT  first_name,mi,last_name,email
 FROM    person 
-/*This gives the person's qualifiers for the job*/
 WHERE EXISTS(
              (SELECT ks_code
-              FROM   has_skill NATURAL JOIN person
-              WHERE  has_skill.pers_id = person.pers_id)
+              FROM   has_skill hs
+              LEFT JOIN person p ON hs.pers_id = p.pers_id)
              MINUS
-             (SELECT prefer
-              FROM   requires_ks
-              WHERE  pos_code = 9999)
-            )
-/*This takes away anything that a person is missing from the job skills*/
---Did I overthink this? Do we even need this bit of the query?
-AND NOT EXISTS(
-               (SELECT    ks_code
-                FROM      cert NATURAL JOIN person)
-               MINUS
-               (SELECT    ks_code
-                FROM      requires_ks NATURAL JOIN position
-                WHERE     pos_code = 9999;)
-              );
+             (SELECT ks_code
+              FROM   position_skills
+              WHERE  pos_code = 3
+              AND prefer = 'R')
+            );
 
 /*16. When a company cannot find any qualified person for a job position, a secondary solution is to find a person who
 is almost qualified to the job position. Make a “missing-one” list that lists people who miss only one skill for a
