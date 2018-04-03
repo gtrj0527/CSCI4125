@@ -16,6 +16,7 @@ SELECT pers_id, num_missing FROM missing_skills WHERE num_missing = (SELECT MIN(
 /* Query 19 */
 SELECT pers_id, num_missing FROM missing_skills WHERE num_missing <= 1 AND pos_code = 10;
 
-/* Query 20, not working. */
-WITH pers_skill_missing AS (SELECT pers_id FROM missing_skills WHERE num_missing <= 1 AND pos_code = 10)
-SELECT DISTINCT position_skills.ks_code FROM position_skills JOIN has_skill ON position_skills.ks_code <> has_skill.ks_code NATURAL JOIN pers_skill_missing;
+/* Query 20 */
+CREATE VIEW missing_skills AS (select pers_id, pos_code, ks_code FROM person, position_skills MINUS select pers_id, pos_code, pos_skill FROM relevant_skills WHERE pos_skill IS NOT NULL);
+
+SELECT DISTINCT ks_code FROM missing_skills WHERE pos_code = 10;
