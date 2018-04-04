@@ -71,6 +71,77 @@ GROUP BY c.comp_id,comp_name
 ORDER BY pay_rate desc;*/
 
 /*4. Given a person?s identifier, find all the job positions this person is currently holding and worked in the past.*/
+drop view total_cost;
+drop view wage_cost;
+drop view salary_cost;
+
+create view salary_cost as (
+	select comp_id,comp_name, sum(pay_rate) AS cost
+	from company c
+	natural join position p
+	natural join works w
+	--left join position p on c.comp_id = p.comp_id
+	--left join works w on p.pos_code = w.pos_code
+	where pay_type = 'S' 
+    and end_date is null
+    group by comp_id, comp_name
+);
+/*This results in entries from comp_id 1111 and 1113.*/
+select * from salary_cost; 
+
+create view wage_cost as (
+	select comp_id,comp_name, sum(pay_rate*1920) AS cost 
+	from company c
+	natural join position p
+	natural join works w
+	--left join position p on c.comp_id = p.comp_id
+	--left join works w on p.pos_code = w.pos_code
+	where pay_type = 'W'
+    and end_date is null
+    group by comp_id, comp_name
+);
+
+/* This appears to work. */
+WITH costs AS (SELECT * FROM wage_cost UNION SELECT * FROM salary_cost)
+SELECT comp_id, comp_name, SUM(cost) FROM costs GROUP BY comp_id, comp_name;
+
+
+
+
+
+
+/*This results in entries from comp_id 1112 and 1113.*/
+
+select * from wage_cost;
+drop view total_cost;
+create view total_cost as (
+    select *
+    from salary_cost 
+    full outer join wage_cost
+    );
+select * from total_cost;
+--create view total_cost as (
+--    select sc.comp_id,sc.comp_name, sum(sal_cost + wg_cost) ttl_cost
+--    from salary_cost sc
+--    left join wage_cost wc on sc.comp_id = wc.comp_id
+--    group by sc.comp_id,sc.comp_name);
+
+/*This results in entries from comp_id 1111 (null) and 1113. They are not what I was expecting.*/    
+select * 
+from total_cost 
+order by ttl_cost desc;
+
+/*Option 2:*/
+select c.comp_id,comp_name,sum(pay_rate)
+from company c
+left join position p on c.comp_id = p.comp_id
+left join works w on p.pos_code = w.pos_code
+where (if pay_type = 'W' (pay_rate * 1920))
+group by c.comp_id,comp_name
+order by pay_rate desc;
+
+/*4. Given a person’s identifier, find all the job positions this person is currently holding and worked in the past.*/
+--I WORK!!!
 SELECT pers_id,first_name,mi,last_name,pos_code, pos_title,start_date,end_date
 FROM person 
 NATURAL JOIN position 
