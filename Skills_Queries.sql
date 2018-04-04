@@ -43,3 +43,11 @@ SELECT pers_id FROM unemployed_people JOIN works WHERE end_date IS NOT NULL AND 
 DROP VIEW company_employee_count;
 CREATE VIEW company_employee_count AS (SELECT comp_id, COUNT(*) AS empl_count FROM works NATURAL JOIN position WHERE end_date IS NULL GROUP BY comp_id);
 SELECT comp_name, empl_count FROM company NATURAL JOIN company_employee_count WHERE empl_count = (SELECT MAX(empl_count) FROM company_employee_count);
+-- company_labor_cost from Query 3
+SELECT comp_name, labor_cost FROM company NATURAL JOIN company_labor_cost WHERE labor_cost = (SELECT MAX(labor_cost) FROM company_labor_cost);
+
+/* Query 24 */
+CREATE VIEW sector_employee_count AS (SELECT primary_sector, SUM(empl_count) AS sec_empl_count FROM company NATURAL JOIN company_employee_count GROUP BY primary_sector);
+CREATE VIEW sector_labor_cost AS (SELECT primary_sector, SUM(labor_cost) AS sec_labor_cost FROM company NATURAL JOIN company_labor_cost GROUP BY primary_sector);
+SELECT primary_sector FROM sector_employee_count WHERE sec_empl_count = (SELECT MAX(sec_empl_count) FROM sector_employee_count);
+SELECT primary_sector FROM sector_labor_cost WHERE sec_labor_cost = (SELECT MAX(sec_labor_cost) FROM sector_labor_cost);
