@@ -1,6 +1,5 @@
 DROP TABLE works;
 DROP TABLE takes;
-DROP TABLE job_category;    
 DROP TABLE course_cert;
 DROP TABLE has_cert;
 DROP TABLE has_skill;
@@ -132,11 +131,9 @@ CREATE TABLE position(
     pos_title varchar(255) NOT NULL,
     emp_mode varchar(2) NOT NULL,        --FT: full time, PT: part time
     cat_code varchar (255) NOT NULL,
-    primary_skill varchar(10) NOT NULL,
     pay_rate number(10,2) NOT NULL,
     pay_type varchar(1),        --W: wage, S: salary
     CONSTRAINT pos_company_fk FOREIGN KEY (comp_id) REFERENCES company(comp_id),
-    CONSTRAINT primary_skill_fk FOREIGN KEY (primary_skill) REFERENCES know_skill(ks_code),
     CONSTRAINT pos_category_fk FOREIGN KEY (cat_code) REFERENCES job_category(cat_code)
 );
 
