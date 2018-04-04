@@ -18,8 +18,6 @@ AND pay_type = 'S'
 ORDER BY pay_rate DESC;
 
 /*3. List companies' labor cost (total salaries and wage rates by 1920 hours) in descending order.*/
---I'M STILL BROKEN BECAUSE GABY JUST CAN'T UNTANGLE THIS ONE. :(
-/*Option 1: Returns only one result.*/
 DROP VIEW total_cost;
 DROP VIEW wage_cost;
 DROP VIEW salary_cost;
@@ -55,20 +53,10 @@ WITH costs AS (
     UNION 
     SELECT * 
     FROM salary_cost)
-SELECT comp_id, comp_name, SUM(cost) 
+SELECT comp_id, comp_name, SUM(cost) AS labor_cost
 FROM costs 
 GROUP BY comp_id, comp_name
-ORDER BY cost DESC;
-
-
-/*Option 2: DOESN'T WORK*/
-/*SELECT c.comp_id,comp_name,SUM(pay_rate)
-FROM company c
-LEFT JOIN position p on c.comp_id = p.comp_id
-LEFT JOIN works w on p.pos_code = w.pos_code
-WHERE (IF pay_type = 'W' (pay_rate * 1920))
-GROUP BY c.comp_id,comp_name
-ORDER BY pay_rate desc;*/
+ORDER BY labor_cost DESC;
 
 /*4. Given a person?s identifier, find all the job positions this person is currently holding and worked in the past.*/
 SELECT pers_id,first_name,mi,last_name,pos_code, pos_title,start_date,end_date
@@ -114,7 +102,6 @@ LEFT JOIN position p ON ks.ks_code = p.primary_skill
 WHERE   n.nwcet_code = 'WDA';
 
 /*8. Given a person?s identifier, list a person?s missing knowledge/skills for a specific pos_code in a readable format.*/
---Even though has_skill isn't populated yet, I IZ WERKING!!!
 DROP VIEW missing_skill;
 CREATE VIEW missing_skill AS (
     (SELECT pers_id,first_name,mi,last_name,ks_code
@@ -490,10 +477,36 @@ WHERE empl_count =
                  FROM company_employee_count);
 
 /*Second query*/
+--Using company_labor_cost from Query 3
+SELECT comp_name, labor_cost 
+FROM company 
+NATURAL JOIN company_labor_cost 
+WHERE labor_cost = (
+                SELECT MAX(labor_cost) 
+                FROM company_labor_cost);
 
 /*24. Find out the job distribution among business sectors; find out the biggest sector in terms of number of employees
 and the total amount of salaries and wages paid to employees. (Two queries)*/
-
+CREATE VIEW sector_employee_count AS (
+    SELECT primary_sector, SUM(empl_count) AS sec_empl_count 
+    FROM company 
+    NATURAL JOIN company_employee_count 
+    GROUP BY primary_sector);
+CREATE VIEW sector_labor_cost AS (
+    SELECT primary_sector, SUM(labor_cost) AS sec_labor_cost 
+    FROM company 
+    NATURAL JOIN company_labor_cost 
+    GROUP BY primary_sector);
+SELECT primary_sector 
+FROM sector_employee_count 
+WHERE sec_empl_count = (
+                    SELECT MAX(sec_empl_count) 
+                    FROM sector_employee_count);
+SELECT primary_sector 
+FROM sector_labor_cost 
+WHERE sec_labor_cost = (
+                    SELECT MAX(sec_labor_cost) 
+                    FROM sector_labor_cost);
 
 /*25. Find out (1) the number of the people whose earnings increased, (2) the number of those whose earnings
 decreased, (3) the ratio of (# of earning increased : # of earning decreased), (4) the average earning changing rate
