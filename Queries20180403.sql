@@ -12,7 +12,7 @@ SELECT last_name,first_name,mi,pay_rate
 FROM works w
 JOIN person pers ON w.pers_id = pers.pers_id
 JOIN position p ON w.pos_code = p.pos_code
-WHERE comp_id = 1111
+WHERE comp_id = 1112
 AND end_date IS NULL
 AND pay_type = 'S'
 ORDER BY pay_rate DESC;
@@ -46,7 +46,6 @@ CREATE VIEW wage_cost AS (
     GROUP BY comp_id, comp_name
 );
 
-/* This appears to work. */
 WITH costs AS (
     SELECT * 
     FROM wage_cost 
@@ -497,11 +496,13 @@ CREATE VIEW sector_labor_cost AS (
     FROM company 
     NATURAL JOIN company_labor_cost 
     GROUP BY primary_sector);
+/*Query 1*/
 SELECT primary_sector 
 FROM sector_employee_count 
 WHERE sec_empl_count = (
                     SELECT MAX(sec_empl_count) 
                     FROM sector_employee_count);
+/*Query 2*/
 SELECT primary_sector 
 FROM sector_labor_cost 
 WHERE sec_labor_cost = (
@@ -514,7 +515,73 @@ of for the workers in a specific business sector (use attribute ?primary sector?
 change = the sum of a person?s current income ? the sum of the person?s earning when he/she was holding his/her
 the latest previous job position. For (4), only count the earning from the specified sector (companies? ?primary
 sector?)]*/
-
+CREATE VIEW position_yearly_pay AS (
+    SELECT pos_code, primary_sector, pay_rate AS yearly_pay 
+    FROM position 
+    NATURAL JOIN company 
+    WHERE pay_type = 'S' 
+    UNION 
+    SELECT pos_code, primary_sector, pay_rate*1920 AS pay_rate 
+    FROM position 
+    WHERE pay_type = 'W');
+-- (SELECT SYSDATE FROM DUAL) == NOW
+CREATE VIEW current_earnings_by_sector AS (
+    SELECT pers_id, primary_sector, SUM(yearly_pay) AS curr_earnings 
+    FROM person 
+    NATURAL JOIN works 
+    NATURAL JOIN position 
+    NATURAL JOIN position_yearly_pay 
+    WHERE end_date IS NULL 
+    OR end_date > (SELECT SYSDATE 
+                   FROM DUAL) 
+    GROUP BY pers_id, primary_sector);
+CREATE VIEW last_ended_job_date AS (
+    SELECT pers_id, MAX(end_date) AS last_end_date 
+    FROM person 
+    NATURAL JOIN works 
+    GROUP BY pers_id); 
+CREATE VIEW previous_earnings_by_sector AS (
+    SELECT pers_id, primary_sector, SUM(yearly_pay) AS old_earnings 
+    FROM person 
+    NATURAL JOIN works 
+    NATURAL JOIN position 
+    NATURAL JOIN position_yearly_pay 
+    NATURAL JOIN last_ended_job_date 
+    WHERE start_date > last_end_date 
+    AND (end_date IS NULL OR end_date > last_end_date) 
+    GROUP BY pers_id, primary_sector);
+CREATE VIEW pay_change_by_sector AS (
+    SELECT pers_id, primary_sector, current_earnings.earnings-previous_earnings AS pay_diff 
+    FROM current_earnings_by_sector 
+    NATURAL JOIN previous_earnings_by_sector 
+    GROUP BY pers_id);
+CREATE VIEW pay_change AS (
+    SELECT pers_id, SUM(pay_diff) AS diff 
+    FROM pay_change_by_sector 
+    GROUP BY pers_id);
+/* 25.1 */
+SELECT COUNT(*) AS increase_count 
+FROM pay_change 
+WHERE diff > 0;
+/* 25.2 */
+SELECT COUNT(*) AS decrease_count 
+FROM pay_change 
+WHERE diff < 0;
+/* 25.3 */
+WITH inc_count AS (
+        SELECT COUNT(*) AS increase_count 
+        FROM pay_change 
+        WHERE diff > 0),
+     dec_count AS (
+        SELECT COUNT(*) AS decrease_count 
+        FROM pay_change 
+        WHERE diff < 0)
+SELECT increase_count / decrease_count AS ratio 
+FROM increase_count, decrease_count;
+/* 25.4 */
+SELECT AVG(pay_diff) 
+FROM pay_change_by_sector 
+WHERE primary_sector = ?;
 
 /*BONUS: NOT REQUIRED FOR 05APR18 TURN IN*/
 /*26. Find the leaf-node job categories that have the most openings due to lack of qualified workers. If there are many

@@ -1,6 +1,5 @@
 DROP TABLE works;
 DROP TABLE takes;
-DROP TABLE job_category;    
 DROP TABLE course_cert;
 DROP TABLE has_cert;
 DROP TABLE has_skill;
@@ -10,6 +9,7 @@ DROP TABLE section;
 DROP TABLE position_skills;
 DROP TABLE position;
 DROP TABLE job_category;    
+DROP TABLE provides_skill;
 DROP TABLE know_skill;    
 DROP TABLE NWCET;
 DROP TABLE training_provider;
@@ -84,8 +84,9 @@ CREATE TABLE company(
 );
 
 CREATE TABLE company_specialty (
-    comp_id number NOT NULL PRIMARY KEY,
+    comp_id number NOT NULL,
     specialty varchar(8) NOT NULL, 
+    CONSTRAINT comp_spec_pk PRIMARY KEY (comp_id, specialty),
     CONSTRAINT comp_spec_fk FOREIGN KEY (comp_id) REFERENCES company(comp_id),
     CONSTRAINT specialty_fk FOREIGN KEY (specialty) REFERENCES GICS(primary_sector_code)
 );
@@ -111,6 +112,14 @@ CREATE TABLE know_skill(
     description varchar(255),
     training_level varchar(255) NOT NULL, -- Beginner, Intermediate, Advanced
     CONSTRAINT ks_nwcet_fk FOREIGN KEY (nwcet_code) REFERENCES NWCET (nwcet_code)
+);
+
+CREATE TABLE provides_skill (
+    ks_code varchar (255) NOT NULL,
+    c_code NUMBER NOT NULL,
+    CONSTRAINT provide_skill_pk PRIMARY KEY (ks_code, c_code),
+    CONSTRAINT skill_provide_fk FOREIGN KEY (ks_code) REFERENCES know_skill(ks_code),
+    CONSTRAINT course_provide_fk FOREIGN KEY (c_code) REFERENCES course(c_code)
 );
 
 CREATE TABLE job_category( -- AKA SOC
@@ -151,7 +160,6 @@ CREATE TABLE section (
     c_code number NOT NULL,
     sec_code number(10) NOT NULL,
     complete_date date NOT NULL, -- YYYY-MM-DD
-    --year number(4),
     offered_by number NOT NULL,
     format varchar(255),
     CONSTRAINT section_pk PRIMARY KEY (c_code, sec_code, complete_date), 
