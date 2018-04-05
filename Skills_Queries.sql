@@ -51,3 +51,22 @@ CREATE VIEW sector_employee_count AS (SELECT primary_sector, SUM(empl_count) AS 
 CREATE VIEW sector_labor_cost AS (SELECT primary_sector, SUM(labor_cost) AS sec_labor_cost FROM company NATURAL JOIN company_labor_cost GROUP BY primary_sector);
 SELECT primary_sector FROM sector_employee_count WHERE sec_empl_count = (SELECT MAX(sec_empl_count) FROM sector_employee_count);
 SELECT primary_sector FROM sector_labor_cost WHERE sec_labor_cost = (SELECT MAX(sec_labor_cost) FROM sector_labor_cost);
+
+/* Query 25 */
+CREATE VIEW position_yearly_pay AS (SELECT pos_code, primary_sector, pay_rate AS yearly_pay FROM position NATURAL JOIN company WHERE pay_type = 'S' UNION SELECT pos_code, primary_sector, pay_rate*1920 AS pay_rate FROM position WHERE pay_type = 'W');
+-- (SELECT SYSDATE FROM DUAL) == NOW
+CREATE VIEW current_earnings_by_sector AS (SELECT pers_id, primary_sector, SUM(yearly_pay) AS curr_earnings FROM person NATURAL JOIN works NATURAL JOIN position NATURAL JOIN position_yearly_pay WHERE end_date IS NULL OR end_date > (SELECT SYSDATE FROM DUAL) GROUP BY pers_id, primary_sector);
+CREATE VIEW last_ended_job_date AS (SELECT pers_id, MAX(end_date) AS last_end_date FROM person NATURAL JOIN works GROUP BY pers_id); 
+CREATE VIEW previous_earnings_by_sector AS (SELECT pers_id, primary_sector, SUM(yearly_pay) AS old_earnings FROM person NATURAL JOIN works NATURAL JOIN position NATURAL JOIN position_yearly_pay NATURAL JOIN last_ended_job_date WHERE start_date > last_end_date AND (end_date IS NULL OR end_date > last_end_date) GROUP BY pers_id, primary_sector);
+CREATE VIEW pay_change_by_sector AS (SELECT pers_id, primary_sector, current_earnings.earnings-previous_earnings AS pay_diff FROM current_earnings_by_sector NATURAL JOIN previous_earnings_by_sector GROUP BY pers_id);
+CREATE VIEW pay_change AS (SELECT pers_id, SUM(pay_diff) AS diff FROM pay_change_by_sector GROUP BY pers_id);
+/* 25.1 */
+SELECT COUNT(*) AS increase_count FROM pay_change WHERE diff > 0;
+/* 25.2 */
+SELECT COUNT(*) AS decrease_count FROM pay_change WHERE diff < 0;
+/* 25.3 */
+WITH inc_count AS (SELECT COUNT(*) AS increase_count FROM pay_change WHERE diff > 0),
+dec_count AS (SELECT COUNT(*) AS decrease_count FROM pay_change WHERE diff < 0)
+SELECT increase_count / decrease_count AS ratio FROM increase_count, decrease_count;
+/* 25.4 */
+SELECT AVG(pay_diff) FROM pay_change_by_sector WHERE primary_sector = ?;
