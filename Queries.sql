@@ -1,39 +1,48 @@
 /*1. List a specific company’s workers by names.*/
-SELECT pers_id,last_name,first_name,mi
+SELECT last_name,first_name,mi
 FROM works w
-JOIN person pers ON pers.person_id =w.pers_id
-JOIN position p ON p.pos_code=w.pos_code
-WHERE comp_id = '8932%' 
+JOIN person pers on w.pers_id = pers.pers_id
+JOIN position p on w.pos_code = p.pos_code
+WHERE comp_id = 89324987
 AND end_date IS NULL
 ORDER BY last_name;
 
 --We need to insert information into all the tables; this is just my brainstorming attempt at queries.
 /*2. List a specific company’s staff by salary in descending order.*/
-SELECT pers_id,last_name,first_name,mi
-FROM person NATURAL JOIN works NATURAL JOIN company NATURAL JOIN position
-WHERE comp_id = 012659 
-    AND end_date IS NULL 
-    AND pay_type = 'S'
+SELECT last_name,first_name,mi,pay_rate
+FROM works w
+JOIN person pers on w.pers_id = pers.pers_id
+JOIN position p on w.pos_code = p.pos_code
+WHERE comp_id = 89324987
+AND end_date IS NULL
+AND pay_type = 'S'
 ORDER BY pay_rate DESC;
 
 /*3. List companies’ labor cost (total salaries and wage rates by 1920 hours) in descending order.*/
+DROP VIEW comp_sal_exp;
 CREATE VIEW comp_sal_exp AS (
-    SELECT comp_id, comp_name, SUM(pay_rate) AS sal_cost
-    FROM   company NATURAL JOIN works NATURAL JOIN position
-    WHERE  pay_type = 'S'
-    GROUP BY comp_id;
+    SELECT c.comp_id, c.comp_name, SUM(p.pay_rate) AS sal_cost
+    FROM   company c
+    JOIN position p on c.comp_id = p.comp_id
+    WHERE  p.pay_type = 'S'
+    GROUP BY c.comp_id,c.comp_name);
+/*Test the view*/
+select * from comp_sal_exp;    
 --The wage rate is going to be more difficult because it's just for the PT emp.
 --How do we determine how much time they'll work? Here, I'm assuming 20 hr/wk.
 CREATE VIEW comp_wage_exp AS (
     SELECT comp_id, comp_name, SUM(pay_rate * (1920/2)) AS wage_cost
     FROM   company NATURAL JOIN works NATURAL JOIN position
     WHERE  pay_type = 'W'
-    GROUP BY comp_id;
-    
-SELECT comp_id, comp_name, SUM(sal_cost + wage_cost) AS total_cost
+    GROUP BY comp_id,comp_name);
+/*Test the view */    
+select * from comp_wage_exp;    
+
+/*Final query*/
+SELECT comp_id, comp_name, (SUM(sal_cost) + SUM(wage_cost)) AS total_cost
 FROM comp_sal_exp NATURAL JOIN comp_wage_exp
 GROUP BY comp_id, comp_name
-ORDER BY final_cost;
+ORDER BY final_cost DESC;
 
 /*4. Given a person’s identifier, find all the job positions this person is currently holding and worked in the past.*/
 SELECT pos_code, title

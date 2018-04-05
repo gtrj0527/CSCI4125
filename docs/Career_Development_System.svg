@@ -1,0 +1,1003 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'   width='2175' height='1235' viewBox='0 0 2175 1235' >
+  <script type='text/ecmascript'>
+  <![CDATA[
+  function hghl(el) { for ( var i in el ){ var elem = document.getElementById(el[i]); if ( elem != null ) elem.setAttribute('class','highlight');  }  }
+  function uhghl(el) { for ( var i in el ){ var elem = document.getElementById(el[i]); if ( elem != null ) elem.setAttribute('class','scene'); }  } 
+  ]]>
+  </script> 
+
+<style type='text/css'>
+  text                { fill:#000000; font-family: Tahoma, 'Trebuchet MS', Dialog; font-size:11px; }
+  a text:hover        { fill:#94025f; text-shadow: 0px 0px 6px #d0ce00; font-size:13px; }
+  text.highlight      { fill:#94025f; text-shadow: 0px 0px 4px #eac533; font-size:13px; }
+  text.colType        { fill:#b3b3b3; }
+  text.relName        { fill:#b09c7c; }
+  path                { stroke:#5c554f; stroke-width:1.15; fill:none; }
+  path                { stroke:#5c554f; stroke-width:1.15; fill:none;}
+  path.virtual        { stroke:#b7642d; }
+  path.logo           { fill:#fbeac0;fill-opacity:1;stroke-width:0.3;stroke:#222222; }
+  path.dotted         { stroke-dasharray:4,2; }
+  path.scene          { stroke-width:10; opacity:0;}
+  path.highlight      { stroke-width:5; stroke:#c1a662; opacity:0.6;}
+  rect.entity         { fill:#ffffff; stroke:#aaa; stroke-width:1;shape-rendering:crispEdges;filter:url(#shadow); }
+  line.delim          { stroke-width:1; shape-rendering:crispEdges; }
+  text.callout        { fill:#000000; font-family: Tahoma, 'Trebuchet MS', Dialog; font-size:12px; }
+  rect.callout        { fill:url(#calloutGradient); stroke:#bebdbd; stroke-width:0.5; filter: url(#shadow);}
+  rect.grp            { stroke:#b1b1b1; stroke-width:1.7; opacity:0.8; }
+  path.st0            { fill:#ececec;fill-opacity:1;stroke-width:0.6;stroke:#aaaaaa; }
+</style>
+<defs>
+  <pattern id='layoutBgA' patternUnits='userSpaceOnUse'  width='10' height='20' x='0' y='0' viewBox='0 0 5 10'>  
+     <line x1='-2' y1='1' x2='7' y2='10' stroke='#f3f3f3' stroke-width='.5'/>  
+     <line x1='-2' y1='6' x2='7' y2='15' stroke='#f3f3f3' stroke-width='.5'/>  
+     <line x1='-2' y1='-4' x2='7' y2='5' stroke='#f3f3f3' stroke-width='.5'/>  
+  </pattern>  
+  <radialGradient id='layoutBgB' gradientUnits='userSpaceOnUse' cx='50%' cy='50%' r='75%' fx='46%' fy='22%'>
+     <stop offset='0%' stop-opacity='.2' stop-color='#f5f5f5' />  
+     <stop offset='100%' stop-color='#efefef' />  
+  </radialGradient>
+  <pattern id='layoutBgTr' patternUnits='userSpaceOnUse'  width='300' height='300' x='0' y='0' viewBox='0 0 300 300'>  
+  <path class='st0' d='m 62.011835,91.267143 c 3.536475,3.175214 2.262669,8.705999 -1.637711,11.015197 -3.594697,5.8423 -6.34682,-2.892623 -9.715478,-4.653898 -5.609222,-2.838926 2.050802,-6.680123 4.77004,-8.319046 2.334696,-0.724067 4.935143,0.312302 6.583149,1.957747 z m -2.720492,2.538595 c -2.698397,-3.517732 -9.282815,1.269287 -3.69635,3.568637 2.765331,5.605665 7.052809,-0.56184 3.69635,-3.568637 z' />
+  <path class='st0' d='m 72.25864,84.624638 c 4.108046,3.143003 -0.737059,6.895259 -1.994918,8.323564 -3.586718,5.561143 -6.495079,-4.197379 -10.07759,-5.582178 -4.443422,-1.088878 1.349298,-7.249213 2.503526,-2.503449 2.464639,4.517161 2.304019,-3.70697 6.291113,-1.995914 1.280083,0.137865 2.410691,0.864819 3.277869,1.757977 z m -2.646109,2.323242 c -4.797162,-3.078383 -2.810517,6.305507 0.515161,1.990646 0.296432,-0.688582 0.01209,-1.493412 -0.515161,-1.990646 z' />
+  <path class='st0' d='m 78.230641,79.436735 c 4.142121,3.027466 -2.020102,10.435276 -3.450543,5.477315 3.306312,-5.248112 -9.186019,-2.220094 -5.805994,-8.77679 -0.544141,-3.93011 6.797826,-2.102227 3.386015,0.245477 -0.181085,2.915838 4.637371,1.019311 5.870522,3.053982 z' />
+  <path class='st0' d='m 82.744502,72.597397 c -4.901605,1.926521 1.146497,6.285555 2.559694,2.225783 6.21817,3.539297 -6.640186,8.416664 -7.590325,1.997457 -2.24365,-2.914883 4.026676,-10.148618 5.030631,-4.22324 z' />
+  <path class='st0' d='m 90.727458,64.259158 c 1.583987,1.690029 3.321317,3.2696 4.81267,5.026353 -2.535706,6.849794 -6.445583,-5.918773 -8.388458,-0.167017 0.782768,2.03426 5.877405,3.752079 2.670979,5.711199 -3.315119,1.519161 -5.782422,-5.157931 -8.858893,-6.780537 -4.229842,-1.139816 1.510134,-7.074128 2.586227,-2.385939 3.141198,5.495193 1.840537,-5.598295 7.177489,-1.404062 z' />
+  <path class='st0' d='m 99.622027,58.374253 c 1.493293,1.9548 -6.281936,7.024659 -0.885258,4.740447 0.386238,-4.434477 6.131941,-1.133173 2.175851,1.618005 -4.421491,6.12739 -13.666659,-3.151506 -7.058299,-7.136537 1.785129,-1.119329 4.348209,-0.743179 5.767706,0.778085 z m -2.900824,1.89746 c -3.608188,-2.208543 -2.280489,5.00803 -0.12563,0.329531 z' />
+  <path class='st0' d='m 115.18023,50.570441 c -1.61703,5.201678 -4.6204,-0.364502 -7.01598,-1.749619 -4.40977,2.122562 4.89641,4.913939 1.89606,7.018157 -2.48061,3.877635 -4.11404,-4.060614 -7.01192,-2.6391 -1.76318,3.107252 7.28394,6.252304 0.87346,7.876177 -1.74515,-2.956649 -9.055498,-5.610518 -3.950378,-8.66062 1.696478,1.897023 1.770418,-5.43503 5.347308,-3.072411 -0.44014,-5.474701 6.11995,-4.950882 7.7846,-0.815355 0.69076,0.682329 1.39587,1.351469 2.07685,2.042771 z' />
+  <path class='st0' d='m 120.54891,39.417125 c 2.50681,1.334124 4.80466,4.941837 0.75044,5.297362 -0.46414,1.89865 -5.25369,5.602652 -8.01742,1.815475 -3.87345,-2.809139 -0.0676,-7.603869 2.3036,-8.133924 1.6795,-3.853018 3.16703,-1.199465 4.96338,1.021087 z m -2.2464,2.175828 c -4.8049,-2.992167 -3.08987,6.380358 0.42374,2.036159 0.33052,-0.677508 0.12099,-1.525836 -0.42374,-2.036159 z' />
+  <path class='st0' d='m 128.50836,24.06821 c -5.10403,3.035506 3.20535,6.383175 5.05938,9.450276 -0.91853,2.95886 -4.06493,3.650723 -5.34691,0.265618 -2.25715,-2.089033 -4.65672,-6.948595 -7.07024,-2.584686 -4.71758,-3.764394 3.81217,-5.812054 5.12382,-9.226328 0.75738,0.677487 1.38637,1.498638 2.23389,2.095175 z' />
+  <path class='st0' d='m 137.14366,22.299812 c -3.09615,2.259885 0.71537,4.412454 1.99042,6.435866 -3.08975,5.080354 -5.91384,-2.98648 -8.92144,-4.094939 1.44369,-3.219573 3.3497,-1.335928 4.27156,-4.41058 0.97822,-0.894325 1.75044,1.871047 2.65946,2.069653 z' />
+  <path class='st0' d='m 136.85093,14.890174 c 2.31562,5.283511 -7.17975,1.771993 -1.29675,-0.475107 l 0.7108,0.08973 z m 4.867,5.317354 c 2.56912,1.439678 4.26517,4.725219 0.30678,5.233637 -1.56592,-3.098864 -9.51683,-5.749448 -3.64502,-8.633714 1.17746,0.325095 2.15375,2.591149 3.33824,3.400077 z' />
+  <path class='st0' d='m 149.95578,11.976423 c 2.50679,1.334142 4.80455,4.94192 0.75041,5.297394 -0.4641,1.898604 -5.25368,5.602645 -8.0174,1.81545 -3.87347,-2.80918 -0.0676,-7.603844 2.30366,-8.133968 1.67949,-3.8530525 3.16695,-1.1993573 4.96333,1.021124 z m -2.24641,2.175828 c -4.80489,-2.992177 -3.08986,6.380343 0.42374,2.036167 0.33055,-0.677518 0.121,-1.52585 -0.42374,-2.036167 z' />
+  <path class='st0' d='m 153.26135,7.538431 c 2.60497,1.5799548 6.03999,5.944272 1.08117,6.050232 -2.53319,-3.231828 -7.20316,-6.4304525 -8.84748,-9.4582682 1.89121,-2.8664883 3.78452,-2.247699 5.38514,0.8929426 0.78017,0.8503859 1.57195,1.6911437 2.38118,2.5150667 z' />
+  </pattern>  
+  <linearGradient id='groupUnderTitleLine' x1='0%' y1='0%' x2='100%' y2='0%' >
+          <stop offset='0%' stop-color='#999999' stop-opacity='0.7'/> 
+          <stop offset='100%' stop-color='#999999' stop-opacity='0' /> 
+   </linearGradient>
+  <radialGradient id='calloutGradient' cx='25%' cy='20%' r='80%' fx='10%' fy='10%'>
+	   <stop offset='0%' stop-color='#ffffff' />
+    <stop offset='100%' stop-color='#f8f6d1' />
+  </radialGradient>
+  <filter id='shadow' width='120%' height='120%'> 
+      <feOffset result='offOut' in='SourceGraphic' dx='1' dy='1' /> 
+      <feColorMatrix result='matrixOut' in='offOut' type='matrix' 
+      values='0.1 0 0 0 0 0 0.4 0 0 0 0 0 0.6 0 0 0 0 0 0.3 0' /> 
+      <feGaussianBlur result='blurOut' in='matrixOut' stdDeviation='3' /> 
+      <feBlend in='SourceGraphic' in2='blurOut' mode='normal' /> 
+    </filter> 
+  <filter id='fkShadow' height='130%'> 
+    <feGaussianBlur in='SourceAlpha' stdDeviation='1.5'/> <!-- stdDeviation is how much to blur -->
+    <feOffset dx='1.2' dy='1.2' result='offsetblur'/> <!-- how much to offset -->
+    <feMerge>
+    <feMergeNode/> <!-- this contains the offset blurred image -->
+    <feMergeNode in='SourceGraphic'/> <!-- this contains the element that the filter is applied to -->
+    </feMerge>
+  </filter>
+  <radialGradient id='legendGradient' fx='5%' fy='5%' r='75%' spreadMethod='pad'>
+          <stop offset='0%' stop-color='#eefbf2' stop-opacity='1'/> 
+          <stop offset='100%' stop-color='#cff9cb' stop-opacity='1' /> 
+   </radialGradient>
+  <symbol id='calloutArrowDown' overflow='visible' >
+      <path d='M 0,0 L 7,11 L 15,0 z' style='fill:#f8f6d1;stroke:none; filter: url(#shadow);' />
+      <path d='M 0,0 L 7,11 L 15,0' style='stroke:#bebdbd; stroke-width:0.5;' />
+  </symbol>
+  <symbol id='calloutArrowUp' overflow='visible' >
+      <path d='M 0,15 L 7,3 L 15,15 z' style='fill:#ffffff; stroke:none; filter: url(#shadow);' />
+      <path d='M 0,15 L 7,3 L 15,15' style='stroke:#bebdbd; stroke-width:0.5;' />
+  </symbol>
+  <symbol id='pk' overflow='visible' >
+    <g transform='scale(0.99)'>
+     <path style='fill:#fffa7d;stroke:#765f03;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;'
+        d='M 9.3678877,3.5695485 C 9.1030218,3.2729386 9.0796382,2.7628519 9.3396185,2.4517097 9.5449651,2.1956495 9.9040386,2.0980533 10.199638,2.2169415 10.533525,2.3415459 10.775153,2.706942 10.750675,3.0842709 10.737029,3.3980003 10.541153,3.699122 10.258248,3.8066067 9.966649,3.9250429 9.6169668,3.8418805 9.4008073,3.6062324 9.3894892,3.5943518 9.3785264,3.582104 9.3678886,3.5695487 z M 11.226617,6.9916004 C 11.888137,6.3548946 12.293488,5.4172188 12.311087,4.442353 12.378144,2.7379364 11.248678,1.0541269 9.7322318,0.44767357 8.3887112,-0.1280313 6.7865012,0.26822889 5.8918395,1.4007929 5.080823,2.3839145 4.9336815,3.8452096 5.3635544,5.101615 L 4.3670905,5.315913 C 4.0664984,5.3682645 4.0967703,5.6316724 4.2574957,5.8208829 L 4.9124,6.5655244 4.1543436,7.2512357 3.2136002,7.2163506 3.1674775,8.5586827 2.0406832,8.5086512 1.5965306,8.9299953 1.5471661,10.179833 0.75616674,10.195223 0.2112857,10.758575 0.15354288,11.735988 0.07199052,12.765553 c 0.36440953,0.238225 0.79006967,0.195492 1.44938278,-0.02675 L 6.3033562,8.1282037 6.8217102,8.6765688 C 6.9985465,8.8799427 7.3003699,8.7497574 7.358381,8.5016252 L 7.4938877,7.5084164 c 0.8537488,0.3985387 1.8303125,0.4711541 2.6851793,0.1427713 0.393927,-0.1407258 0.746858,-0.3701772 1.04755,-0.6595873 z'/>
+     <path d='M 6.8014948,6.3102123 0.15369063,13.024481 0.21560535,12.141962 6.0062342,6.2683782 z'
+        style='fill:#ffe5a5;fill-opacity:1;stroke:#854e31;stroke-width:0.06912433;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:3.00300009'/>
+    </g>
+  </symbol>
+  <symbol id='dist' overflow='visible' >
+    <g transform='scale(0.99)'>
+      <path style='fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;' d='M 0.177,11.431 12.28,11.449'/>
+      <path style='fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;' d='m 6.124,3.954 0.066,7.154 v 0'/>
+      <rect width='11.78' height='3.40' x='0.40' y='0.44' style='fill:#fffa7d;stroke:#765f03;stroke-width:0.6;' ry='0.83'/>
+      <rect width='11.78' height='3.40' x='0.40' y='5.609' style='fill:#fffa7d;stroke:#765f03;stroke-width:0.6;' ry='0.832'/>
+    </g>
+  </symbol>
+  <symbol id='unq' overflow='visible' >
+    <g transform='scale(0.99)'>
+      <rect style='fill:#fbea8e;stroke:#7e4d31;stroke-width:0.71934468;stroke-linecap:round;stroke-linejoin:round;'
+         width='2.29' height='8.43' x='7.48' y='-0.76' ry='1.14' transform='matrix(0.701,0.713,-0.727,0.685,0,0)' />
+      <path style='fill:white;stroke:#858585;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;'
+         d='m 26.04,8.64 a 4.13,4.13 0 1 1 -8.26,0 4.13,4.13 0 1 1 8.26,0 z'
+         transform='matrix(1.025,0,0,0.987,-14.690,-3.862)' />
+      <text x='5.8' y='7.4' style='font-size:7px;fill:#8a8a8a;'>1</text>
+    </g>
+  </symbol>
+  <symbol id='idx' overflow='visible' >
+    <g transform='scale(0.99)'>
+      <rect style='fill:#fbea8e;stroke:#7e4d31;stroke-width:0.71934468;stroke-linecap:round;stroke-linejoin:round;'
+         width='2.29' height='8.43' x='7.48' y='-0.76' ry='1.14' transform='matrix(0.701,0.713,-0.727,0.685,0,0)' />
+      <path style='fill:white;stroke:#858585;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;'
+         d='m 26.04,8.64 a 4.13,4.13 0 1 1 -8.26,0 4.13,4.13 0 1 1 8.26,0 z'
+         transform='matrix(1.025,0,0,0.987,-14.690,-3.862)' />
+    </g>
+  </symbol>
+  <symbol id='fk' overflow='visible' >
+    <g transform='scale(0.87)'>
+      <path style='fill:#f3e1b7;stroke:#7e471f;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+      d='M 12.48,0.33 7.07,0.89 9.067,2.974 0.329,11.731 1.073,12.597 9.811,3.841 11.77,5.78 z' />
+    </g>
+  </symbol>
+  <symbol id='ref' overflow='visible' >
+    <g transform='scale(0.87)'>
+      <path style='fill:#f3e1b7;stroke:#7e471f;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0.10,12.70 5.31,12.15 3.40,10.06 11.82,1.32 11.11,0.45 2.68,9.19 0.80,7.24 z'/>
+    </g>
+  </symbol>
+  <symbol id='flag0' overflow='visible' >
+    <g transform='scale(0.92)'>
+      <path style='fill:#b7d0f6;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+    </g>
+  </symbol>
+  <symbol id='flag1' overflow='visible' >
+    <g transform='scale(0.92)'>
+      <path style='fill:#f4a393;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+    </g>
+  </symbol>
+  <symbol id='flag2' overflow='visible' >
+    <g transform='scale(0.92)'>
+      <path style='fill:#77ec8b;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+    </g>
+  </symbol>
+  <symbol id='nn' overflow='visible' >
+  <path style='stroke:#9b3e50;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0,0 3,3 M 0,3 3,0 z'/>
+  </symbol>
+  <symbol id='view' overflow='visible' >
+    <g transform='scale(0.99)'>
+     <line x1='12' y1='6' x2='19' y2='0' stroke='black' stroke-width='0.5' />
+     <line x1='0' y1='6' x2='7' y2='0' stroke='black' stroke-width='0.5' />
+     <circle cx='3' cy='6' r='3' fill='#f9ebbc' stroke='black' stroke-width='0.5'/>
+     <circle cx='10' cy='6' r='3' fill='#f9ebbc' stroke='black' stroke-width='0.5'/>
+    </g>
+  </symbol>
+  <marker id='arrow01' viewBox='0 0 15.00 15.00' refX='7.50' refY='7.50' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='15.00' orient='auto'>
+    <path d='M 0.00,7.50 L 15.00,7.50 z' />
+    <circle cx='12.50' cy='7.50' r='2.50' style='fill:#5e554d;' />
+<text x='5.00' y='7.50' style='font-size:9px;fill:#5e554d;'>Z</text>  </marker>
+  <marker id='arrow1' viewBox='0 0 15.00 15.00' refX='7.50' refY='7.50' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='15.00' orient='auto'>
+    <path d='M 0.00,7.50 L 15.00,7.50 z' />
+    <circle cx='12.50' cy='7.50' r='2.50' style='fill:#5e554d;' />
+<text x='5.00' y='7.50' style='font-size:9px;fill:#5e554d;'>1</text>  </marker>
+  <marker id='foot01' viewBox='0 0 15.00 15.00' refX='7.50' refY='7.50' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='15.00' orient='auto'>
+    <path d='M 0.00,7.50 L 15.00,7.50 z' />
+    <circle cx='2.50' cy='7.50' r='2.50' style='fill:#5e554d;' />
+<text x='5.00' y='7.50' style='font-size:9px;fill:#5e554d;'>Z</text>  </marker>
+  <marker id='foot0p' viewBox='0 0 15.00 15.00' refX='7.50' refY='7.50' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='15.00' orient='auto'>
+    <path d='M 0.00,7.50 L 15.00,7.50 z' />
+    <circle cx='2.50' cy='7.50' r='2.50' style='fill:#5e554d;' />
+  </marker>
+  <marker id='foot1' viewBox='0 0 15.00 15.00' refX='7.50' refY='7.50' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='15.00' orient='auto'>
+    <path d='M 0.00,7.50 L 15.00,7.50 z' />
+    <circle cx='2.50' cy='7.50' r='2.50' style='fill:#5e554d;' />
+<text x='5.00' y='7.50' style='font-size:9px;fill:#5e554d;'>1</text>  </marker>
+  <marker id='foot1p' viewBox='0 0 15.00 15.00' refX='7.50' refY='7.50' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='15.00' orient='auto'>
+    <path d='M 0.00,7.50 L 15.00,7.50 z' />
+    <circle cx='2.50' cy='7.50' r='2.50' style='fill:#5e554d;' />
+<text x='5.00' y='7.50' style='font-size:9px;fill:#5e554d;'>P</text>  </marker>
+  <linearGradient id='tbg_c8f5bf' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#e4f8e0' /> 
+     <stop offset='100%' stop-color='#c9eec1' /> 
+  </linearGradient>
+  <linearGradient id='tbg_bfbff5' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#e0e0f8' /> 
+     <stop offset='100%' stop-color='#c1c1ee' /> 
+  </linearGradient>
+  <linearGradient id='tbg_bfd4f5' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#e0e9f8' /> 
+     <stop offset='100%' stop-color='#c1d3ee' /> 
+  </linearGradient>
+  <linearGradient id='tbg_f5ddbf' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#f8ede0' /> 
+     <stop offset='100%' stop-color='#eedac1' /> 
+  </linearGradient>
+</defs>
+
+<!-- == Desktop == -->
+<rect x='1' y='1' width='2173' height='1233' rx='7' ry='7' style='fill:url(#layoutBgB); stroke:#777777; stroke-width:0.5;' />
+<rect x='1' y='1' width='2173' height='1233' rx='7' ry='7' style='fill:url(#layoutBgA); stroke:#777777; stroke-width:0.5;' />
+<rect x='1' y='1' width='2173' height='1233' rx='7' ry='7' style='fill:url(#layoutBgTr);' />
+
+<!-- == Legend == -->
+<g transform='translate(10,10)'>
+  <rect x='10' y='10' width='330' height='56' rx='6' ry='6' style='fill:url(#legendGradient);filter:url(#shadow);'/> 
+  <text x='20' y='43'>Default Layout</text> 
+  <text x='20' y='57' style='fill:#aaaaaa; font-size:11px;'><tspan>Move the mouse over tables &amp; columns to read the comments.</tspan></text> 
+<a xlink:href='https://www.dbschema.com'> <path class='logo' d='m 32.309685,20.963194 c 0.411708,4.732616 -4.298055,7.925636 -8.723583,6.970196 -6.616967,1.8448 -2.656457,-6.434594 -3.911969,-10.01566 -2.15469,-5.89407 6.06247,-3.508505 9.167655,-2.863689 2.199228,1.054873 3.389343,3.582089 3.467897,5.909153 z m -3.720955,0.01451 c 0.434195,-4.414565 -7.644142,-5.37533 -5.137307,0.107342 -1.812268,5.992146 5.532698,4.379388 5.137307,-0.107342 z' /> <path class='logo' d='m 44.329732,23.050637 c 0.850982,5.097305 -5.250434,4.558924 -7.144836,4.752415 -6.418993,1.64391 -1.872992,-7.49274 -3.541914,-10.942842 -2.499646,-3.817859 5.939283,-4.402698 3.538545,-0.13612 -1.287874,4.989123 4.215411,-1.154796 5.956717,2.809584 0.840273,0.970849 1.168829,2.272413 1.191488,3.516963 z m -3.519477,-0.09299 c -1.398216,-5.518069 -6.361061,2.717467 -0.984368,1.810718 0.686994,-0.30388 1.029454,-1.087638 0.984368,-1.810718 z' /> <path class='logo' d='m 52.234961,23.301163 c 0.954818,5.035675 -8.606408,6.284861 -6.262292,1.674914 6.000358,-1.604717 -5.188764,-7.870044 1.75972,-10.384908 2.288682,-3.253567 6.399287,3.075831 2.304111,2.48058 -2.124941,2.016587 2.688777,3.89858 2.198472,6.229403 z' /> <path class='logo' d='m 60.204336,21.349224 c -4.894917,-1.916474 -3.458707,5.391212 0.347494,3.37231 2.120589,6.821713 -10.599623,1.664746 -6.906229,-3.691132 0.354172,-3.663246 9.875349,-4.711252 6.558735,0.318822 z' /> <path class='logo' d='m 71.730617,20.654299 c 0.0013,2.316285 0.190131,4.655698 0.07825,6.958009 -6.532419,3.303565 -0.660423,-8.722256 -6.009639,-5.821653 -0.818815,2.024533 1.726403,6.746337 -1.95327,6.005484 -3.458346,-1.137537 -0.696275,-7.713407 -1.833252,-10.994208 -2.308916,-3.710131 5.93704,-4.164951 3.518609,0.0063 -1.462376,6.166445 5.169629,-2.857523 6.19931,3.846079 z' /> <path class='logo' d='m 82.245738,22.378957 c -0.24581,2.448954 -9.386766,0.8867 -3.885979,2.877055 3.312576,-2.99157 5.250902,3.334514 0.482647,2.665545 -7.415384,1.492275 -7.823196,-11.597641 -0.275476,-10.032117 2.068161,0.391458 3.682204,2.408824 3.678808,4.489517 z m -3.414436,-0.578473 c -1.124703,-4.072004 -5.087405,2.125488 -0.316922,0.156453 z' /> <path class='logo' d='m 98.936899,27.222794 c -4.73541,2.718339 -3.1239,-3.406557 -3.92611,-6.050494 -4.66985,-1.438471 0.21621,6.932413 -3.41219,6.438039 -4.46096,1.160054 -0.22824,-5.774711 -3.31526,-6.700429 -3.410722,1.082173 1.04451,9.536575 -4.745091,6.372895 0.746632,-3.355214 -2.776394,-10.269232 3.034971,-9.038963 -0.058,2.544602 5.00686,-2.785359 6.00342,1.37844 3.42021,-4.316316 7.851251,0.524966 6.24018,4.690538 0.0379,0.969988 0.0954,1.940046 0.12008,2.909974 z' /> <path class='logo' d='m 110.47859,22.686058 c 0.91826,2.682088 0.13016,6.890551 -3.0725,4.397004 -1.63641,1.077877 -7.664291,0.541832 -7.09365,-4.114836 -0.907891,-4.692933 5.14729,-5.625578 7.24058,-4.40354 3.85932,-1.686263 3.13176,1.271515 2.92557,4.121372 z m -3.12695,0.0704 c -1.46278,-5.460062 -6.61615,2.5826 -1.08221,1.782003 0.70431,-0.272594 1.13111,-1.037444 1.08221,-1.782003 z' /> </a>
+</g>
+
+<g transform='translate(0,110)'>
+<!-- == Group 'POSITION' == -->
+<rect class='grp' style='fill:#f7f3ec;stroke:#e0dace' x='29' y='40' width='887' height='365' />
+<text x='40' y='55'>POSITION</text>
+<rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='40' y='58' width='865' height='2' />
+
+<!-- == Group 'PERSON' == -->
+<rect class='grp' style='fill:#eef7ec;stroke:#d2e0ce' x='989' y='190' width='497' height='425' />
+<text x='1000' y='205'>PERSON</text>
+<rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='1000' y='208' width='475' height='2' />
+
+<!-- == Group 'COURSE' == -->
+<rect class='grp' style='fill:#ecf0f7;stroke:#ced5e0' x='1724' y='40' width='317' height='470' />
+<text x='1735' y='55'>COURSE</text>
+<rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='1735' y='58' width='295' height='2' />
+
+<!-- == Group 'COMPANY' == -->
+<rect class='grp' style='fill:#ececf7;stroke:#cecee0' x='1724' y='685' width='422' height='380' />
+<text x='1735' y='700'>COMPANY</text>
+<rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='1735' y='703' width='400' height='2' />
+
+<!-- == Fk 'CERT_CERT_ISSUED_BY' == -->
+<path id='CERT_CERT_ISSUED_BY'  onmouseover="hghl(['CERT_CERT_ISSUED_BY','TBOURG.CERT.ISSUED_BY','TBOURG.TRAINING_PROVIDER.COMP_ID'])" onmouseout="uhghl(['CERT_CERT_ISSUED_BY','TBOURG.CERT.ISSUED_BY','TBOURG.TRAINING_PROVIDER.COMP_ID'])" transform='translate(7,0)' class='scene' d='M 1470 285 L 1687,285 Q 1695,285 1695,292 L 1695,465' >
+	<title>Fk CERT_ISSUED_BY
+CERT ref TRAINING_PROVIDER ( ISSUED_BY -&gt; COMP_ID )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 1470 285 L 1687,285 Q 1695,285 1695,292 L 1695,465' ></path>
+<text x='1477' y='280' transform='rotate(0 1477,280)' title='Fk CERT_ISSUED_BY
+CERT ref TRAINING_PROVIDER ( ISSUED_BY -&gt; COMP_ID )' class='relName' style='fill:#7da774'>ISSUED_BY</text>
+<!-- == Fk 'COMPANY_SECTOR_FK' == -->
+<path id='COMPANY_SECTOR_FK'  onmouseover="hghl(['COMPANY_SECTOR_FK','TBOURG.COMPANY.PRIMARY_SECTOR_CODE','TBOURG.GICS.PRIMARY_SECTOR_CODE'])" onmouseout="uhghl(['COMPANY_SECTOR_FK','TBOURG.COMPANY.PRIMARY_SECTOR_CODE','TBOURG.GICS.PRIMARY_SECTOR_CODE'])" transform='translate(7,0)' class='scene' d='M 1905 855 L 2137,855 Q 2145,855 2145,847 L 2145,840' >
+	<title>Fk SECTOR_FK
+COMPANY ref GICS ( PRIMARY_SECTOR_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 1905 855 L 2137,855 Q 2145,855 2145,847 L 2145,840' ></path>
+<text x='1912' y='850' transform='rotate(0 1912,850)' title='Fk SECTOR_FK
+COMPANY ref GICS ( PRIMARY_SECTOR_CODE )' class='relName' style='fill:#7474a7'>PRIMARY_SECTOR_CODE</text>
+<!-- == Fk 'COMPANY_SPECIALTY_COMP_SPEC_FK' == -->
+<path id='COMPANY_SPECIALTY_COMP_SPEC_FK'  onmouseover="hghl(['COMPANY_SPECIALTY_COMP_SPEC_FK','TBOURG.COMPANY_SPECIALTY.COMP_ID','TBOURG.COMPANY.COMP_ID'])" onmouseout="uhghl(['COMPANY_SPECIALTY_COMP_SPEC_FK','TBOURG.COMPANY_SPECIALTY.COMP_ID','TBOURG.COMPANY.COMP_ID'])" transform='translate(7,0)' class='scene' d='M 1950 1005 L 1927,1005 Q 1920,1005 1920,997 L 1920,757 Q 1920,750 1912,750 L 1905,750' >
+	<title>Fk COMP_SPEC_FK
+COMPANY_SPECIALTY ref COMPANY ( COMP_ID )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1950 1005 L 1927,1005 Q 1920,1005 1920,997 L 1920,757 Q 1920,750 1912,750 L 1905,750' ></path>
+<text x='1911' y='1000' transform='rotate(0 1911,1000)' title='Fk COMP_SPEC_FK
+COMPANY_SPECIALTY ref COMPANY ( COMP_ID )' class='relName' style='fill:#7474a7'>COMP_ID</text>
+<!-- == Fk 'COMPANY_SPECIALTY_SPECIALTY_FK' == -->
+<path id='COMPANY_SPECIALTY_SPECIALTY_FK'  onmouseover="hghl(['COMPANY_SPECIALTY_SPECIALTY_FK','TBOURG.COMPANY_SPECIALTY.SPECIALTY','TBOURG.GICS.PRIMARY_SECTOR_CODE'])" onmouseout="uhghl(['COMPANY_SPECIALTY_SPECIALTY_FK','TBOURG.COMPANY_SPECIALTY.SPECIALTY','TBOURG.GICS.PRIMARY_SECTOR_CODE'])" transform='translate(7,0)' class='scene' d='M 2085 1020 L 2137,1020 Q 2145,1020 2145,1012 L 2145,757 Q 2145,750 2137,750 L 2130,750' >
+	<title>Fk SPECIALTY_FK
+COMPANY_SPECIALTY ref GICS ( SPECIALTY -&gt; PRIMARY_SECTOR_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 2085 1020 L 2137,1020 Q 2145,1020 2145,1012 L 2145,757 Q 2145,750 2137,750 L 2130,750' ></path>
+<text x='2092' y='1015' transform='rotate(0 2092,1015)' title='Fk SPECIALTY_FK
+COMPANY_SPECIALTY ref GICS ( SPECIALTY -&gt; PRIMARY_SECTOR_CODE )' class='relName' style='fill:#7474a7'>SPECIALTY</text>
+<!-- == Fk 'COURSE_CERT_CERT_REQUIRES_PK' == -->
+<path id='COURSE_CERT_CERT_REQUIRES_PK'  onmouseover="hghl(['COURSE_CERT_CERT_REQUIRES_PK','TBOURG.COURSE_CERT.CERT_CODE','TBOURG.CERT.CERT_CODE'])" onmouseout="uhghl(['COURSE_CERT_CERT_REQUIRES_PK','TBOURG.COURSE_CERT.CERT_CODE','TBOURG.CERT.CERT_CODE'])" transform='translate(7,0)' class='scene' d='M 1905 315 L 1867,315 Q 1860,315 1860,307 L 1860,262 Q 1860,255 1852,255 L 1470,255' >
+	<title>Fk CERT_REQUIRES_PK
+COURSE_CERT ref CERT ( CERT_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1905 315 L 1867,315 Q 1860,315 1860,307 L 1860,262 Q 1860,255 1852,255 L 1470,255' ></path>
+<text x='1852' y='310' transform='rotate(0 1852,310)' title='Fk CERT_REQUIRES_PK
+COURSE_CERT ref CERT ( CERT_CODE )' class='relName' style='fill:#7488a7'>CERT_CODE</text>
+<!-- == Fk 'COURSE_CERT_COURSE_REQUIRED_PK' == -->
+<path id='COURSE_CERT_COURSE_REQUIRED_PK'  onmouseover="hghl(['COURSE_CERT_COURSE_REQUIRED_PK','TBOURG.COURSE_CERT.C_CODE','TBOURG.COURSE.C_CODE'])" onmouseout="uhghl(['COURSE_CERT_COURSE_REQUIRED_PK','TBOURG.COURSE_CERT.C_CODE','TBOURG.COURSE.C_CODE'])" transform='translate(7,0)' class='scene' d='M 2025 330 L 2032,330 Q 2040,330 2040,322 L 2040,172 Q 2040,165 2032,165 L 1882,165 Q 1875,165 1875,157 L 1875,112 Q 1875,105 1867,105 L 1860,105' >
+	<title>Fk COURSE_REQUIRED_PK
+COURSE_CERT ref COURSE ( C_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 2025 330 L 2032,330 Q 2040,330 2040,322 L 2040,172 Q 2040,165 2032,165 L 1882,165 Q 1875,165 1875,157 L 1875,112 Q 1875,105 1867,105 L 1860,105' ></path>
+<text x='2032' y='325' transform='rotate(0 2032,325)' title='Fk COURSE_REQUIRED_PK
+COURSE_CERT ref COURSE ( C_CODE )' class='relName' style='fill:#7488a7'>C_CODE</text>
+<!-- == Fk 'GICS_PARENT_GICS_SECTOR_FK' == -->
+<path id='GICS_PARENT_GICS_SECTOR_FK'  onmouseover="hghl(['GICS_PARENT_GICS_SECTOR_FK','TBOURG.GICS.PARENT_SECTOR_CODE','TBOURG.GICS.PRIMARY_SECTOR_CODE'])" onmouseout="uhghl(['GICS_PARENT_GICS_SECTOR_FK','TBOURG.GICS.PARENT_SECTOR_CODE','TBOURG.GICS.PRIMARY_SECTOR_CODE'])" transform='translate(7,0)' class='scene' d='M 2130 795 L 2137,795 Q 2145,795 2145,787 L 2145,780' >
+	<title>Fk PARENT_GICS_SECTOR_FK
+GICS ref GICS ( PARENT_SECTOR_CODE -&gt; PRIMARY_SECTOR_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot0p)'     d='M 2130 795 L 2137,795 Q 2145,795 2145,787 L 2145,780' ></path>
+<text x='2137' y='790' transform='rotate(0 2137,790)' title='Fk PARENT_GICS_SECTOR_FK
+GICS ref GICS ( PARENT_SECTOR_CODE -&gt; PRIMARY_SECTOR_CODE )' class='relName' style='fill:#7474a7'>PARENT_SECTOR_CODE</text>
+<!-- == Fk 'HAS_SKILL_KS_SKILL_FK' == -->
+<path id='HAS_SKILL_KS_SKILL_FK'  onmouseover="hghl(['HAS_SKILL_KS_SKILL_FK','TBOURG.HAS_SKILL.KS_CODE','TBOURG.KNOW_SKILL.KS_CODE'])" onmouseout="uhghl(['HAS_SKILL_KS_SKILL_FK','TBOURG.HAS_SKILL.KS_CODE','TBOURG.KNOW_SKILL.KS_CODE'])" transform='translate(7,0)' class='scene' d='M 1185 540 L 922,540 Q 915,540 915,532 L 915,112 Q 915,105 907,105 L 900,105' >
+	<title>Fk KS_SKILL_FK
+HAS_SKILL ref KNOW_SKILL ( KS_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1185 540 L 922,540 Q 915,540 915,532 L 915,112 Q 915,105 907,105 L 900,105' ></path>
+<text x='1146' y='535' transform='rotate(0 1146,535)' title='Fk KS_SKILL_FK
+HAS_SKILL ref KNOW_SKILL ( KS_CODE )' class='relName' style='fill:#7da774'>KS_CODE</text>
+<!-- == Fk 'HAS_SKILL_PERS_SKILL_FK' == -->
+<path id='HAS_SKILL_PERS_SKILL_FK'  onmouseover="hghl(['HAS_SKILL_PERS_SKILL_FK','TBOURG.HAS_SKILL.PERS_ID','TBOURG.PERSON.PERS_ID'])" onmouseout="uhghl(['HAS_SKILL_PERS_SKILL_FK','TBOURG.HAS_SKILL.PERS_ID','TBOURG.PERSON.PERS_ID'])" transform='translate(7,0)' class='scene' d='M 1290 525 L 1312,525 Q 1320,525 1320,517 L 1320,375' >
+	<title>Fk PERS_SKILL_FK
+HAS_SKILL ref PERSON ( PERS_ID )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 1290 525 L 1312,525 Q 1320,525 1320,517 L 1320,375' ></path>
+<text x='1297' y='520' transform='rotate(0 1297,520)' title='Fk PERS_SKILL_FK
+HAS_SKILL ref PERSON ( PERS_ID )' class='relName' style='fill:#7da774'>PERS_ID</text>
+<!-- == Fk 'JOB_CATEGORY_PARENT_CAT_FK' == -->
+<path id='JOB_CATEGORY_PARENT_CAT_FK'  onmouseover="hghl(['JOB_CATEGORY_PARENT_CAT_FK','TBOURG.JOB_CATEGORY.PARENT_CAT_CODE','TBOURG.JOB_CATEGORY.CAT_CODE'])" onmouseout="uhghl(['JOB_CATEGORY_PARENT_CAT_FK','TBOURG.JOB_CATEGORY.PARENT_CAT_CODE','TBOURG.JOB_CATEGORY.CAT_CODE'])" transform='translate(7,0)' class='scene' d='M 345 120 L 337,120 Q 330,120 330,112 L 330,112 Q 330,105 337,105 L 345,105' >
+	<title>Fk PARENT_CAT_FK
+JOB_CATEGORY ref JOB_CATEGORY ( PARENT_CAT_CODE -&gt; CAT_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot0p)' marker-end='url(#arrow1)'    d='M 345 120 L 337,120 Q 330,120 330,112 L 330,112 Q 330,105 337,105 L 345,105' ></path>
+<text x='253' y='115' transform='rotate(0 253,115)' title='Fk PARENT_CAT_FK
+JOB_CATEGORY ref JOB_CATEGORY ( PARENT_CAT_CODE -&gt; CAT_CODE )' class='relName' style='fill:#a79074'>PARENT_CAT_CODE</text>
+<!-- == Fk 'JOB_CATEGORY_CAT_NWCET_FK' == -->
+<path id='JOB_CATEGORY_CAT_NWCET_FK'  onmouseover="hghl(['JOB_CATEGORY_CAT_NWCET_FK','TBOURG.JOB_CATEGORY.CORE_SKILL','TBOURG.NWCET.NWCET_CODE'])" onmouseout="uhghl(['JOB_CATEGORY_CAT_NWCET_FK','TBOURG.JOB_CATEGORY.CORE_SKILL','TBOURG.NWCET.NWCET_CODE'])" transform='translate(7,0)' class='scene' d='M 510 135 L 532,135 Q 540,135 540,127 L 540,112 Q 540,105 547,105 L 555,105' >
+	<title>Fk CAT_NWCET_FK
+JOB_CATEGORY ref NWCET ( CORE_SKILL -&gt; NWCET_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 510 135 L 532,135 Q 540,135 540,127 L 540,112 Q 540,105 547,105 L 555,105' ></path>
+<text x='517' y='130' transform='rotate(0 517,130)' title='Fk CAT_NWCET_FK
+JOB_CATEGORY ref NWCET ( CORE_SKILL -&gt; NWCET_CODE )' class='relName' style='fill:#a79074'>CORE_SKILL</text>
+<!-- == Fk 'KNOW_SKILL_KS_NWCET_FK' == -->
+<path id='KNOW_SKILL_KS_NWCET_FK'  onmouseover="hghl(['KNOW_SKILL_KS_NWCET_FK','TBOURG.KNOW_SKILL.NWCET_CODE','TBOURG.NWCET.NWCET_CODE'])" onmouseout="uhghl(['KNOW_SKILL_KS_NWCET_FK','TBOURG.KNOW_SKILL.NWCET_CODE','TBOURG.NWCET.NWCET_CODE'])" transform='translate(7,0)' class='scene' d='M 765 120 L 742,120 Q 735,120 735,112 L 735,112 Q 735,105 727,105 L 720,105' >
+	<title>Fk KS_NWCET_FK
+KNOW_SKILL ref NWCET ( NWCET_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 765 120 L 742,120 Q 735,120 735,112 L 735,112 Q 735,105 727,105 L 720,105' ></path>
+<text x='702' y='115' transform='rotate(0 702,115)' title='Fk KS_NWCET_FK
+KNOW_SKILL ref NWCET ( NWCET_CODE )' class='relName' style='fill:#a79074'>NWCET_CODE</text>
+<!-- == Fk 'NWCET_PARENT_NWCET_FK' == -->
+<path id='NWCET_PARENT_NWCET_FK'  onmouseover="hghl(['NWCET_PARENT_NWCET_FK','TBOURG.NWCET.PARENT_NWCET_CODE','TBOURG.NWCET.NWCET_CODE'])" onmouseout="uhghl(['NWCET_PARENT_NWCET_FK','TBOURG.NWCET.PARENT_NWCET_CODE','TBOURG.NWCET.NWCET_CODE'])" transform='translate(7,0)' class='scene' d='M 555 120 L 547,120 Q 540,120 540,112 L 540,105' >
+	<title>Fk PARENT_NWCET_FK
+NWCET ref NWCET ( PARENT_NWCET_CODE -&gt; NWCET_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot0p)'     d='M 555 120 L 547,120 Q 540,120 540,112 L 540,105' ></path>
+<text x='447' y='115' transform='rotate(0 447,115)' title='Fk PARENT_NWCET_FK
+NWCET ref NWCET ( PARENT_NWCET_CODE -&gt; NWCET_CODE )' class='relName' style='fill:#a79074'>PARENT_NWCET_CODE</text>
+<!-- == Fk 'POSITION_POS_COMPANY_FK' == -->
+<path id='POSITION_POS_COMPANY_FK'  onmouseover="hghl(['POSITION_POS_COMPANY_FK','TBOURG.POSITION.COMP_ID','TBOURG.COMPANY.COMP_ID'])" onmouseout="uhghl(['POSITION_POS_COMPANY_FK','TBOURG.POSITION.COMP_ID','TBOURG.COMPANY.COMP_ID'])" transform='translate(7,0)' class='scene' d='M 195 120 L 187,120 Q 180,120 180,112 L 180,52 Q 180,45 187,45 L 1882,45 Q 1890,45 1890,52 L 1890,682 Q 1890,690 1897,690 L 1912,690 Q 1920,690 1920,697 L 1920,742 Q 1920,750 1912,750 L 1905,750' >
+	<title>Fk POS_COMPANY_FK
+POSITION ref COMPANY ( COMP_ID )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 195 120 L 187,120 Q 180,120 180,112 L 180,52 Q 180,45 187,45 L 1882,45 Q 1890,45 1890,52 L 1890,682 Q 1890,690 1897,690 L 1912,690 Q 1920,690 1920,697 L 1920,742 Q 1920,750 1912,750 L 1905,750' ></path>
+<text x='156' y='115' transform='rotate(0 156,115)' title='Fk POS_COMPANY_FK
+POSITION ref COMPANY ( COMP_ID )' class='relName' style='fill:#a79074'>COMP_ID</text>
+<!-- == Fk 'POSITION_POS_CATEGORY_FK' == -->
+<path id='POSITION_POS_CATEGORY_FK'  onmouseover="hghl(['POSITION_POS_CATEGORY_FK','TBOURG.POSITION.CAT_CODE','TBOURG.JOB_CATEGORY.CAT_CODE'])" onmouseout="uhghl(['POSITION_POS_CATEGORY_FK','TBOURG.POSITION.CAT_CODE','TBOURG.JOB_CATEGORY.CAT_CODE'])" transform='translate(7,0)' class='scene' d='M 300 165 L 322,165 Q 330,165 330,157 L 330,105' >
+	<title>Fk POS_CATEGORY_FK
+POSITION ref JOB_CATEGORY ( CAT_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 300 165 L 322,165 Q 330,165 330,157 L 330,105' ></path>
+<text x='307' y='160' transform='rotate(0 307,160)' title='Fk POS_CATEGORY_FK
+POSITION ref JOB_CATEGORY ( CAT_CODE )' class='relName' style='fill:#a79074'>CAT_CODE</text>
+<!-- == Fk 'POSITION_CERT_PC_CERT_FK' == -->
+<path id='POSITION_CERT_PC_CERT_FK'  onmouseover="hghl(['POSITION_CERT_PC_CERT_FK','TBOURG.POSITION_CERT.CERT_CODE','TBOURG.CERT.CERT_CODE'])" onmouseout="uhghl(['POSITION_CERT_PC_CERT_FK','TBOURG.POSITION_CERT.CERT_CODE','TBOURG.CERT.CERT_CODE'])" transform='translate(7,0)' class='scene' d='M 465 315 L 1147,315 Q 1155,315 1155,307 L 1155,202 Q 1155,195 1162,195 L 1327,195 Q 1335,195 1335,202 L 1335,247 Q 1335,255 1342,255 L 1350,255' >
+	<title>Fk PC_CERT_FK
+POSITION_CERT ref CERT ( CERT_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 465 315 L 1147,315 Q 1155,315 1155,307 L 1155,202 Q 1155,195 1162,195 L 1327,195 Q 1335,195 1335,202 L 1335,247 Q 1335,255 1342,255 L 1350,255' ></path>
+<text x='472' y='310' transform='rotate(0 472,310)' title='Fk PC_CERT_FK
+POSITION_CERT ref CERT ( CERT_CODE )' class='relName' style='fill:#a79074'>CERT_CODE</text>
+<!-- == Fk 'POSITION_CERT_PC_POS_FK' == -->
+<path id='POSITION_CERT_PC_POS_FK'  onmouseover="hghl(['POSITION_CERT_PC_POS_FK','TBOURG.POSITION_CERT.POS_CODE','TBOURG.POSITION.POS_CODE'])" onmouseout="uhghl(['POSITION_CERT_PC_POS_FK','TBOURG.POSITION_CERT.POS_CODE','TBOURG.POSITION.POS_CODE'])" transform='translate(7,0)' class='scene' d='M 345 330 L 322,330 Q 315,330 315,322 L 315,112 Q 315,105 307,105 L 300,105' >
+	<title>Fk PC_POS_FK
+POSITION_CERT ref POSITION ( POS_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 345 330 L 322,330 Q 315,330 315,322 L 315,112 Q 315,105 307,105 L 300,105' ></path>
+<text x='298' y='325' transform='rotate(0 298,325)' title='Fk PC_POS_FK
+POSITION_CERT ref POSITION ( POS_CODE )' class='relName' style='fill:#a79074'>POS_CODE</text>
+<!-- == Fk 'POSITION_SKILLS_PS_KS_FK' == -->
+<path id='POSITION_SKILLS_PS_KS_FK'  onmouseover="hghl(['POSITION_SKILLS_PS_KS_FK','TBOURG.POSITION_SKILLS.KS_CODE','TBOURG.KNOW_SKILL.KS_CODE'])" onmouseout="uhghl(['POSITION_SKILLS_PS_KS_FK','TBOURG.POSITION_SKILLS.KS_CODE','TBOURG.KNOW_SKILL.KS_CODE'])" transform='translate(7,0)' class='scene' d='M 150 165 L 172,165 Q 180,165 180,172 L 180,232 Q 180,240 187,240 L 907,240 Q 915,240 915,232 L 915,225' >
+	<title>Fk PS_KS_FK
+POSITION_SKILLS ref KNOW_SKILL ( KS_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 150 165 L 172,165 Q 180,165 180,172 L 180,232 Q 180,240 187,240 L 907,240 Q 915,240 915,232 L 915,225' ></path>
+<text x='157' y='160' transform='rotate(0 157,160)' title='Fk PS_KS_FK
+POSITION_SKILLS ref KNOW_SKILL ( KS_CODE )' class='relName' style='fill:#a79074'>KS_CODE</text>
+<!-- == Fk 'POSITION_SKILLS_PS_POS_FK' == -->
+<path id='POSITION_SKILLS_PS_POS_FK'  onmouseover="hghl(['POSITION_SKILLS_PS_POS_FK','TBOURG.POSITION_SKILLS.POS_CODE','TBOURG.POSITION.POS_CODE'])" onmouseout="uhghl(['POSITION_SKILLS_PS_POS_FK','TBOURG.POSITION_SKILLS.POS_CODE','TBOURG.POSITION.POS_CODE'])" transform='translate(7,0)' class='scene' d='M 150 180 L 157,180 Q 165,180 165,187 L 165,247 Q 165,255 172,255 L 307,255 Q 315,255 315,247 L 315,240' >
+	<title>Fk PS_POS_FK
+POSITION_SKILLS ref POSITION ( POS_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 150 180 L 157,180 Q 165,180 165,187 L 165,247 Q 165,255 172,255 L 307,255 Q 315,255 315,247 L 315,240' ></path>
+<text x='157' y='175' transform='rotate(0 157,175)' title='Fk PS_POS_FK
+POSITION_SKILLS ref POSITION ( POS_CODE )' class='relName' style='fill:#a79074'>POS_CODE</text>
+<!-- == Fk 'PREREQUISITE_C_CODE_FK' == -->
+<path id='PREREQUISITE_C_CODE_FK'  onmouseover="hghl(['PREREQUISITE_C_CODE_FK','TBOURG.PREREQUISITE.C_CODE','TBOURG.COURSE.C_CODE'])" onmouseout="uhghl(['PREREQUISITE_C_CODE_FK','TBOURG.PREREQUISITE.C_CODE','TBOURG.COURSE.C_CODE'])" transform='translate(7,0)' class='scene' d='M 1905 105 L 1860,105' >
+	<title>Fk C_CODE_FK
+PREREQUISITE ref COURSE ( C_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 1905 105 L 1860,105' ></path>
+<text x='1871' y='100' transform='rotate(0 1871,100)' title='Fk C_CODE_FK
+PREREQUISITE ref COURSE ( C_CODE )' class='relName' style='fill:#7488a7'>C_CODE</text>
+<!-- == Fk 'PREREQUISITE_PREREQ_CODE' == -->
+<path id='PREREQUISITE_PREREQ_CODE'  onmouseover="hghl(['PREREQUISITE_PREREQ_CODE','TBOURG.PREREQUISITE.PREREQ_CODE','TBOURG.COURSE.C_CODE'])" onmouseout="uhghl(['PREREQUISITE_PREREQ_CODE','TBOURG.PREREQUISITE.PREREQ_CODE','TBOURG.COURSE.C_CODE'])" transform='translate(7,0)' class='scene' d='M 1905 120 L 1882,120 Q 1875,120 1875,112 L 1875,105' >
+	<title>Fk PREREQ_CODE
+PREREQUISITE ref COURSE ( PREREQ_CODE -&gt; C_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 1905 120 L 1882,120 Q 1875,120 1875,112 L 1875,105' ></path>
+<text x='1838' y='115' transform='rotate(0 1838,115)' title='Fk PREREQ_CODE
+PREREQUISITE ref COURSE ( PREREQ_CODE -&gt; C_CODE )' class='relName' style='fill:#7488a7'>PREREQ_CODE</text>
+<!-- == Fk 'PROVIDES_SKILL_COURSE_PROVIDE_FK' == -->
+<path id='PROVIDES_SKILL_COURSE_PROVIDE_FK'  onmouseover="hghl(['PROVIDES_SKILL_COURSE_PROVIDE_FK','TBOURG.PROVIDES_SKILL.C_CODE','TBOURG.COURSE.C_CODE'])" onmouseout="uhghl(['PROVIDES_SKILL_COURSE_PROVIDE_FK','TBOURG.PROVIDES_SKILL.C_CODE','TBOURG.COURSE.C_CODE'])" transform='translate(7,0)' class='scene' d='M 1725 330 L 1717,330 Q 1710,330 1710,322 L 1710,112 Q 1710,105 1717,105 L 1725,105' >
+	<title>Fk COURSE_PROVIDE_FK
+PROVIDES_SKILL ref COURSE ( C_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1725 330 L 1717,330 Q 1710,330 1710,322 L 1710,112 Q 1710,105 1717,105 L 1725,105' ></path>
+<text x='1691' y='325' transform='rotate(0 1691,325)' title='Fk COURSE_PROVIDE_FK
+PROVIDES_SKILL ref COURSE ( C_CODE )' class='relName' style='fill:#7488a7'>C_CODE</text>
+<!-- == Fk 'PROVIDES_SKILL_SKILL_PROVIDE_FK' == -->
+<path id='PROVIDES_SKILL_SKILL_PROVIDE_FK'  onmouseover="hghl(['PROVIDES_SKILL_SKILL_PROVIDE_FK','TBOURG.PROVIDES_SKILL.KS_CODE','TBOURG.KNOW_SKILL.KS_CODE'])" onmouseout="uhghl(['PROVIDES_SKILL_SKILL_PROVIDE_FK','TBOURG.PROVIDES_SKILL.KS_CODE','TBOURG.KNOW_SKILL.KS_CODE'])" transform='translate(7,0)' class='scene' d='M 1725 315 L 1507,315 Q 1500,315 1500,307 L 1500,187 Q 1500,180 1492,180 L 922,180 Q 915,180 915,172 L 915,165' >
+	<title>Fk SKILL_PROVIDE_FK
+PROVIDES_SKILL ref KNOW_SKILL ( KS_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 1725 315 L 1507,315 Q 1500,315 1500,307 L 1500,187 Q 1500,180 1492,180 L 922,180 Q 915,180 915,172 L 915,165' ></path>
+<text x='1686' y='310' transform='rotate(0 1686,310)' title='Fk SKILL_PROVIDE_FK
+PROVIDES_SKILL ref KNOW_SKILL ( KS_CODE )' class='relName' style='fill:#7488a7'>KS_CODE</text>
+<!-- == Fk 'WORKS_PERS_WORKS_FK' == -->
+<path id='WORKS_PERS_WORKS_FK'  onmouseover="hghl(['WORKS_PERS_WORKS_FK','TBOURG.WORKS.PERS_ID','TBOURG.PERSON.PERS_ID'])" onmouseout="uhghl(['WORKS_PERS_WORKS_FK','TBOURG.WORKS.PERS_ID','TBOURG.PERSON.PERS_ID'])" transform='translate(7,0)' class='scene' d='M 180 330 L 172,330 Q 165,330 165,337 L 165,442 Q 165,450 172,450 L 1312,450 Q 1320,450 1320,442 L 1320,435' >
+	<title>Fk PERS_WORKS_FK
+WORKS ref PERSON ( PERS_ID )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 180 330 L 172,330 Q 165,330 165,337 L 165,442 Q 165,450 172,450 L 1312,450 Q 1320,450 1320,442 L 1320,435' ></path>
+<text x='145' y='325' transform='rotate(0 145,325)' title='Fk PERS_WORKS_FK
+WORKS ref PERSON ( PERS_ID )' class='relName' style='fill:#a79074'>PERS_ID</text>
+<!-- == Fk 'WORKS_POS_WORKS_FK' == -->
+<path id='WORKS_POS_WORKS_FK'  onmouseover="hghl(['WORKS_POS_WORKS_FK','TBOURG.WORKS.POS_CODE','TBOURG.POSITION.POS_CODE'])" onmouseout="uhghl(['WORKS_POS_WORKS_FK','TBOURG.WORKS.POS_CODE','TBOURG.POSITION.POS_CODE'])" transform='translate(7,0)' class='scene' d='M 300 315 L 307,315 Q 315,315 315,307 L 315,300' >
+	<title>Fk POS_WORKS_FK
+WORKS ref POSITION ( POS_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 300 315 L 307,315 Q 315,315 315,307 L 315,300' ></path>
+<text x='307' y='310' transform='rotate(0 307,310)' title='Fk POS_WORKS_FK
+WORKS ref POSITION ( POS_CODE )' class='relName' style='fill:#a79074'>POS_CODE</text>
+<!-- == Fk 'TRAINING_PROVIDER_PROVIDER_COMP_FK' == -->
+<path id='TRAINING_PROVIDER_PROVIDER_COMP_FK'  onmouseover="hghl(['TRAINING_PROVIDER_PROVIDER_COMP_FK','TBOURG.TRAINING_PROVIDER.COMP_ID','TBOURG.COMPANY.COMP_ID'])" onmouseout="uhghl(['TRAINING_PROVIDER_PROVIDER_COMP_FK','TBOURG.TRAINING_PROVIDER.COMP_ID','TBOURG.COMPANY.COMP_ID'])" transform='translate(7,0)' class='scene' d='M 1875 975 L 1912,975 Q 1920,975 1920,967 L 1920,960' >
+	<title>Fk PROVIDER_COMP_FK
+TRAINING_PROVIDER ref COMPANY ( COMP_ID )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1)'     d='M 1875 975 L 1912,975 Q 1920,975 1920,967 L 1920,960' ></path>
+<text x='1882' y='970' transform='rotate(0 1882,970)' title='Fk PROVIDER_COMP_FK
+TRAINING_PROVIDER ref COMPANY ( COMP_ID )' class='relName' style='fill:#7da774'>COMP_ID</text>
+<!-- == Fk 'SECTION_SEC_COURSE_FK' == -->
+<path id='SECTION_SEC_COURSE_FK'  onmouseover="hghl(['SECTION_SEC_COURSE_FK','TBOURG.SECTION.C_CODE','TBOURG.COURSE.C_CODE'])" onmouseout="uhghl(['SECTION_SEC_COURSE_FK','TBOURG.SECTION.C_CODE','TBOURG.COURSE.C_CODE'])" transform='translate(7,0)' class='scene' d='M 1725 405 L 1717,405 Q 1710,405 1710,397 L 1710,315' >
+	<title>Fk SEC_COURSE_FK
+SECTION ref COURSE ( C_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 1725 405 L 1717,405 Q 1710,405 1710,397 L 1710,315' ></path>
+<text x='1691' y='400' transform='rotate(0 1691,400)' title='Fk SEC_COURSE_FK
+SECTION ref COURSE ( C_CODE )' class='relName' style='fill:#7da774'>C_CODE</text>
+<!-- == Fk 'SECTION_SECT_OFFERED_BY_FK' == -->
+<path id='SECTION_SECT_OFFERED_BY_FK'  onmouseover="hghl(['SECTION_SECT_OFFERED_BY_FK','TBOURG.SECTION.OFFERED_BY','TBOURG.TRAINING_PROVIDER.COMP_ID'])" onmouseout="uhghl(['SECTION_SECT_OFFERED_BY_FK','TBOURG.SECTION.OFFERED_BY','TBOURG.TRAINING_PROVIDER.COMP_ID'])" transform='translate(7,0)' class='scene' d='M 1725 450 L 1702,450 Q 1695,450 1695,457 L 1695,967 Q 1695,975 1702,975 L 1740,975' >
+	<title>Fk SECT_OFFERED_BY_FK
+SECTION ref TRAINING_PROVIDER ( OFFERED_BY -&gt; COMP_ID )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1725 450 L 1702,450 Q 1695,450 1695,457 L 1695,967 Q 1695,975 1702,975 L 1740,975' ></path>
+<text x='1668' y='445' transform='rotate(0 1668,445)' title='Fk SECT_OFFERED_BY_FK
+SECTION ref TRAINING_PROVIDER ( OFFERED_BY -&gt; COMP_ID )' class='relName' style='fill:#7da774'>OFFERED_BY</text>
+<!-- == Fk 'TAKES_PERS_TAKES_FK' == -->
+<path id='TAKES_PERS_TAKES_FK'  onmouseover="hghl(['TAKES_PERS_TAKES_FK','TBOURG.TAKES.PERS_ID','TBOURG.PERSON.PERS_ID'])" onmouseout="uhghl(['TAKES_PERS_TAKES_FK','TBOURG.TAKES.PERS_ID','TBOURG.PERSON.PERS_ID'])" transform='translate(7,0)' class='scene' d='M 1335 570 L 1327,570 Q 1320,570 1320,562 L 1320,510' >
+	<title>Fk PERS_TAKES_FK
+TAKES ref PERSON ( PERS_ID )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 1335 570 L 1327,570 Q 1320,570 1320,562 L 1320,510' ></path>
+<text x='1300' y='565' transform='rotate(0 1300,565)' title='Fk PERS_TAKES_FK
+TAKES ref PERSON ( PERS_ID )' class='relName' style='fill:#7da774'>PERS_ID</text>
+<!-- == Fk 'TAKES_SEC_TAKES_FK' == -->
+<path id='TAKES_SEC_TAKES_FK'  onmouseover="hghl(['TAKES_SEC_TAKES_FK','TBOURG.TAKES.C_CODE','TBOURG.TAKES.SEC_CODE','TBOURG.TAKES.COMPLETE_DATE','TBOURG.SECTION.C_CODE','TBOURG.SECTION.SEC_CODE','TBOURG.SECTION.COMPLETE_DATE'])" onmouseout="uhghl(['TAKES_SEC_TAKES_FK','TBOURG.TAKES.C_CODE','TBOURG.TAKES.SEC_CODE','TBOURG.TAKES.COMPLETE_DATE','TBOURG.SECTION.C_CODE','TBOURG.SECTION.SEC_CODE','TBOURG.SECTION.COMPLETE_DATE'])" transform='translate(7,0)' class='scene' d='M 1470 555 L 1702,555 Q 1710,555 1710,547 L 1710,442 Q 1710,435 1717,435 L 1725,435' >
+	<title>Fk SEC_TAKES_FK
+TAKES ref SECTION ( C_CODE, SEC_CODE, COMPLETE_DATE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1470 555 L 1702,555 Q 1710,555 1710,547 L 1710,442 Q 1710,435 1717,435 L 1725,435' ></path>
+<text x='1477' y='550' transform='rotate(0 1477,550)' title='Fk SEC_TAKES_FK
+TAKES ref SECTION ( C_CODE, SEC_CODE, COMPLETE_DATE )' class='relName' style='fill:#7da774'>C_CODE,SEC_CODE,COMPLETE_DATE</text>
+<!-- == Fk 'HAS_CERT_HAS_CERT_FK' == -->
+<path id='HAS_CERT_HAS_CERT_FK'  onmouseover="hghl(['HAS_CERT_HAS_CERT_FK','TBOURG.HAS_CERT.CERT_CODE','TBOURG.CERT.CERT_CODE'])" onmouseout="uhghl(['HAS_CERT_HAS_CERT_FK','TBOURG.HAS_CERT.CERT_CODE','TBOURG.CERT.CERT_CODE'])" transform='translate(7,0)' class='scene' d='M 1470 405 L 1477,405 Q 1485,405 1485,397 L 1485,262 Q 1485,255 1477,255 L 1470,255' >
+	<title>Fk HAS_CERT_FK
+HAS_CERT ref CERT ( CERT_CODE )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 1470 405 L 1477,405 Q 1485,405 1485,397 L 1485,262 Q 1485,255 1477,255 L 1470,255' ></path>
+<text x='1477' y='400' transform='rotate(0 1477,400)' title='Fk HAS_CERT_FK
+HAS_CERT ref CERT ( CERT_CODE )' class='relName' style='fill:#7da774'>CERT_CODE</text>
+<!-- == Fk 'HAS_CERT_PERS_CERT_FK' == -->
+<path id='HAS_CERT_PERS_CERT_FK'  onmouseover="hghl(['HAS_CERT_PERS_CERT_FK','TBOURG.HAS_CERT.PERS_ID','TBOURG.PERSON.PERS_ID'])" onmouseout="uhghl(['HAS_CERT_PERS_CERT_FK','TBOURG.HAS_CERT.PERS_ID','TBOURG.PERSON.PERS_ID'])" transform='translate(7,0)' class='scene' d='M 1350 390 L 1327,390 Q 1320,390 1320,382 L 1320,262 Q 1320,255 1312,255 L 1305,255' >
+	<title>Fk PERS_CERT_FK
+HAS_CERT ref PERSON ( PERS_ID )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1350 390 L 1327,390 Q 1320,390 1320,382 L 1320,262 Q 1320,255 1312,255 L 1305,255' ></path>
+<text x='1315' y='385' transform='rotate(0 1315,385)' title='Fk PERS_CERT_FK
+HAS_CERT ref PERSON ( PERS_ID )' class='relName' style='fill:#7da774'>PERS_ID</text>
+<!-- == Fk 'PERSON_PHONE_NUMBERS_PERSON_PH_FK' == -->
+<path id='PERSON_PHONE_NUMBERS_PERSON_PH_FK'  onmouseover="hghl(['PERSON_PHONE_NUMBERS_PERSON_PH_FK','TBOURG.PERSON_PHONE_NUMBERS.PERS_ID','TBOURG.PERSON.PERS_ID'])" onmouseout="uhghl(['PERSON_PHONE_NUMBERS_PERSON_PH_FK','TBOURG.PERSON_PHONE_NUMBERS.PERS_ID','TBOURG.PERSON.PERS_ID'])" transform='translate(7,0)' class='scene' d='M 1155 375 L 1162,375 Q 1170,375 1170,367 L 1170,262 Q 1170,255 1177,255 L 1185,255' >
+	<title>Fk PERSON_PH_FK
+PERSON_PHONE_NUMBERS ref PERSON ( PERS_ID )</title>
+</path>
+<path transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 1155 375 L 1162,375 Q 1170,375 1170,367 L 1170,262 Q 1170,255 1177,255 L 1185,255' ></path>
+<text x='1162' y='370' transform='rotate(0 1162,370)' title='Fk PERSON_PH_FK
+PERSON_PHONE_NUMBERS ref PERSON ( PERS_ID )' class='relName' style='fill:#7da774'>PERS_ID</text>
+<!-- == Table 'CERT' == -->
+<rect class='entity' x='1365' y='218' width='105' height='105' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1365 244 L 1365 225 Q 1365 218 1372 218 L 1463 218 Q 1470 218 1470 225 L 1470 244 L1365 244 ' style='fill:url(#tbg_c8f5bf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1365' y='218' width='105' height='105' rx='7' ry='7' style='fill:none;stroke:#b1bfae'/>
+<line class='delim' x1='1365' y1='244' x2='1470' y2='244' style='stroke:#b1bfae'/>
+<line class='delim' x1='1380' y1='244' x2='1380' y2='323' style='stroke:#b1bfae'/>
+<line class='delim' x1='1459' y1='244' x2='1459' y2='323' style='stroke:#b1bfae'/>
+<a xlink:href='#CERT'><text x='1401' y='236'>CERT</text><title>Table TBOURG.CERT</title></a>
+  <use id='nn' x='1367' y='252' xlink:href='#nn'/><a xlink:href='#CERT.CERT_CODE'><use id='pk' x='1367' y='251' xlink:href='#pk'/><title>Pk SYS_C00146299 ( CERT_CODE ) </title></a>
+<a xlink:href='#CERT.CERT_CODE'><text id='TBOURG.CERT.CERT_CODE' x='1383' y='261' onmouseover="hghl(['COURSE_CERT_CERT_REQUIRES_PK','TBOURG.COURSE_CERT.CERT_CODE','HAS_CERT_HAS_CERT_FK','TBOURG.HAS_CERT.CERT_CODE','POSITION_CERT_PC_CERT_FK','TBOURG.POSITION_CERT.CERT_CODE'])" onmouseout="uhghl(['COURSE_CERT_CERT_REQUIRES_PK','TBOURG.COURSE_CERT.CERT_CODE','HAS_CERT_HAS_CERT_FK','TBOURG.HAS_CERT.CERT_CODE','POSITION_CERT_PC_CERT_FK','TBOURG.POSITION_CERT.CERT_CODE'])">CERT_CODE</text><title>CERT_CODE
+* number default "TBOURG"."ISEQ$$_277012".nextval</title></a>
+<a xlink:href='#CERT.CERT_CODE'><use id='ref' x='1459' y='251' xlink:href='#ref'/><title>Referred by COURSE_CERT ( CERT_CODE ) 
+Referred by HAS_CERT ( CERT_CODE ) 
+Referred by POSITION_CERT ( CERT_CODE ) </title></a>
+  <use id='nn' x='1367' y='267' xlink:href='#nn'/><a xlink:href='#CERT.CERT_NAME'><text id='TBOURG.CERT.CERT_NAME' x='1383' y='276'>CERT_NAME</text><title>CERT_NAME
+* varchar2(255)</title></a>
+<text x='1467' y='273' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1367' y='282' xlink:href='#nn'/><a xlink:href='#CERT.ISSUED_BY'><text id='TBOURG.CERT.ISSUED_BY' x='1383' y='291' onmouseover="hghl(['CERT_CERT_ISSUED_BY','TBOURG.TRAINING_PROVIDER.COMP_ID'])" onmouseout="uhghl(['CERT_CERT_ISSUED_BY','TBOURG.TRAINING_PROVIDER.COMP_ID'])">ISSUED_BY</text><title>ISSUED_BY
+* number(8)</title></a>
+<a xlink:href='#CERT.ISSUED_BY'><use id='fk' x='1459' y='281' xlink:href='#fk'/><title>References TRAINING_PROVIDER ( ISSUED_BY -&gt; COMP_ID ) </title></a>
+  <a xlink:href='#CERT.TOOL'><text id='TBOURG.CERT.TOOL' x='1383' y='306'>TOOL</text><title>TOOL
+varchar2(255)</title></a>
+<text x='1467' y='303' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'COMPANY' == -->
+<rect class='entity' x='1740' y='713' width='165' height='195' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1740 739 L 1740 720 Q 1740 713 1747 713 L 1898 713 Q 1905 713 1905 720 L 1905 739 L1740 739 ' style='fill:url(#tbg_bfbff5);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1740' y='713' width='165' height='195' rx='7' ry='7' style='fill:none;stroke:#aeaebf'/>
+<line class='delim' x1='1740' y1='739' x2='1905' y2='739' style='stroke:#aeaebf'/>
+<line class='delim' x1='1755' y1='739' x2='1755' y2='908' style='stroke:#aeaebf'/>
+<line class='delim' x1='1894' y1='739' x2='1894' y2='908' style='stroke:#aeaebf'/>
+<a xlink:href='#COMPANY'><text x='1795' y='731'>COMPANY</text><title>Table TBOURG.COMPANY</title></a>
+  <use id='nn' x='1742' y='747' xlink:href='#nn'/><a xlink:href='#COMPANY.COMP_ID'><use id='pk' x='1742' y='746' xlink:href='#pk'/><title>Pk SYS_C00146243 ( COMP_ID ) </title></a>
+<a xlink:href='#COMPANY.COMP_ID'><text id='TBOURG.COMPANY.COMP_ID' x='1758' y='756' onmouseover="hghl(['COMPANY_SPECIALTY_COMP_SPEC_FK','TBOURG.COMPANY_SPECIALTY.COMP_ID','POSITION_POS_COMPANY_FK','TBOURG.POSITION.COMP_ID','TRAINING_PROVIDER_PROVIDER_COMP_FK','TBOURG.TRAINING_PROVIDER.COMP_ID'])" onmouseout="uhghl(['COMPANY_SPECIALTY_COMP_SPEC_FK','TBOURG.COMPANY_SPECIALTY.COMP_ID','POSITION_POS_COMPANY_FK','TBOURG.POSITION.COMP_ID','TRAINING_PROVIDER_PROVIDER_COMP_FK','TBOURG.TRAINING_PROVIDER.COMP_ID'])">COMP_ID</text><title>COMP_ID
+* number default "TBOURG"."ISEQ$$_276990".nextval</title></a>
+<a xlink:href='#COMPANY.COMP_ID'><use id='ref' x='1894' y='746' xlink:href='#ref'/><title>Referred by COMPANY_SPECIALTY ( COMP_ID ) 
+Referred by POSITION ( COMP_ID ) 
+Referred by TRAINING_PROVIDER ( COMP_ID ) </title></a>
+  <use id='nn' x='1742' y='762' xlink:href='#nn'/><a xlink:href='#COMPANY.COMP_NAME'><text id='TBOURG.COMPANY.COMP_NAME' x='1758' y='771'>COMP_NAME</text><title>COMP_NAME
+* varchar2(255)</title></a>
+<text x='1902' y='768' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1742' y='777' xlink:href='#nn'/><a xlink:href='#COMPANY.ADDRESS1'><text id='TBOURG.COMPANY.ADDRESS1' x='1758' y='786'>ADDRESS1</text><title>ADDRESS1
+* varchar2(255)</title></a>
+<text x='1902' y='783' text-anchor='end' class='colType'>t</text>  <a xlink:href='#COMPANY.ADDRESS2'><text id='TBOURG.COMPANY.ADDRESS2' x='1758' y='801'>ADDRESS2</text><title>ADDRESS2
+varchar2(255)</title></a>
+<text x='1902' y='798' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1742' y='807' xlink:href='#nn'/><a xlink:href='#COMPANY.CITY'><text id='TBOURG.COMPANY.CITY' x='1758' y='816'>CITY</text><title>CITY
+* varchar2(255)</title></a>
+<text x='1902' y='813' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1742' y='822' xlink:href='#nn'/><a xlink:href='#COMPANY.STATE'><text id='TBOURG.COMPANY.STATE' x='1758' y='831'>STATE</text><title>STATE
+* varchar2(2)</title></a>
+<text x='1902' y='828' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1742' y='837' xlink:href='#nn'/><a xlink:href='#COMPANY.ZIP'><text id='TBOURG.COMPANY.ZIP' x='1758' y='846'>ZIP</text><title>ZIP
+* varchar2(9)</title></a>
+<text x='1902' y='843' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1742' y='852' xlink:href='#nn'/><a xlink:href='#COMPANY.PRIMARY_SECTOR_CODE'><text id='TBOURG.COMPANY.PRIMARY_SECTOR_CODE' x='1758' y='861' onmouseover="hghl(['COMPANY_SECTOR_FK','TBOURG.GICS.PRIMARY_SECTOR_CODE'])" onmouseout="uhghl(['COMPANY_SECTOR_FK','TBOURG.GICS.PRIMARY_SECTOR_CODE'])">PRIMARY_SECTOR_CODE</text><title>PRIMARY_SECTOR_CODE
+* varchar2(8)</title></a>
+<a xlink:href='#COMPANY.PRIMARY_SECTOR_CODE'><use id='fk' x='1894' y='851' xlink:href='#fk'/><title>References GICS ( PRIMARY_SECTOR_CODE ) </title></a>
+  <a xlink:href='#COMPANY.PHONE'><text id='TBOURG.COMPANY.PHONE' x='1758' y='876'>PHONE</text><title>PHONE
+varchar2(10)</title></a>
+<text x='1902' y='873' text-anchor='end' class='colType'>t</text>  <a xlink:href='#COMPANY.WEBSITE'><text id='TBOURG.COMPANY.WEBSITE' x='1758' y='891'>WEBSITE</text><title>WEBSITE
+varchar2(255)</title></a>
+<text x='1902' y='888' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'COMPANY_SPECIALTY' == -->
+<rect class='entity' x='1965' y='968' width='120' height='75' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1965 994 L 1965 975 Q 1965 968 1972 968 L 2078 968 Q 2085 968 2085 975 L 2085 994 L1965 994 ' style='fill:url(#tbg_bfbff5);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1965' y='968' width='120' height='75' rx='7' ry='7' style='fill:none;stroke:#aeaebf'/>
+<line class='delim' x1='1965' y1='994' x2='2085' y2='994' style='stroke:#aeaebf'/>
+<line class='delim' x1='1980' y1='994' x2='1980' y2='1043' style='stroke:#aeaebf'/>
+<line class='delim' x1='2074' y1='994' x2='2074' y2='1043' style='stroke:#aeaebf'/>
+<a xlink:href='#COMPANY_SPECIALTY'><text x='1968' y='986'>COMPANY_SPECIALTY</text><title>Table TBOURG.COMPANY_SPECIALTY</title></a>
+  <use id='nn' x='1967' y='1002' xlink:href='#nn'/><a xlink:href='#COMPANY_SPECIALTY.COMP_ID'><use id='pk' x='1967' y='1001' xlink:href='#pk'/><title>Pk COMP_SPEC_PK ( COMP_ID, SPECIALTY ) </title></a>
+<a xlink:href='#COMPANY_SPECIALTY.COMP_ID'><text id='TBOURG.COMPANY_SPECIALTY.COMP_ID' x='1983' y='1011' onmouseover="hghl(['COMPANY_SPECIALTY_COMP_SPEC_FK','TBOURG.COMPANY.COMP_ID'])" onmouseout="uhghl(['COMPANY_SPECIALTY_COMP_SPEC_FK','TBOURG.COMPANY.COMP_ID'])">COMP_ID</text><title>COMP_ID
+* number</title></a>
+<a xlink:href='#COMPANY_SPECIALTY.COMP_ID'><use id='fk' x='2074' y='1001' xlink:href='#fk'/><title>References COMPANY ( COMP_ID ) </title></a>
+  <use id='nn' x='1967' y='1017' xlink:href='#nn'/><a xlink:href='#COMPANY_SPECIALTY.SPECIALTY'><use id='pk' x='1967' y='1016' xlink:href='#pk'/><title>Pk COMP_SPEC_PK ( COMP_ID, SPECIALTY ) </title></a>
+<a xlink:href='#COMPANY_SPECIALTY.SPECIALTY'><text id='TBOURG.COMPANY_SPECIALTY.SPECIALTY' x='1983' y='1026' onmouseover="hghl(['COMPANY_SPECIALTY_SPECIALTY_FK','TBOURG.GICS.PRIMARY_SECTOR_CODE'])" onmouseout="uhghl(['COMPANY_SPECIALTY_SPECIALTY_FK','TBOURG.GICS.PRIMARY_SECTOR_CODE'])">SPECIALTY</text><title>SPECIALTY
+* varchar2(8)</title></a>
+<a xlink:href='#COMPANY_SPECIALTY.SPECIALTY'><use id='fk' x='2074' y='1016' xlink:href='#fk'/><title>References GICS ( SPECIALTY -&gt; PRIMARY_SECTOR_CODE ) </title></a>
+
+<!-- == Table 'COURSE' == -->
+<rect class='entity' x='1740' y='68' width='120' height='150' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1740 94 L 1740 75 Q 1740 68 1747 68 L 1853 68 Q 1860 68 1860 75 L 1860 94 L1740 94 ' style='fill:url(#tbg_bfd4f5);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1740' y='68' width='120' height='150' rx='7' ry='7' style='fill:none;stroke:#aeb5bf'/>
+<line class='delim' x1='1740' y1='94' x2='1860' y2='94' style='stroke:#aeb5bf'/>
+<line class='delim' x1='1755' y1='94' x2='1755' y2='218' style='stroke:#aeb5bf'/>
+<line class='delim' x1='1849' y1='94' x2='1849' y2='218' style='stroke:#aeb5bf'/>
+<a xlink:href='#COURSE'><text x='1776' y='86'>COURSE</text><title>Table TBOURG.COURSE</title></a>
+  <use id='nn' x='1742' y='102' xlink:href='#nn'/><a xlink:href='#COURSE.C_CODE'><use id='pk' x='1742' y='101' xlink:href='#pk'/><title>Pk SYS_C00146227 ( C_CODE ) </title></a>
+<a xlink:href='#COURSE.C_CODE'><text id='TBOURG.COURSE.C_CODE' x='1758' y='111' onmouseover="hghl(['PROVIDES_SKILL_COURSE_PROVIDE_FK','TBOURG.PROVIDES_SKILL.C_CODE','COURSE_CERT_COURSE_REQUIRED_PK','TBOURG.COURSE_CERT.C_CODE','PREREQUISITE_C_CODE_FK','TBOURG.PREREQUISITE.C_CODE','PREREQUISITE_PREREQ_CODE','TBOURG.PREREQUISITE.PREREQ_CODE','SECTION_SEC_COURSE_FK','TBOURG.SECTION.C_CODE'])" onmouseout="uhghl(['PROVIDES_SKILL_COURSE_PROVIDE_FK','TBOURG.PROVIDES_SKILL.C_CODE','COURSE_CERT_COURSE_REQUIRED_PK','TBOURG.COURSE_CERT.C_CODE','PREREQUISITE_C_CODE_FK','TBOURG.PREREQUISITE.C_CODE','PREREQUISITE_PREREQ_CODE','TBOURG.PREREQUISITE.PREREQ_CODE','SECTION_SEC_COURSE_FK','TBOURG.SECTION.C_CODE'])">C_CODE</text><title>C_CODE
+* number default "TBOURG"."ISEQ$$_276983".nextval</title></a>
+<a xlink:href='#COURSE.C_CODE'><use id='ref' x='1849' y='101' xlink:href='#ref'/><title>Referred by PROVIDES_SKILL ( C_CODE ) 
+Referred by COURSE_CERT ( C_CODE ) 
+Referred by PREREQUISITE ( C_CODE ) 
+Referred by PREREQUISITE ( PREREQ_CODE -&gt; C_CODE ) 
+Referred by SECTION ( C_CODE ) </title></a>
+  <use id='nn' x='1742' y='117' xlink:href='#nn'/><a xlink:href='#COURSE.TITLE'><text id='TBOURG.COURSE.TITLE' x='1758' y='126'>TITLE</text><title>TITLE
+* varchar2(255)</title></a>
+<text x='1857' y='123' text-anchor='end' class='colType'>t</text>  <a xlink:href='#COURSE.TRAINING_LEVEL'><text id='TBOURG.COURSE.TRAINING_LEVEL' x='1758' y='141'>TRAINING_LEVEL</text><title>TRAINING_LEVEL
+varchar2(12)</title></a>
+<text x='1857' y='138' text-anchor='end' class='colType'>t</text>  <a xlink:href='#COURSE.DESCRIPTION'><text id='TBOURG.COURSE.DESCRIPTION' x='1758' y='156'>DESCRIPTION</text><title>DESCRIPTION
+varchar2(255)</title></a>
+<text x='1857' y='153' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1742' y='162' xlink:href='#nn'/><a xlink:href='#COURSE.STATUS'><text id='TBOURG.COURSE.STATUS' x='1758' y='171'>STATUS</text><title>STATUS
+* varchar2(1)</title></a>
+<text x='1857' y='168' text-anchor='end' class='colType'>t</text>  <a xlink:href='#COURSE.RETAIL_PRICE'><text id='TBOURG.COURSE.RETAIL_PRICE' x='1758' y='186'>RETAIL_PRICE</text><title>RETAIL_PRICE
+number(10,2)</title></a>
+<text x='1857' y='183' text-anchor='end' class='colType'>#</text>  <use id='nn' x='1742' y='192' xlink:href='#nn'/><a xlink:href='#COURSE.TRAIN_TYPE'><text id='TBOURG.COURSE.TRAIN_TYPE' x='1758' y='201'>TRAIN_TYPE</text><title>TRAIN_TYPE
+* varchar2(255)</title></a>
+<text x='1857' y='198' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'COURSE_CERT' == -->
+<rect class='entity' x='1920' y='278' width='105' height='75' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1920 304 L 1920 285 Q 1920 278 1927 278 L 2018 278 Q 2025 278 2025 285 L 2025 304 L1920 304 ' style='fill:url(#tbg_bfd4f5);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1920' y='278' width='105' height='75' rx='7' ry='7' style='fill:none;stroke:#aeb5bf'/>
+<line class='delim' x1='1920' y1='304' x2='2025' y2='304' style='stroke:#aeb5bf'/>
+<line class='delim' x1='1935' y1='304' x2='1935' y2='353' style='stroke:#aeb5bf'/>
+<line class='delim' x1='2014' y1='304' x2='2014' y2='353' style='stroke:#aeb5bf'/>
+<a xlink:href='#COURSE_CERT'><text x='1933' y='296'>COURSE_CERT</text><title>Table TBOURG.COURSE_CERT</title></a>
+  <use id='nn' x='1922' y='312' xlink:href='#nn'/><a xlink:href='#COURSE_CERT.CERT_CODE'><use id='pk' x='1922' y='311' xlink:href='#pk'/><title>Pk COURSE_CERT_PK ( CERT_CODE, C_CODE ) </title></a>
+<a xlink:href='#COURSE_CERT.CERT_CODE'><text id='TBOURG.COURSE_CERT.CERT_CODE' x='1938' y='321' onmouseover="hghl(['COURSE_CERT_CERT_REQUIRES_PK','TBOURG.CERT.CERT_CODE'])" onmouseout="uhghl(['COURSE_CERT_CERT_REQUIRES_PK','TBOURG.CERT.CERT_CODE'])">CERT_CODE</text><title>CERT_CODE
+* number</title></a>
+<a xlink:href='#COURSE_CERT.CERT_CODE'><use id='fk' x='2014' y='311' xlink:href='#fk'/><title>References CERT ( CERT_CODE ) </title></a>
+  <use id='nn' x='1922' y='327' xlink:href='#nn'/><a xlink:href='#COURSE_CERT.C_CODE'><use id='pk' x='1922' y='326' xlink:href='#pk'/><title>Pk COURSE_CERT_PK ( CERT_CODE, C_CODE ) </title></a>
+<a xlink:href='#COURSE_CERT.C_CODE'><text id='TBOURG.COURSE_CERT.C_CODE' x='1938' y='336' onmouseover="hghl(['COURSE_CERT_COURSE_REQUIRED_PK','TBOURG.COURSE.C_CODE'])" onmouseout="uhghl(['COURSE_CERT_COURSE_REQUIRED_PK','TBOURG.COURSE.C_CODE'])">C_CODE</text><title>C_CODE
+* number</title></a>
+<a xlink:href='#COURSE_CERT.C_CODE'><use id='fk' x='2014' y='326' xlink:href='#fk'/><title>References COURSE ( C_CODE ) </title></a>
+
+<!-- == Table 'GICS' == -->
+<rect class='entity' x='1965' y='713' width='165' height='105' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1965 739 L 1965 720 Q 1965 713 1972 713 L 2123 713 Q 2130 713 2130 720 L 2130 739 L1965 739 ' style='fill:url(#tbg_bfbff5);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1965' y='713' width='165' height='105' rx='7' ry='7' style='fill:none;stroke:#aeaebf'/>
+<line class='delim' x1='1965' y1='739' x2='2130' y2='739' style='stroke:#aeaebf'/>
+<line class='delim' x1='1980' y1='739' x2='1980' y2='818' style='stroke:#aeaebf'/>
+<line class='delim' x1='2119' y1='739' x2='2119' y2='818' style='stroke:#aeaebf'/>
+<a xlink:href='#GICS'><text x='2032' y='731'>GICS</text><title>Table TBOURG.GICS</title></a>
+  <use id='nn' x='1967' y='747' xlink:href='#nn'/><a xlink:href='#GICS.PRIMARY_SECTOR_CODE'><use id='pk' x='1967' y='746' xlink:href='#pk'/><title>Pk SYS_C00146234 ( PRIMARY_SECTOR_CODE ) </title></a>
+<a xlink:href='#GICS.PRIMARY_SECTOR_CODE'><text id='TBOURG.GICS.PRIMARY_SECTOR_CODE' x='1983' y='756' onmouseover="hghl(['GICS_PARENT_GICS_SECTOR_FK','TBOURG.GICS.PARENT_SECTOR_CODE','COMPANY_SECTOR_FK','TBOURG.COMPANY.PRIMARY_SECTOR_CODE','COMPANY_SPECIALTY_SPECIALTY_FK','TBOURG.COMPANY_SPECIALTY.SPECIALTY'])" onmouseout="uhghl(['GICS_PARENT_GICS_SECTOR_FK','TBOURG.GICS.PARENT_SECTOR_CODE','COMPANY_SECTOR_FK','TBOURG.COMPANY.PRIMARY_SECTOR_CODE','COMPANY_SPECIALTY_SPECIALTY_FK','TBOURG.COMPANY_SPECIALTY.SPECIALTY'])">PRIMARY_SECTOR_CODE</text><title>PRIMARY_SECTOR_CODE
+* varchar2(8)</title></a>
+<a xlink:href='#GICS.PRIMARY_SECTOR_CODE'><use id='ref' x='2119' y='746' xlink:href='#ref'/><title>Referred by GICS ( PARENT_SECTOR_CODE -&gt; PRIMARY_SECTOR_CODE ) 
+Referred by COMPANY ( PRIMARY_SECTOR_CODE ) 
+Referred by COMPANY_SPECIALTY ( SPECIALTY -&gt; PRIMARY_SECTOR_CODE ) </title></a>
+  <a xlink:href='#GICS.CODE_NAME'><text id='TBOURG.GICS.CODE_NAME' x='1983' y='771'>CODE_NAME</text><title>CODE_NAME
+varchar2(255)</title></a>
+<text x='2127' y='768' text-anchor='end' class='colType'>t</text>  <a xlink:href='#GICS.CODE_DESCRIPTION'><text id='TBOURG.GICS.CODE_DESCRIPTION' x='1983' y='786'>CODE_DESCRIPTION</text><title>CODE_DESCRIPTION
+varchar2(255)</title></a>
+<text x='2127' y='783' text-anchor='end' class='colType'>t</text>  <a xlink:href='#GICS.PARENT_SECTOR_CODE'><text id='TBOURG.GICS.PARENT_SECTOR_CODE' x='1983' y='801' onmouseover="hghl(['GICS_PARENT_GICS_SECTOR_FK','TBOURG.GICS.PRIMARY_SECTOR_CODE'])" onmouseout="uhghl(['GICS_PARENT_GICS_SECTOR_FK','TBOURG.GICS.PRIMARY_SECTOR_CODE'])">PARENT_SECTOR_CODE</text><title>PARENT_SECTOR_CODE
+varchar2(8)</title></a>
+<a xlink:href='#GICS.PARENT_SECTOR_CODE'><use id='fk' x='2119' y='791' xlink:href='#fk'/><title>References GICS ( PARENT_SECTOR_CODE -&gt; PRIMARY_SECTOR_CODE ) </title></a>
+
+<!-- == Table 'HAS_SKILL' == -->
+<rect class='entity' x='1200' y='488' width='90' height='75' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1200 514 L 1200 495 Q 1200 488 1207 488 L 1283 488 Q 1290 488 1290 495 L 1290 514 L1200 514 ' style='fill:url(#tbg_c8f5bf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1200' y='488' width='90' height='75' rx='7' ry='7' style='fill:none;stroke:#b1bfae'/>
+<line class='delim' x1='1200' y1='514' x2='1290' y2='514' style='stroke:#b1bfae'/>
+<line class='delim' x1='1215' y1='514' x2='1215' y2='563' style='stroke:#b1bfae'/>
+<line class='delim' x1='1279' y1='514' x2='1279' y2='563' style='stroke:#b1bfae'/>
+<a xlink:href='#HAS_SKILL'><text x='1216' y='506'>HAS_SKILL</text><title>Table TBOURG.HAS_SKILL</title></a>
+  <use id='nn' x='1202' y='522' xlink:href='#nn'/><a xlink:href='#HAS_SKILL.PERS_ID'><use id='pk' x='1202' y='521' xlink:href='#pk'/><title>Pk HAS_SKILL_PK ( PERS_ID, KS_CODE ) </title></a>
+<a xlink:href='#HAS_SKILL.PERS_ID'><text id='TBOURG.HAS_SKILL.PERS_ID' x='1218' y='531' onmouseover="hghl(['HAS_SKILL_PERS_SKILL_FK','TBOURG.PERSON.PERS_ID'])" onmouseout="uhghl(['HAS_SKILL_PERS_SKILL_FK','TBOURG.PERSON.PERS_ID'])">PERS_ID</text><title>PERS_ID
+* number</title></a>
+<a xlink:href='#HAS_SKILL.PERS_ID'><use id='fk' x='1279' y='521' xlink:href='#fk'/><title>References PERSON ( PERS_ID ) </title></a>
+  <use id='nn' x='1202' y='537' xlink:href='#nn'/><a xlink:href='#HAS_SKILL.KS_CODE'><use id='pk' x='1202' y='536' xlink:href='#pk'/><title>Pk HAS_SKILL_PK ( PERS_ID, KS_CODE ) </title></a>
+<a xlink:href='#HAS_SKILL.KS_CODE'><text id='TBOURG.HAS_SKILL.KS_CODE' x='1218' y='546' onmouseover="hghl(['HAS_SKILL_KS_SKILL_FK','TBOURG.KNOW_SKILL.KS_CODE'])" onmouseout="uhghl(['HAS_SKILL_KS_SKILL_FK','TBOURG.KNOW_SKILL.KS_CODE'])">KS_CODE</text><title>KS_CODE
+* varchar2(255)</title></a>
+<a xlink:href='#HAS_SKILL.KS_CODE'><use id='fk' x='1279' y='536' xlink:href='#fk'/><title>References KNOW_SKILL ( KS_CODE ) </title></a>
+
+<!-- == Table 'JOB_CATEGORY' == -->
+<rect class='entity' x='360' y='68' width='150' height='150' rx='7' ry='7' style='stroke:none'/>
+<path d='M 360 94 L 360 75 Q 360 68 367 68 L 503 68 Q 510 68 510 75 L 510 94 L360 94 ' style='fill:url(#tbg_f5ddbf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='360' y='68' width='150' height='150' rx='7' ry='7' style='fill:none;stroke:#bfb7ae'/>
+<line class='delim' x1='360' y1='94' x2='510' y2='94' style='stroke:#bfb7ae'/>
+<line class='delim' x1='375' y1='94' x2='375' y2='218' style='stroke:#bfb7ae'/>
+<line class='delim' x1='499' y1='94' x2='499' y2='218' style='stroke:#bfb7ae'/>
+<a xlink:href='#JOB_CATEGORY'><text x='392' y='86'>JOB_CATEGORY</text><title>Table TBOURG.JOB_CATEGORY</title></a>
+  <use id='nn' x='362' y='102' xlink:href='#nn'/><a xlink:href='#JOB_CATEGORY.CAT_CODE'><use id='pk' x='362' y='101' xlink:href='#pk'/><title>Pk SYS_C00146271 ( CAT_CODE ) </title></a>
+<a xlink:href='#JOB_CATEGORY.CAT_CODE'><text id='TBOURG.JOB_CATEGORY.CAT_CODE' x='378' y='111' onmouseover="hghl(['JOB_CATEGORY_PARENT_CAT_FK','TBOURG.JOB_CATEGORY.PARENT_CAT_CODE','POSITION_POS_CATEGORY_FK','TBOURG.POSITION.CAT_CODE'])" onmouseout="uhghl(['JOB_CATEGORY_PARENT_CAT_FK','TBOURG.JOB_CATEGORY.PARENT_CAT_CODE','POSITION_POS_CATEGORY_FK','TBOURG.POSITION.CAT_CODE'])">CAT_CODE</text><title>CAT_CODE
+* varchar2(255)</title></a>
+<a xlink:href='#JOB_CATEGORY.CAT_CODE'><use id='ref' x='499' y='101' xlink:href='#ref'/><title>Referred by JOB_CATEGORY ( PARENT_CAT_CODE -&gt; CAT_CODE ) 
+Referred by POSITION ( CAT_CODE ) </title></a>
+  <a xlink:href='#JOB_CATEGORY.PARENT_CAT_CODE'><text id='TBOURG.JOB_CATEGORY.PARENT_CAT_CODE' x='378' y='126' onmouseover="hghl(['JOB_CATEGORY_PARENT_CAT_FK','TBOURG.JOB_CATEGORY.CAT_CODE'])" onmouseout="uhghl(['JOB_CATEGORY_PARENT_CAT_FK','TBOURG.JOB_CATEGORY.CAT_CODE'])">PARENT_CAT_CODE</text><title>PARENT_CAT_CODE
+varchar2(255)</title></a>
+<a xlink:href='#JOB_CATEGORY.PARENT_CAT_CODE'><use id='fk' x='499' y='116' xlink:href='#fk'/><title>References JOB_CATEGORY ( PARENT_CAT_CODE -&gt; CAT_CODE ) </title></a>
+  <use id='nn' x='362' y='132' xlink:href='#nn'/><a xlink:href='#JOB_CATEGORY.CORE_SKILL'><text id='TBOURG.JOB_CATEGORY.CORE_SKILL' x='378' y='141' onmouseover="hghl(['JOB_CATEGORY_CAT_NWCET_FK','TBOURG.NWCET.NWCET_CODE'])" onmouseout="uhghl(['JOB_CATEGORY_CAT_NWCET_FK','TBOURG.NWCET.NWCET_CODE'])">CORE_SKILL</text><title>CORE_SKILL
+* varchar2(255)</title></a>
+<a xlink:href='#JOB_CATEGORY.CORE_SKILL'><use id='fk' x='499' y='131' xlink:href='#fk'/><title>References NWCET ( CORE_SKILL -&gt; NWCET_CODE ) </title></a>
+  <use id='nn' x='362' y='147' xlink:href='#nn'/><a xlink:href='#JOB_CATEGORY.JOB_CATEGORY_TITLE'><text id='TBOURG.JOB_CATEGORY.JOB_CATEGORY_TITLE' x='378' y='156'>JOB_CATEGORY_TITLE</text><title>JOB_CATEGORY_TITLE
+* varchar2(255)</title></a>
+<text x='507' y='153' text-anchor='end' class='colType'>t</text>  <a xlink:href='#JOB_CATEGORY.DESCRIPTION'><text id='TBOURG.JOB_CATEGORY.DESCRIPTION' x='378' y='171'>DESCRIPTION</text><title>DESCRIPTION
+varchar2(255)</title></a>
+<text x='507' y='168' text-anchor='end' class='colType'>t</text>  <a xlink:href='#JOB_CATEGORY.PAY_RANGE_HIGH'><text id='TBOURG.JOB_CATEGORY.PAY_RANGE_HIGH' x='378' y='186'>PAY_RANGE_HIGH</text><title>PAY_RANGE_HIGH
+float(15,0)</title></a>
+<text x='507' y='183' text-anchor='end' class='colType'>#</text>  <a xlink:href='#JOB_CATEGORY.PAY_RANGE_LOW'><text id='TBOURG.JOB_CATEGORY.PAY_RANGE_LOW' x='378' y='201'>PAY_RANGE_LOW</text><title>PAY_RANGE_LOW
+float(15,0)</title></a>
+<text x='507' y='198' text-anchor='end' class='colType'>#</text>
+<!-- == Table 'KNOW_SKILL' == -->
+<rect class='entity' x='780' y='68' width='120' height='120' rx='7' ry='7' style='stroke:none'/>
+<path d='M 780 94 L 780 75 Q 780 68 787 68 L 893 68 Q 900 68 900 75 L 900 94 L780 94 ' style='fill:url(#tbg_f5ddbf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='780' y='68' width='120' height='120' rx='7' ry='7' style='fill:none;stroke:#bfb7ae'/>
+<line class='delim' x1='780' y1='94' x2='900' y2='94' style='stroke:#bfb7ae'/>
+<line class='delim' x1='795' y1='94' x2='795' y2='188' style='stroke:#bfb7ae'/>
+<line class='delim' x1='889' y1='94' x2='889' y2='188' style='stroke:#bfb7ae'/>
+<a xlink:href='#KNOW_SKILL'><text x='805' y='86'>KNOW_SKILL</text><title>Table TBOURG.KNOW_SKILL</title></a>
+  <use id='nn' x='782' y='102' xlink:href='#nn'/><a xlink:href='#KNOW_SKILL.KS_CODE'><use id='pk' x='782' y='101' xlink:href='#pk'/><title>Pk SYS_C00146261 ( KS_CODE ) </title></a>
+<a xlink:href='#KNOW_SKILL.KS_CODE'><text id='TBOURG.KNOW_SKILL.KS_CODE' x='798' y='111' onmouseover="hghl(['HAS_SKILL_KS_SKILL_FK','TBOURG.HAS_SKILL.KS_CODE','POSITION_SKILLS_PS_KS_FK','TBOURG.POSITION_SKILLS.KS_CODE','PROVIDES_SKILL_SKILL_PROVIDE_FK','TBOURG.PROVIDES_SKILL.KS_CODE'])" onmouseout="uhghl(['HAS_SKILL_KS_SKILL_FK','TBOURG.HAS_SKILL.KS_CODE','POSITION_SKILLS_PS_KS_FK','TBOURG.POSITION_SKILLS.KS_CODE','PROVIDES_SKILL_SKILL_PROVIDE_FK','TBOURG.PROVIDES_SKILL.KS_CODE'])">KS_CODE</text><title>KS_CODE
+* varchar2(255)</title></a>
+<a xlink:href='#KNOW_SKILL.KS_CODE'><use id='ref' x='889' y='101' xlink:href='#ref'/><title>Referred by HAS_SKILL ( KS_CODE ) 
+Referred by POSITION_SKILLS ( KS_CODE ) 
+Referred by PROVIDES_SKILL ( KS_CODE ) </title></a>
+  <use id='nn' x='782' y='117' xlink:href='#nn'/><a xlink:href='#KNOW_SKILL.NWCET_CODE'><text id='TBOURG.KNOW_SKILL.NWCET_CODE' x='798' y='126' onmouseover="hghl(['KNOW_SKILL_KS_NWCET_FK','TBOURG.NWCET.NWCET_CODE'])" onmouseout="uhghl(['KNOW_SKILL_KS_NWCET_FK','TBOURG.NWCET.NWCET_CODE'])">NWCET_CODE</text><title>NWCET_CODE
+* varchar2(255)</title></a>
+<a xlink:href='#KNOW_SKILL.NWCET_CODE'><use id='fk' x='889' y='116' xlink:href='#fk'/><title>References NWCET ( NWCET_CODE ) </title></a>
+  <use id='nn' x='782' y='132' xlink:href='#nn'/><a xlink:href='#KNOW_SKILL.KS_TITLE'><text id='TBOURG.KNOW_SKILL.KS_TITLE' x='798' y='141'>KS_TITLE</text><title>KS_TITLE
+* varchar2(255)</title></a>
+<text x='897' y='138' text-anchor='end' class='colType'>t</text>  <a xlink:href='#KNOW_SKILL.DESCRIPTION'><text id='TBOURG.KNOW_SKILL.DESCRIPTION' x='798' y='156'>DESCRIPTION</text><title>DESCRIPTION
+varchar2(255)</title></a>
+<text x='897' y='153' text-anchor='end' class='colType'>t</text>  <use id='nn' x='782' y='162' xlink:href='#nn'/><a xlink:href='#KNOW_SKILL.TRAINING_LEVEL'><text id='TBOURG.KNOW_SKILL.TRAINING_LEVEL' x='798' y='171'>TRAINING_LEVEL</text><title>TRAINING_LEVEL
+* varchar2(255)</title></a>
+<text x='897' y='168' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'NWCET' == -->
+<rect class='entity' x='570' y='68' width='150' height='105' rx='7' ry='7' style='stroke:none'/>
+<path d='M 570 94 L 570 75 Q 570 68 577 68 L 713 68 Q 720 68 720 75 L 720 94 L570 94 ' style='fill:url(#tbg_f5ddbf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='570' y='68' width='150' height='105' rx='7' ry='7' style='fill:none;stroke:#bfb7ae'/>
+<line class='delim' x1='570' y1='94' x2='720' y2='94' style='stroke:#bfb7ae'/>
+<line class='delim' x1='585' y1='94' x2='585' y2='173' style='stroke:#bfb7ae'/>
+<line class='delim' x1='709' y1='94' x2='709' y2='173' style='stroke:#bfb7ae'/>
+<a xlink:href='#NWCET'><text x='624' y='86'>NWCET</text><title>Table TBOURG.NWCET</title></a>
+  <use id='nn' x='572' y='102' xlink:href='#nn'/><a xlink:href='#NWCET.NWCET_CODE'><use id='pk' x='572' y='101' xlink:href='#pk'/><title>Pk SYS_C00146255 ( NWCET_CODE ) </title></a>
+<a xlink:href='#NWCET.NWCET_CODE'><text id='TBOURG.NWCET.NWCET_CODE' x='588' y='111' onmouseover="hghl(['JOB_CATEGORY_CAT_NWCET_FK','TBOURG.JOB_CATEGORY.CORE_SKILL','KNOW_SKILL_KS_NWCET_FK','TBOURG.KNOW_SKILL.NWCET_CODE','NWCET_PARENT_NWCET_FK','TBOURG.NWCET.PARENT_NWCET_CODE'])" onmouseout="uhghl(['JOB_CATEGORY_CAT_NWCET_FK','TBOURG.JOB_CATEGORY.CORE_SKILL','KNOW_SKILL_KS_NWCET_FK','TBOURG.KNOW_SKILL.NWCET_CODE','NWCET_PARENT_NWCET_FK','TBOURG.NWCET.PARENT_NWCET_CODE'])">NWCET_CODE</text><title>NWCET_CODE
+* varchar2(255)</title></a>
+<a xlink:href='#NWCET.NWCET_CODE'><use id='ref' x='709' y='101' xlink:href='#ref'/><title>Referred by JOB_CATEGORY ( CORE_SKILL -&gt; NWCET_CODE ) 
+Referred by KNOW_SKILL ( NWCET_CODE ) 
+Referred by NWCET ( PARENT_NWCET_CODE -&gt; NWCET_CODE ) </title></a>
+  <a xlink:href='#NWCET.PARENT_NWCET_CODE'><text id='TBOURG.NWCET.PARENT_NWCET_CODE' x='588' y='126' onmouseover="hghl(['NWCET_PARENT_NWCET_FK','TBOURG.NWCET.NWCET_CODE'])" onmouseout="uhghl(['NWCET_PARENT_NWCET_FK','TBOURG.NWCET.NWCET_CODE'])">PARENT_NWCET_CODE</text><title>PARENT_NWCET_CODE
+varchar2(255)</title></a>
+<a xlink:href='#NWCET.PARENT_NWCET_CODE'><use id='fk' x='709' y='116' xlink:href='#fk'/><title>References NWCET ( PARENT_NWCET_CODE -&gt; NWCET_CODE ) </title></a>
+  <use id='nn' x='572' y='132' xlink:href='#nn'/><a xlink:href='#NWCET.NWCET_TITLE'><text id='TBOURG.NWCET.NWCET_TITLE' x='588' y='141'>NWCET_TITLE</text><title>NWCET_TITLE
+* varchar2(255)</title></a>
+<text x='717' y='138' text-anchor='end' class='colType'>t</text>  <a xlink:href='#NWCET.DESCRIPTION'><text id='TBOURG.NWCET.DESCRIPTION' x='588' y='156'>DESCRIPTION</text><title>DESCRIPTION
+varchar2(255)</title></a>
+<text x='717' y='153' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'PERSON' == -->
+<rect class='entity' x='1200' y='218' width='105' height='210' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1200 244 L 1200 225 Q 1200 218 1207 218 L 1298 218 Q 1305 218 1305 225 L 1305 244 L1200 244 ' style='fill:url(#tbg_c8f5bf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1200' y='218' width='105' height='210' rx='7' ry='7' style='fill:none;stroke:#b1bfae'/>
+<line class='delim' x1='1200' y1='244' x2='1305' y2='244' style='stroke:#b1bfae'/>
+<line class='delim' x1='1215' y1='244' x2='1215' y2='428' style='stroke:#b1bfae'/>
+<line class='delim' x1='1294' y1='244' x2='1294' y2='428' style='stroke:#b1bfae'/>
+<a xlink:href='#PERSON'><text x='1229' y='236'>PERSON</text><title>Table TBOURG.PERSON</title></a>
+  <use id='nn' x='1202' y='252' xlink:href='#nn'/><a xlink:href='#PERSON.PERS_ID'><use id='pk' x='1202' y='251' xlink:href='#pk'/><title>Pk SYS_C00146217 ( PERS_ID ) </title></a>
+<a xlink:href='#PERSON.PERS_ID'><text id='TBOURG.PERSON.PERS_ID' x='1218' y='261' onmouseover="hghl(['PERSON_PHONE_NUMBERS_PERSON_PH_FK','TBOURG.PERSON_PHONE_NUMBERS.PERS_ID','HAS_CERT_PERS_CERT_FK','TBOURG.HAS_CERT.PERS_ID','HAS_SKILL_PERS_SKILL_FK','TBOURG.HAS_SKILL.PERS_ID','TAKES_PERS_TAKES_FK','TBOURG.TAKES.PERS_ID','WORKS_PERS_WORKS_FK','TBOURG.WORKS.PERS_ID'])" onmouseout="uhghl(['PERSON_PHONE_NUMBERS_PERSON_PH_FK','TBOURG.PERSON_PHONE_NUMBERS.PERS_ID','HAS_CERT_PERS_CERT_FK','TBOURG.HAS_CERT.PERS_ID','HAS_SKILL_PERS_SKILL_FK','TBOURG.HAS_SKILL.PERS_ID','TAKES_PERS_TAKES_FK','TBOURG.TAKES.PERS_ID','WORKS_PERS_WORKS_FK','TBOURG.WORKS.PERS_ID'])">PERS_ID</text><title>PERS_ID
+* number default "TBOURG"."ISEQ$$_276978".nextval</title></a>
+<a xlink:href='#PERSON.PERS_ID'><use id='ref' x='1294' y='251' xlink:href='#ref'/><title>Referred by PERSON_PHONE_NUMBERS ( PERS_ID ) 
+Referred by HAS_CERT ( PERS_ID ) 
+Referred by HAS_SKILL ( PERS_ID ) 
+Referred by TAKES ( PERS_ID ) 
+Referred by WORKS ( PERS_ID ) </title></a>
+  <use id='nn' x='1202' y='267' xlink:href='#nn'/><a xlink:href='#PERSON.LAST_NAME'><text id='TBOURG.PERSON.LAST_NAME' x='1218' y='276'>LAST_NAME</text><title>LAST_NAME
+* varchar2(255)</title></a>
+<text x='1302' y='273' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1202' y='282' xlink:href='#nn'/><a xlink:href='#PERSON.FIRST_NAME'><text id='TBOURG.PERSON.FIRST_NAME' x='1218' y='291'>FIRST_NAME</text><title>FIRST_NAME
+* varchar2(255)</title></a>
+<text x='1302' y='288' text-anchor='end' class='colType'>t</text>  <a xlink:href='#PERSON.MI'><text id='TBOURG.PERSON.MI' x='1218' y='306'>MI</text><title>MI
+varchar2(1)</title></a>
+<text x='1302' y='303' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1202' y='312' xlink:href='#nn'/><a xlink:href='#PERSON.ADDRESS1'><text id='TBOURG.PERSON.ADDRESS1' x='1218' y='321'>ADDRESS1</text><title>ADDRESS1
+* varchar2(255)</title></a>
+<text x='1302' y='318' text-anchor='end' class='colType'>t</text>  <a xlink:href='#PERSON.ADDRESS2'><text id='TBOURG.PERSON.ADDRESS2' x='1218' y='336'>ADDRESS2</text><title>ADDRESS2
+varchar2(255)</title></a>
+<text x='1302' y='333' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1202' y='342' xlink:href='#nn'/><a xlink:href='#PERSON.CITY'><text id='TBOURG.PERSON.CITY' x='1218' y='351'>CITY</text><title>CITY
+* varchar2(255)</title></a>
+<text x='1302' y='348' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1202' y='357' xlink:href='#nn'/><a xlink:href='#PERSON.STATE'><text id='TBOURG.PERSON.STATE' x='1218' y='366'>STATE</text><title>STATE
+* varchar2(2)</title></a>
+<text x='1302' y='363' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1202' y='372' xlink:href='#nn'/><a xlink:href='#PERSON.ZIP'><text id='TBOURG.PERSON.ZIP' x='1218' y='381'>ZIP</text><title>ZIP
+* varchar2(9)</title></a>
+<text x='1302' y='378' text-anchor='end' class='colType'>t</text>  <a xlink:href='#PERSON.EMAIL'><text id='TBOURG.PERSON.EMAIL' x='1218' y='396'>EMAIL</text><title>EMAIL
+varchar2(255)</title></a>
+<text x='1302' y='393' text-anchor='end' class='colType'>t</text>  <a xlink:href='#PERSON.GENDER'><text id='TBOURG.PERSON.GENDER' x='1218' y='411'>GENDER</text><title>GENDER
+varchar2(2)</title></a>
+<text x='1302' y='408' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'POSITION' == -->
+<rect class='entity' x='210' y='68' width='90' height='150' rx='7' ry='7' style='stroke:none'/>
+<path d='M 210 94 L 210 75 Q 210 68 217 68 L 293 68 Q 300 68 300 75 L 300 94 L210 94 ' style='fill:url(#tbg_f5ddbf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='210' y='68' width='90' height='150' rx='7' ry='7' style='fill:none;stroke:#bfb7ae'/>
+<line class='delim' x1='210' y1='94' x2='300' y2='94' style='stroke:#bfb7ae'/>
+<line class='delim' x1='225' y1='94' x2='225' y2='218' style='stroke:#bfb7ae'/>
+<line class='delim' x1='289' y1='94' x2='289' y2='218' style='stroke:#bfb7ae'/>
+<a xlink:href='#POSITION'><text x='227' y='86'>POSITION</text><title>Table TBOURG.POSITION</title></a>
+  <use id='nn' x='212' y='102' xlink:href='#nn'/><a xlink:href='#POSITION.POS_CODE'><use id='pk' x='212' y='101' xlink:href='#pk'/><title>Pk SYS_C00146280 ( POS_CODE ) </title></a>
+<a xlink:href='#POSITION.POS_CODE'><text id='TBOURG.POSITION.POS_CODE' x='228' y='111' onmouseover="hghl(['POSITION_CERT_PC_POS_FK','TBOURG.POSITION_CERT.POS_CODE','WORKS_POS_WORKS_FK','TBOURG.WORKS.POS_CODE','POSITION_SKILLS_PS_POS_FK','TBOURG.POSITION_SKILLS.POS_CODE'])" onmouseout="uhghl(['POSITION_CERT_PC_POS_FK','TBOURG.POSITION_CERT.POS_CODE','WORKS_POS_WORKS_FK','TBOURG.WORKS.POS_CODE','POSITION_SKILLS_PS_POS_FK','TBOURG.POSITION_SKILLS.POS_CODE'])">POS_CODE</text><title>POS_CODE
+* number default "TBOURG"."ISEQ$$_277005".nextval</title></a>
+<a xlink:href='#POSITION.POS_CODE'><use id='ref' x='289' y='101' xlink:href='#ref'/><title>Referred by POSITION_CERT ( POS_CODE ) 
+Referred by WORKS ( POS_CODE ) 
+Referred by POSITION_SKILLS ( POS_CODE ) </title></a>
+  <use id='nn' x='212' y='117' xlink:href='#nn'/><a xlink:href='#POSITION.COMP_ID'><text id='TBOURG.POSITION.COMP_ID' x='228' y='126' onmouseover="hghl(['POSITION_POS_COMPANY_FK','TBOURG.COMPANY.COMP_ID'])" onmouseout="uhghl(['POSITION_POS_COMPANY_FK','TBOURG.COMPANY.COMP_ID'])">COMP_ID</text><title>COMP_ID
+* number</title></a>
+<a xlink:href='#POSITION.COMP_ID'><use id='fk' x='289' y='116' xlink:href='#fk'/><title>References COMPANY ( COMP_ID ) </title></a>
+  <use id='nn' x='212' y='132' xlink:href='#nn'/><a xlink:href='#POSITION.POS_TITLE'><text id='TBOURG.POSITION.POS_TITLE' x='228' y='141'>POS_TITLE</text><title>POS_TITLE
+* varchar2(255)</title></a>
+<text x='297' y='138' text-anchor='end' class='colType'>t</text>  <use id='nn' x='212' y='147' xlink:href='#nn'/><a xlink:href='#POSITION.EMP_MODE'><text id='TBOURG.POSITION.EMP_MODE' x='228' y='156'>EMP_MODE</text><title>EMP_MODE
+* varchar2(2)</title></a>
+<text x='297' y='153' text-anchor='end' class='colType'>t</text>  <use id='nn' x='212' y='162' xlink:href='#nn'/><a xlink:href='#POSITION.CAT_CODE'><text id='TBOURG.POSITION.CAT_CODE' x='228' y='171' onmouseover="hghl(['POSITION_POS_CATEGORY_FK','TBOURG.JOB_CATEGORY.CAT_CODE'])" onmouseout="uhghl(['POSITION_POS_CATEGORY_FK','TBOURG.JOB_CATEGORY.CAT_CODE'])">CAT_CODE</text><title>CAT_CODE
+* varchar2(255)</title></a>
+<a xlink:href='#POSITION.CAT_CODE'><use id='fk' x='289' y='161' xlink:href='#fk'/><title>References JOB_CATEGORY ( CAT_CODE ) </title></a>
+  <use id='nn' x='212' y='177' xlink:href='#nn'/><a xlink:href='#POSITION.PAY_RATE'><text id='TBOURG.POSITION.PAY_RATE' x='228' y='186'>PAY_RATE</text><title>PAY_RATE
+* number(10,2)</title></a>
+<text x='297' y='183' text-anchor='end' class='colType'>#</text>  <a xlink:href='#POSITION.PAY_TYPE'><text id='TBOURG.POSITION.PAY_TYPE' x='228' y='201'>PAY_TYPE</text><title>PAY_TYPE
+varchar2(1)</title></a>
+<text x='297' y='198' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'POSITION_CERT' == -->
+<rect class='entity' x='360' y='278' width='105' height='90' rx='7' ry='7' style='stroke:none'/>
+<path d='M 360 304 L 360 285 Q 360 278 367 278 L 458 278 Q 465 278 465 285 L 465 304 L360 304 ' style='fill:url(#tbg_f5ddbf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='360' y='278' width='105' height='90' rx='7' ry='7' style='fill:none;stroke:#bfb7ae'/>
+<line class='delim' x1='360' y1='304' x2='465' y2='304' style='stroke:#bfb7ae'/>
+<line class='delim' x1='375' y1='304' x2='375' y2='368' style='stroke:#bfb7ae'/>
+<line class='delim' x1='454' y1='304' x2='454' y2='368' style='stroke:#bfb7ae'/>
+<a xlink:href='#POSITION_CERT'><text x='369' y='296'>POSITION_CERT</text><title>Table TBOURG.POSITION_CERT</title></a>
+  <use id='nn' x='362' y='312' xlink:href='#nn'/><a xlink:href='#POSITION_CERT.CERT_CODE'><use id='pk' x='362' y='311' xlink:href='#pk'/><title>Pk POSITION_CERT_PK ( CERT_CODE, POS_CODE ) </title></a>
+<a xlink:href='#POSITION_CERT.CERT_CODE'><text id='TBOURG.POSITION_CERT.CERT_CODE' x='378' y='321' onmouseover="hghl(['POSITION_CERT_PC_CERT_FK','TBOURG.CERT.CERT_CODE'])" onmouseout="uhghl(['POSITION_CERT_PC_CERT_FK','TBOURG.CERT.CERT_CODE'])">CERT_CODE</text><title>CERT_CODE
+* number</title></a>
+<a xlink:href='#POSITION_CERT.CERT_CODE'><use id='fk' x='454' y='311' xlink:href='#fk'/><title>References CERT ( CERT_CODE ) </title></a>
+  <use id='nn' x='362' y='327' xlink:href='#nn'/><a xlink:href='#POSITION_CERT.POS_CODE'><use id='pk' x='362' y='326' xlink:href='#pk'/><title>Pk POSITION_CERT_PK ( CERT_CODE, POS_CODE ) </title></a>
+<a xlink:href='#POSITION_CERT.POS_CODE'><text id='TBOURG.POSITION_CERT.POS_CODE' x='378' y='336' onmouseover="hghl(['POSITION_CERT_PC_POS_FK','TBOURG.POSITION.POS_CODE'])" onmouseout="uhghl(['POSITION_CERT_PC_POS_FK','TBOURG.POSITION.POS_CODE'])">POS_CODE</text><title>POS_CODE
+* number</title></a>
+<a xlink:href='#POSITION_CERT.POS_CODE'><use id='fk' x='454' y='326' xlink:href='#fk'/><title>References POSITION ( POS_CODE ) </title></a>
+  <a xlink:href='#POSITION_CERT.PREFER'><text id='TBOURG.POSITION_CERT.PREFER' x='378' y='351'>PREFER</text><title>PREFER
+varchar2(2)</title></a>
+<text x='462' y='348' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'POSITION_SKILLS' == -->
+<rect class='entity' x='45' y='128' width='105' height='90' rx='7' ry='7' style='stroke:none'/>
+<path d='M 45 154 L 45 135 Q 45 128 52 128 L 143 128 Q 150 128 150 135 L 150 154 L45 154 ' style='fill:url(#tbg_f5ddbf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='45' y='128' width='105' height='90' rx='7' ry='7' style='fill:none;stroke:#bfb7ae'/>
+<line class='delim' x1='45' y1='154' x2='150' y2='154' style='stroke:#bfb7ae'/>
+<line class='delim' x1='60' y1='154' x2='60' y2='218' style='stroke:#bfb7ae'/>
+<line class='delim' x1='139' y1='154' x2='139' y2='218' style='stroke:#bfb7ae'/>
+<a xlink:href='#POSITION_SKILLS'><text x='51' y='146'>POSITION_SKILLS</text><title>Table TBOURG.POSITION_SKILLS</title></a>
+  <use id='nn' x='47' y='162' xlink:href='#nn'/><a xlink:href='#POSITION_SKILLS.KS_CODE'><use id='pk' x='47' y='161' xlink:href='#pk'/><title>Pk POSITION_PK ( KS_CODE, POS_CODE ) </title></a>
+<a xlink:href='#POSITION_SKILLS.KS_CODE'><text id='TBOURG.POSITION_SKILLS.KS_CODE' x='63' y='171' onmouseover="hghl(['POSITION_SKILLS_PS_KS_FK','TBOURG.KNOW_SKILL.KS_CODE'])" onmouseout="uhghl(['POSITION_SKILLS_PS_KS_FK','TBOURG.KNOW_SKILL.KS_CODE'])">KS_CODE</text><title>KS_CODE
+* varchar2(255)</title></a>
+<a xlink:href='#POSITION_SKILLS.KS_CODE'><use id='fk' x='139' y='161' xlink:href='#fk'/><title>References KNOW_SKILL ( KS_CODE ) </title></a>
+  <use id='nn' x='47' y='177' xlink:href='#nn'/><a xlink:href='#POSITION_SKILLS.POS_CODE'><use id='pk' x='47' y='176' xlink:href='#pk'/><title>Pk POSITION_PK ( KS_CODE, POS_CODE ) </title></a>
+<a xlink:href='#POSITION_SKILLS.POS_CODE'><text id='TBOURG.POSITION_SKILLS.POS_CODE' x='63' y='186' onmouseover="hghl(['POSITION_SKILLS_PS_POS_FK','TBOURG.POSITION.POS_CODE'])" onmouseout="uhghl(['POSITION_SKILLS_PS_POS_FK','TBOURG.POSITION.POS_CODE'])">POS_CODE</text><title>POS_CODE
+* number</title></a>
+<a xlink:href='#POSITION_SKILLS.POS_CODE'><use id='fk' x='139' y='176' xlink:href='#fk'/><title>References POSITION ( POS_CODE ) </title></a>
+  <use id='nn' x='47' y='192' xlink:href='#nn'/><a xlink:href='#POSITION_SKILLS.PREFER'><text id='TBOURG.POSITION_SKILLS.PREFER' x='63' y='201'>PREFER</text><title>PREFER
+* char(1)</title></a>
+<text x='147' y='198' text-anchor='end' class='colType'>c</text>
+<!-- == Table 'PREREQUISITE' == -->
+<rect class='entity' x='1920' y='68' width='105' height='75' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1920 94 L 1920 75 Q 1920 68 1927 68 L 2018 68 Q 2025 68 2025 75 L 2025 94 L1920 94 ' style='fill:url(#tbg_bfd4f5);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1920' y='68' width='105' height='75' rx='7' ry='7' style='fill:none;stroke:#aeb5bf'/>
+<line class='delim' x1='1920' y1='94' x2='2025' y2='94' style='stroke:#aeb5bf'/>
+<line class='delim' x1='1935' y1='94' x2='1935' y2='143' style='stroke:#aeb5bf'/>
+<line class='delim' x1='2014' y1='94' x2='2014' y2='143' style='stroke:#aeb5bf'/>
+<a xlink:href='#PREREQUISITE'><text x='1933' y='86'>PREREQUISITE</text><title>Table TBOURG.PREREQUISITE</title></a>
+  <use id='nn' x='1922' y='102' xlink:href='#nn'/><a xlink:href='#PREREQUISITE.C_CODE'><use id='pk' x='1922' y='101' xlink:href='#pk'/><title>Pk PREREQ_PK ( C_CODE, PREREQ_CODE ) </title></a>
+<a xlink:href='#PREREQUISITE.C_CODE'><text id='TBOURG.PREREQUISITE.C_CODE' x='1938' y='111' onmouseover="hghl(['PREREQUISITE_C_CODE_FK','TBOURG.COURSE.C_CODE'])" onmouseout="uhghl(['PREREQUISITE_C_CODE_FK','TBOURG.COURSE.C_CODE'])">C_CODE</text><title>C_CODE
+* number</title></a>
+<a xlink:href='#PREREQUISITE.C_CODE'><use id='fk' x='2014' y='101' xlink:href='#fk'/><title>References COURSE ( C_CODE ) </title></a>
+  <use id='nn' x='1922' y='117' xlink:href='#nn'/><a xlink:href='#PREREQUISITE.PREREQ_CODE'><use id='pk' x='1922' y='116' xlink:href='#pk'/><title>Pk PREREQ_PK ( C_CODE, PREREQ_CODE ) </title></a>
+<a xlink:href='#PREREQUISITE.PREREQ_CODE'><text id='TBOURG.PREREQUISITE.PREREQ_CODE' x='1938' y='126' onmouseover="hghl(['PREREQUISITE_PREREQ_CODE','TBOURG.COURSE.C_CODE'])" onmouseout="uhghl(['PREREQUISITE_PREREQ_CODE','TBOURG.COURSE.C_CODE'])">PREREQ_CODE</text><title>PREREQ_CODE
+* number</title></a>
+<a xlink:href='#PREREQUISITE.PREREQ_CODE'><use id='fk' x='2014' y='116' xlink:href='#fk'/><title>References COURSE ( PREREQ_CODE -&gt; C_CODE ) </title></a>
+
+<!-- == Table 'PROVIDES_SKILL' == -->
+<rect class='entity' x='1740' y='278' width='105' height='75' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1740 304 L 1740 285 Q 1740 278 1747 278 L 1838 278 Q 1845 278 1845 285 L 1845 304 L1740 304 ' style='fill:url(#tbg_bfd4f5);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1740' y='278' width='105' height='75' rx='7' ry='7' style='fill:none;stroke:#aeb5bf'/>
+<line class='delim' x1='1740' y1='304' x2='1845' y2='304' style='stroke:#aeb5bf'/>
+<line class='delim' x1='1755' y1='304' x2='1755' y2='353' style='stroke:#aeb5bf'/>
+<line class='delim' x1='1834' y1='304' x2='1834' y2='353' style='stroke:#aeb5bf'/>
+<a xlink:href='#PROVIDES_SKILL'><text x='1748' y='296'>PROVIDES_SKILL</text><title>Table TBOURG.PROVIDES_SKILL</title></a>
+  <use id='nn' x='1742' y='312' xlink:href='#nn'/><a xlink:href='#PROVIDES_SKILL.KS_CODE'><use id='pk' x='1742' y='311' xlink:href='#pk'/><title>Pk PROVIDE_SKILL_PK ( KS_CODE, C_CODE ) </title></a>
+<a xlink:href='#PROVIDES_SKILL.KS_CODE'><text id='TBOURG.PROVIDES_SKILL.KS_CODE' x='1758' y='321' onmouseover="hghl(['PROVIDES_SKILL_SKILL_PROVIDE_FK','TBOURG.KNOW_SKILL.KS_CODE'])" onmouseout="uhghl(['PROVIDES_SKILL_SKILL_PROVIDE_FK','TBOURG.KNOW_SKILL.KS_CODE'])">KS_CODE</text><title>KS_CODE
+* varchar2(255)</title></a>
+<a xlink:href='#PROVIDES_SKILL.KS_CODE'><use id='fk' x='1834' y='311' xlink:href='#fk'/><title>References KNOW_SKILL ( KS_CODE ) </title></a>
+  <use id='nn' x='1742' y='327' xlink:href='#nn'/><a xlink:href='#PROVIDES_SKILL.C_CODE'><use id='pk' x='1742' y='326' xlink:href='#pk'/><title>Pk PROVIDE_SKILL_PK ( KS_CODE, C_CODE ) </title></a>
+<a xlink:href='#PROVIDES_SKILL.C_CODE'><text id='TBOURG.PROVIDES_SKILL.C_CODE' x='1758' y='336' onmouseover="hghl(['PROVIDES_SKILL_COURSE_PROVIDE_FK','TBOURG.COURSE.C_CODE'])" onmouseout="uhghl(['PROVIDES_SKILL_COURSE_PROVIDE_FK','TBOURG.COURSE.C_CODE'])">C_CODE</text><title>C_CODE
+* number</title></a>
+<a xlink:href='#PROVIDES_SKILL.C_CODE'><use id='fk' x='1834' y='326' xlink:href='#fk'/><title>References COURSE ( C_CODE ) </title></a>
+
+<!-- == Table 'WORKS' == -->
+<rect class='entity' x='195' y='278' width='105' height='105' rx='7' ry='7' style='stroke:none'/>
+<path d='M 195 304 L 195 285 Q 195 278 202 278 L 293 278 Q 300 278 300 285 L 300 304 L195 304 ' style='fill:url(#tbg_f5ddbf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='195' y='278' width='105' height='105' rx='7' ry='7' style='fill:none;stroke:#bfb7ae'/>
+<line class='delim' x1='195' y1='304' x2='300' y2='304' style='stroke:#bfb7ae'/>
+<line class='delim' x1='210' y1='304' x2='210' y2='383' style='stroke:#bfb7ae'/>
+<line class='delim' x1='289' y1='304' x2='289' y2='383' style='stroke:#bfb7ae'/>
+<a xlink:href='#WORKS'><text x='226' y='296'>WORKS</text><title>Table TBOURG.WORKS</title></a>
+  <use id='nn' x='197' y='312' xlink:href='#nn'/><a xlink:href='#WORKS.POS_CODE'><use id='pk' x='197' y='311' xlink:href='#pk'/><title>Unq POS_START_DATE_UNIQ ( POS_CODE, START_DATE ) Pk WORKS_PK ( POS_CODE, PERS_ID ) </title></a>
+<a xlink:href='#WORKS.POS_CODE'><text id='TBOURG.WORKS.POS_CODE' x='213' y='321' onmouseover="hghl(['WORKS_POS_WORKS_FK','TBOURG.POSITION.POS_CODE'])" onmouseout="uhghl(['WORKS_POS_WORKS_FK','TBOURG.POSITION.POS_CODE'])">POS_CODE</text><title>POS_CODE
+* number</title></a>
+<a xlink:href='#WORKS.POS_CODE'><use id='fk' x='289' y='311' xlink:href='#fk'/><title>References POSITION ( POS_CODE ) </title></a>
+  <use id='nn' x='197' y='327' xlink:href='#nn'/><a xlink:href='#WORKS.PERS_ID'><use id='pk' x='197' y='326' xlink:href='#pk'/><title>Pk WORKS_PK ( POS_CODE, PERS_ID ) </title></a>
+<a xlink:href='#WORKS.PERS_ID'><text id='TBOURG.WORKS.PERS_ID' x='213' y='336' onmouseover="hghl(['WORKS_PERS_WORKS_FK','TBOURG.PERSON.PERS_ID'])" onmouseout="uhghl(['WORKS_PERS_WORKS_FK','TBOURG.PERSON.PERS_ID'])">PERS_ID</text><title>PERS_ID
+* number</title></a>
+<a xlink:href='#WORKS.PERS_ID'><use id='fk' x='289' y='326' xlink:href='#fk'/><title>References PERSON ( PERS_ID ) </title></a>
+  <use id='nn' x='197' y='342' xlink:href='#nn'/><a xlink:href='#WORKS.START_DATE'><use id='unq' x='197' y='341' xlink:href='#unq'/><title>Unq POS_START_DATE_UNIQ ( POS_CODE, START_DATE ) </title></a>
+<a xlink:href='#WORKS.START_DATE'><text id='TBOURG.WORKS.START_DATE' x='213' y='351'>START_DATE</text><title>START_DATE
+* varchar2(255)</title></a>
+<text x='297' y='348' text-anchor='end' class='colType'>t</text>  <a xlink:href='#WORKS.END_DATE'><text id='TBOURG.WORKS.END_DATE' x='213' y='366'>END_DATE</text><title>END_DATE
+varchar2(255)</title></a>
+<text x='297' y='363' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'TRAINING_PROVIDER' == -->
+<rect class='entity' x='1755' y='938' width='120' height='75' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1755 964 L 1755 945 Q 1755 938 1762 938 L 1868 938 Q 1875 938 1875 945 L 1875 964 L1755 964 ' style='fill:url(#tbg_c8f5bf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1755' y='938' width='120' height='75' rx='7' ry='7' style='fill:none;stroke:#b1bfae'/>
+<line class='delim' x1='1755' y1='964' x2='1875' y2='964' style='stroke:#b1bfae'/>
+<line class='delim' x1='1770' y1='964' x2='1770' y2='1013' style='stroke:#b1bfae'/>
+<line class='delim' x1='1864' y1='964' x2='1864' y2='1013' style='stroke:#b1bfae'/>
+<a xlink:href='#TRAINING_PROVIDER'><text x='1759' y='956'>TRAINING_PROVIDER</text><title>Table TBOURG.TRAINING_PROVIDER</title></a>
+  <use id='nn' x='1757' y='972' xlink:href='#nn'/><a xlink:href='#TRAINING_PROVIDER.COMP_ID'><use id='pk' x='1757' y='971' xlink:href='#pk'/><title>Pk SYS_C00146251 ( COMP_ID ) </title></a>
+<a xlink:href='#TRAINING_PROVIDER.COMP_ID'><text id='TBOURG.TRAINING_PROVIDER.COMP_ID' x='1773' y='981' onmouseover="hghl(['TRAINING_PROVIDER_PROVIDER_COMP_FK','TBOURG.COMPANY.COMP_ID','CERT_CERT_ISSUED_BY','TBOURG.CERT.ISSUED_BY','SECTION_SECT_OFFERED_BY_FK','TBOURG.SECTION.OFFERED_BY'])" onmouseout="uhghl(['TRAINING_PROVIDER_PROVIDER_COMP_FK','TBOURG.COMPANY.COMP_ID','CERT_CERT_ISSUED_BY','TBOURG.CERT.ISSUED_BY','SECTION_SECT_OFFERED_BY_FK','TBOURG.SECTION.OFFERED_BY'])">COMP_ID</text><title>COMP_ID
+* number</title></a>
+<a xlink:href='#TRAINING_PROVIDER.COMP_ID'><use id='fk' x='1864' y='971' xlink:href='#fk'/><title>References COMPANY ( COMP_ID ) 
+Referred by CERT ( ISSUED_BY -&gt; COMP_ID ) 
+Referred by SECTION ( OFFERED_BY -&gt; COMP_ID ) </title></a>
+  <a xlink:href='#TRAINING_PROVIDER.TRAIN_TYPE'><text id='TBOURG.TRAINING_PROVIDER.TRAIN_TYPE' x='1773' y='996'>TRAIN_TYPE</text><title>TRAIN_TYPE
+varchar2(255)</title></a>
+<text x='1872' y='993' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'SECTION' == -->
+<rect class='entity' x='1740' y='368' width='120' height='120' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1740 394 L 1740 375 Q 1740 368 1747 368 L 1853 368 Q 1860 368 1860 375 L 1860 394 L1740 394 ' style='fill:url(#tbg_c8f5bf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1740' y='368' width='120' height='120' rx='7' ry='7' style='fill:none;stroke:#b1bfae'/>
+<line class='delim' x1='1740' y1='394' x2='1860' y2='394' style='stroke:#b1bfae'/>
+<line class='delim' x1='1755' y1='394' x2='1755' y2='488' style='stroke:#b1bfae'/>
+<line class='delim' x1='1849' y1='394' x2='1849' y2='488' style='stroke:#b1bfae'/>
+<a xlink:href='#SECTION'><text x='1775' y='386'>SECTION</text><title>Table TBOURG.SECTION</title></a>
+  <use id='nn' x='1742' y='402' xlink:href='#nn'/><a xlink:href='#SECTION.C_CODE'><use id='pk' x='1742' y='401' xlink:href='#pk'/><title>Pk SECTION_PK ( C_CODE, SEC_CODE, COMPLETE_DATE ) </title></a>
+<a xlink:href='#SECTION.C_CODE'><text id='TBOURG.SECTION.C_CODE' x='1758' y='411' onmouseover="hghl(['SECTION_SEC_COURSE_FK','TBOURG.COURSE.C_CODE','TAKES_SEC_TAKES_FK','TBOURG.TAKES.C_CODE','TBOURG.TAKES.SEC_CODE','TBOURG.TAKES.COMPLETE_DATE'])" onmouseout="uhghl(['SECTION_SEC_COURSE_FK','TBOURG.COURSE.C_CODE','TAKES_SEC_TAKES_FK','TBOURG.TAKES.C_CODE','TBOURG.TAKES.SEC_CODE','TBOURG.TAKES.COMPLETE_DATE'])">C_CODE</text><title>C_CODE
+* number</title></a>
+<a xlink:href='#SECTION.C_CODE'><use id='fk' x='1849' y='401' xlink:href='#fk'/><title>References COURSE ( C_CODE ) 
+Referred by TAKES ( C_CODE, SEC_CODE, COMPLETE_DATE ) </title></a>
+  <use id='nn' x='1742' y='417' xlink:href='#nn'/><a xlink:href='#SECTION.SEC_CODE'><use id='pk' x='1742' y='416' xlink:href='#pk'/><title>Pk SECTION_PK ( C_CODE, SEC_CODE, COMPLETE_DATE ) </title></a>
+<a xlink:href='#SECTION.SEC_CODE'><text id='TBOURG.SECTION.SEC_CODE' x='1758' y='426' onmouseover="hghl(['TAKES_SEC_TAKES_FK','TBOURG.TAKES.C_CODE','TBOURG.TAKES.SEC_CODE','TBOURG.TAKES.COMPLETE_DATE'])" onmouseout="uhghl(['TAKES_SEC_TAKES_FK','TBOURG.TAKES.C_CODE','TBOURG.TAKES.SEC_CODE','TBOURG.TAKES.COMPLETE_DATE'])">SEC_CODE</text><title>SEC_CODE
+* number(10)</title></a>
+<a xlink:href='#SECTION.SEC_CODE'><use id='ref' x='1849' y='416' xlink:href='#ref'/><title>Referred by TAKES ( C_CODE, SEC_CODE, COMPLETE_DATE ) </title></a>
+  <use id='nn' x='1742' y='432' xlink:href='#nn'/><a xlink:href='#SECTION.COMPLETE_DATE'><use id='pk' x='1742' y='431' xlink:href='#pk'/><title>Pk SECTION_PK ( C_CODE, SEC_CODE, COMPLETE_DATE ) </title></a>
+<a xlink:href='#SECTION.COMPLETE_DATE'><text id='TBOURG.SECTION.COMPLETE_DATE' x='1758' y='441' onmouseover="hghl(['TAKES_SEC_TAKES_FK','TBOURG.TAKES.C_CODE','TBOURG.TAKES.SEC_CODE','TBOURG.TAKES.COMPLETE_DATE'])" onmouseout="uhghl(['TAKES_SEC_TAKES_FK','TBOURG.TAKES.C_CODE','TBOURG.TAKES.SEC_CODE','TBOURG.TAKES.COMPLETE_DATE'])">COMPLETE_DATE</text><title>COMPLETE_DATE
+* date</title></a>
+<a xlink:href='#SECTION.COMPLETE_DATE'><use id='ref' x='1849' y='431' xlink:href='#ref'/><title>Referred by TAKES ( C_CODE, SEC_CODE, COMPLETE_DATE ) </title></a>
+  <use id='nn' x='1742' y='447' xlink:href='#nn'/><a xlink:href='#SECTION.OFFERED_BY'><text id='TBOURG.SECTION.OFFERED_BY' x='1758' y='456' onmouseover="hghl(['SECTION_SECT_OFFERED_BY_FK','TBOURG.TRAINING_PROVIDER.COMP_ID'])" onmouseout="uhghl(['SECTION_SECT_OFFERED_BY_FK','TBOURG.TRAINING_PROVIDER.COMP_ID'])">OFFERED_BY</text><title>OFFERED_BY
+* number</title></a>
+<a xlink:href='#SECTION.OFFERED_BY'><use id='fk' x='1849' y='446' xlink:href='#fk'/><title>References TRAINING_PROVIDER ( OFFERED_BY -&gt; COMP_ID ) </title></a>
+  <a xlink:href='#SECTION.FORMAT'><text id='TBOURG.SECTION.FORMAT' x='1758' y='471'>FORMAT</text><title>FORMAT
+varchar2(255)</title></a>
+<text x='1857' y='468' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'TAKES' == -->
+<rect class='entity' x='1350' y='488' width='120' height='105' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1350 514 L 1350 495 Q 1350 488 1357 488 L 1463 488 Q 1470 488 1470 495 L 1470 514 L1350 514 ' style='fill:url(#tbg_c8f5bf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1350' y='488' width='120' height='105' rx='7' ry='7' style='fill:none;stroke:#b1bfae'/>
+<line class='delim' x1='1350' y1='514' x2='1470' y2='514' style='stroke:#b1bfae'/>
+<line class='delim' x1='1365' y1='514' x2='1365' y2='593' style='stroke:#b1bfae'/>
+<line class='delim' x1='1459' y1='514' x2='1459' y2='593' style='stroke:#b1bfae'/>
+<a xlink:href='#TAKES'><text x='1391' y='506'>TAKES</text><title>Table TBOURG.TAKES</title></a>
+  <use id='nn' x='1352' y='522' xlink:href='#nn'/><a xlink:href='#TAKES.C_CODE'><use id='pk' x='1352' y='521' xlink:href='#pk'/><title>Pk TAKES_PK ( C_CODE, SEC_CODE, COMPLETE_DATE, PERS_ID ) </title></a>
+<a xlink:href='#TAKES.C_CODE'><text id='TBOURG.TAKES.C_CODE' x='1368' y='531' onmouseover="hghl(['TAKES_SEC_TAKES_FK','TBOURG.SECTION.C_CODE','TBOURG.SECTION.SEC_CODE','TBOURG.SECTION.COMPLETE_DATE'])" onmouseout="uhghl(['TAKES_SEC_TAKES_FK','TBOURG.SECTION.C_CODE','TBOURG.SECTION.SEC_CODE','TBOURG.SECTION.COMPLETE_DATE'])">C_CODE</text><title>C_CODE
+* number</title></a>
+<a xlink:href='#TAKES.C_CODE'><use id='fk' x='1459' y='521' xlink:href='#fk'/><title>References SECTION ( C_CODE, SEC_CODE, COMPLETE_DATE ) </title></a>
+  <use id='nn' x='1352' y='537' xlink:href='#nn'/><a xlink:href='#TAKES.SEC_CODE'><use id='pk' x='1352' y='536' xlink:href='#pk'/><title>Pk TAKES_PK ( C_CODE, SEC_CODE, COMPLETE_DATE, PERS_ID ) </title></a>
+<a xlink:href='#TAKES.SEC_CODE'><text id='TBOURG.TAKES.SEC_CODE' x='1368' y='546' onmouseover="hghl(['TAKES_SEC_TAKES_FK','TBOURG.SECTION.C_CODE','TBOURG.SECTION.SEC_CODE','TBOURG.SECTION.COMPLETE_DATE'])" onmouseout="uhghl(['TAKES_SEC_TAKES_FK','TBOURG.SECTION.C_CODE','TBOURG.SECTION.SEC_CODE','TBOURG.SECTION.COMPLETE_DATE'])">SEC_CODE</text><title>SEC_CODE
+* number(10)</title></a>
+<a xlink:href='#TAKES.SEC_CODE'><use id='fk' x='1459' y='536' xlink:href='#fk'/><title>References SECTION ( C_CODE, SEC_CODE, COMPLETE_DATE ) </title></a>
+  <use id='nn' x='1352' y='552' xlink:href='#nn'/><a xlink:href='#TAKES.COMPLETE_DATE'><use id='pk' x='1352' y='551' xlink:href='#pk'/><title>Pk TAKES_PK ( C_CODE, SEC_CODE, COMPLETE_DATE, PERS_ID ) </title></a>
+<a xlink:href='#TAKES.COMPLETE_DATE'><text id='TBOURG.TAKES.COMPLETE_DATE' x='1368' y='561' onmouseover="hghl(['TAKES_SEC_TAKES_FK','TBOURG.SECTION.C_CODE','TBOURG.SECTION.SEC_CODE','TBOURG.SECTION.COMPLETE_DATE'])" onmouseout="uhghl(['TAKES_SEC_TAKES_FK','TBOURG.SECTION.C_CODE','TBOURG.SECTION.SEC_CODE','TBOURG.SECTION.COMPLETE_DATE'])">COMPLETE_DATE</text><title>COMPLETE_DATE
+* date</title></a>
+<a xlink:href='#TAKES.COMPLETE_DATE'><use id='fk' x='1459' y='551' xlink:href='#fk'/><title>References SECTION ( C_CODE, SEC_CODE, COMPLETE_DATE ) </title></a>
+  <use id='nn' x='1352' y='567' xlink:href='#nn'/><a xlink:href='#TAKES.PERS_ID'><use id='pk' x='1352' y='566' xlink:href='#pk'/><title>Pk TAKES_PK ( C_CODE, SEC_CODE, COMPLETE_DATE, PERS_ID ) </title></a>
+<a xlink:href='#TAKES.PERS_ID'><text id='TBOURG.TAKES.PERS_ID' x='1368' y='576' onmouseover="hghl(['TAKES_PERS_TAKES_FK','TBOURG.PERSON.PERS_ID'])" onmouseout="uhghl(['TAKES_PERS_TAKES_FK','TBOURG.PERSON.PERS_ID'])">PERS_ID</text><title>PERS_ID
+* number</title></a>
+<a xlink:href='#TAKES.PERS_ID'><use id='fk' x='1459' y='566' xlink:href='#fk'/><title>References PERSON ( PERS_ID ) </title></a>
+
+<!-- == Table 'HAS_CERT' == -->
+<rect class='entity' x='1365' y='353' width='105' height='75' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1365 379 L 1365 360 Q 1365 353 1372 353 L 1463 353 Q 1470 353 1470 360 L 1470 379 L1365 379 ' style='fill:url(#tbg_c8f5bf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1365' y='353' width='105' height='75' rx='7' ry='7' style='fill:none;stroke:#b1bfae'/>
+<line class='delim' x1='1365' y1='379' x2='1470' y2='379' style='stroke:#b1bfae'/>
+<line class='delim' x1='1380' y1='379' x2='1380' y2='428' style='stroke:#b1bfae'/>
+<line class='delim' x1='1459' y1='379' x2='1459' y2='428' style='stroke:#b1bfae'/>
+<a xlink:href='#HAS_CERT'><text x='1388' y='371'>HAS_CERT</text><title>Table TBOURG.HAS_CERT</title></a>
+  <use id='nn' x='1367' y='387' xlink:href='#nn'/><a xlink:href='#HAS_CERT.PERS_ID'><use id='pk' x='1367' y='386' xlink:href='#pk'/><title>Pk HAS_CERT_PK ( PERS_ID, CERT_CODE ) </title></a>
+<a xlink:href='#HAS_CERT.PERS_ID'><text id='TBOURG.HAS_CERT.PERS_ID' x='1383' y='396' onmouseover="hghl(['HAS_CERT_PERS_CERT_FK','TBOURG.PERSON.PERS_ID'])" onmouseout="uhghl(['HAS_CERT_PERS_CERT_FK','TBOURG.PERSON.PERS_ID'])">PERS_ID</text><title>PERS_ID
+* number</title></a>
+<a xlink:href='#HAS_CERT.PERS_ID'><use id='fk' x='1459' y='386' xlink:href='#fk'/><title>References PERSON ( PERS_ID ) </title></a>
+  <use id='nn' x='1367' y='402' xlink:href='#nn'/><a xlink:href='#HAS_CERT.CERT_CODE'><use id='pk' x='1367' y='401' xlink:href='#pk'/><title>Pk HAS_CERT_PK ( PERS_ID, CERT_CODE ) </title></a>
+<a xlink:href='#HAS_CERT.CERT_CODE'><text id='TBOURG.HAS_CERT.CERT_CODE' x='1383' y='411' onmouseover="hghl(['HAS_CERT_HAS_CERT_FK','TBOURG.CERT.CERT_CODE'])" onmouseout="uhghl(['HAS_CERT_HAS_CERT_FK','TBOURG.CERT.CERT_CODE'])">CERT_CODE</text><title>CERT_CODE
+* number</title></a>
+<a xlink:href='#HAS_CERT.CERT_CODE'><use id='fk' x='1459' y='401' xlink:href='#fk'/><title>References CERT ( CERT_CODE ) </title></a>
+
+<!-- == Table 'PERSON_PHONE_NUMBERS' == -->
+<rect class='entity' x='1005' y='338' width='150' height='90' rx='7' ry='7' style='stroke:none'/>
+<path d='M 1005 364 L 1005 345 Q 1005 338 1012 338 L 1148 338 Q 1155 338 1155 345 L 1155 364 L1005 364 ' style='fill:url(#tbg_c8f5bf);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='1005' y='338' width='150' height='90' rx='7' ry='7' style='fill:none;stroke:#b1bfae'/>
+<line class='delim' x1='1005' y1='364' x2='1155' y2='364' style='stroke:#b1bfae'/>
+<line class='delim' x1='1020' y1='364' x2='1020' y2='428' style='stroke:#b1bfae'/>
+<line class='delim' x1='1144' y1='364' x2='1144' y2='428' style='stroke:#b1bfae'/>
+<a xlink:href='#PERSON_PHONE_NUMBERS'><text x='1010' y='356'>PERSON_PHONE_NUMBERS</text><title>Table TBOURG.PERSON_PHONE_NUMBERS</title></a>
+  <use id='nn' x='1007' y='372' xlink:href='#nn'/><a xlink:href='#PERSON_PHONE_NUMBERS.PERS_ID'><use id='pk' x='1007' y='371' xlink:href='#pk'/><title>Pk PERSON_PH_PK ( PERS_ID, PHONE ) </title></a>
+<a xlink:href='#PERSON_PHONE_NUMBERS.PERS_ID'><text id='TBOURG.PERSON_PHONE_NUMBERS.PERS_ID' x='1023' y='381' onmouseover="hghl(['PERSON_PHONE_NUMBERS_PERSON_PH_FK','TBOURG.PERSON.PERS_ID'])" onmouseout="uhghl(['PERSON_PHONE_NUMBERS_PERSON_PH_FK','TBOURG.PERSON.PERS_ID'])">PERS_ID</text><title>PERS_ID
+* number</title></a>
+<a xlink:href='#PERSON_PHONE_NUMBERS.PERS_ID'><use id='fk' x='1144' y='371' xlink:href='#fk'/><title>References PERSON ( PERS_ID ) </title></a>
+  <use id='nn' x='1007' y='387' xlink:href='#nn'/><a xlink:href='#PERSON_PHONE_NUMBERS.PHONE'><use id='pk' x='1007' y='386' xlink:href='#pk'/><title>Pk PERSON_PH_PK ( PERS_ID, PHONE ) </title></a>
+<a xlink:href='#PERSON_PHONE_NUMBERS.PHONE'><text id='TBOURG.PERSON_PHONE_NUMBERS.PHONE' x='1023' y='396'>PHONE</text><title>PHONE
+* varchar2(10)</title></a>
+<text x='1152' y='393' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1007' y='402' xlink:href='#nn'/><a xlink:href='#PERSON_PHONE_NUMBERS.PHONE_NUMBER_TYPE'><text id='TBOURG.PERSON_PHONE_NUMBERS.PHONE_NUMBER_TYPE' x='1023' y='411'>PHONE_NUMBER_TYPE</text><title>PHONE_NUMBER_TYPE
+* varchar2(6)</title></a>
+<text x='1152' y='408' text-anchor='end' class='colType'>t</text>
+</g></svg>

@@ -1,0 +1,1094 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.0 Transitional//EN'>
+<html>
+<head>
+<title>Default Layout</title>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>-->
+<link rel="shortcut icon" href="https://www.dbschema.com/images/favicon.ico">
+<style type='text/css'>
+body {
+    font-family: 'Segoe UI', 'Lucida sans', Dialog;
+    font-size: 13px;
+    background-color:#f5f5f5;
+    margin: 10px;
+}
+</style>
+</head>
+
+<body>
+<object data='Career_Development_System.svg' width='2175' height='1235' type='image/svg+xml' >
+<embed src='Career_Development_System.svg' width='2175' height='1235' type='image/svg+xml' />
+<p>The <a href="http://www.adobe.com/svg/viewer/install/main.html">Adobe SVG Viewer</a> is required to view this image !</p></object>
+<br/><br/>
+<div class='card'><div class='card-block'><a name='CERT' onclick='window.scrollTo(1165, 225);return false;' style='cursor:pointer;'><h4 class='card-title'>Table CERT</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#ref'/></svg></td>
+		<td><a name='CERT.CERT_CODE'>CERT&#95;CODE</a></td>
+		<td> number   DEFAULT "TBOURG"."ISEQ$$_277012".nextval </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='CERT.CERT_NAME'>CERT&#95;NAME</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='CERT.ISSUED_BY'>ISSUED&#95;BY</a></td>
+		<td> number&#40; 8 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='CERT.TOOL'>TOOL</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>SYS&#95;C00146299</td>
+		<td> ON CERT&#95;CODE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>CERT_ISSUED_BY</td>
+		<td > ( ISSUED&#95;BY ) ref <a href='#TRAINING&#95;PROVIDER'>TRAINING&#95;PROVIDER</a> (COMP&#95;ID) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='COMPANY' onclick='window.scrollTo(1540, 720);return false;' style='cursor:pointer;'><h4 class='card-title'>Table COMPANY</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#ref'/></svg></td>
+		<td><a name='COMPANY.COMP_ID'>COMP&#95;ID</a></td>
+		<td> number   DEFAULT "TBOURG"."ISEQ$$_276990".nextval </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='COMPANY.COMP_NAME'>COMP&#95;NAME</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='COMPANY.ADDRESS1'>ADDRESS1</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='COMPANY.ADDRESS2'>ADDRESS2</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='COMPANY.CITY'>CITY</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='COMPANY.STATE'>STATE</a></td>
+		<td> varchar2&#40; 2 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='COMPANY.ZIP'>ZIP</a></td>
+		<td> varchar2&#40; 9 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='COMPANY.PRIMARY_SECTOR_CODE'>PRIMARY&#95;SECTOR&#95;CODE</a></td>
+		<td> varchar2&#40; 8 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='COMPANY.PHONE'>PHONE</a></td>
+		<td> varchar2&#40; 10 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='COMPANY.WEBSITE'>WEBSITE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>SYS&#95;C00146243</td>
+		<td> ON COMP&#95;ID</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>SECTOR_FK</td>
+		<td > ( PRIMARY&#95;SECTOR&#95;CODE ) ref <a href='#GICS'>GICS</a> (PRIMARY&#95;SECTOR&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='COMPANY_SPECIALTY' onclick='window.scrollTo(1765, 975);return false;' style='cursor:pointer;'><h4 class='card-title'>Table COMPANY_SPECIALTY</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='COMPANY_SPECIALTY.COMP_ID'>COMP&#95;ID</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='COMPANY_SPECIALTY.SPECIALTY'>SPECIALTY</a></td>
+		<td> varchar2&#40; 8 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>COMP&#95;SPEC&#95;PK</td>
+		<td> ON COMP&#95;ID&#44; SPECIALTY</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>COMP_SPEC_FK</td>
+		<td > ( COMP&#95;ID ) ref <a href='#COMPANY'>COMPANY</a> (COMP&#95;ID) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>SPECIALTY_FK</td>
+		<td > ( SPECIALTY ) ref <a href='#GICS'>GICS</a> (PRIMARY&#95;SECTOR&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='COURSE' onclick='window.scrollTo(1540, 75);return false;' style='cursor:pointer;'><h4 class='card-title'>Table COURSE</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#ref'/></svg></td>
+		<td><a name='COURSE.C_CODE'>C&#95;CODE</a></td>
+		<td> number   DEFAULT "TBOURG"."ISEQ$$_276983".nextval </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='COURSE.TITLE'>TITLE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='COURSE.TRAINING_LEVEL'>TRAINING&#95;LEVEL</a></td>
+		<td> varchar2&#40; 12 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='COURSE.DESCRIPTION'>DESCRIPTION</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='COURSE.STATUS'>STATUS</a></td>
+		<td> varchar2&#40; 1 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='COURSE.RETAIL_PRICE'>RETAIL&#95;PRICE</a></td>
+		<td> number&#40; 10&#44; 2 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='COURSE.TRAIN_TYPE'>TRAIN&#95;TYPE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>SYS&#95;C00146227</td>
+		<td> ON C&#95;CODE</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='COURSE_CERT' onclick='window.scrollTo(1720, 285);return false;' style='cursor:pointer;'><h4 class='card-title'>Table COURSE_CERT</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='COURSE_CERT.CERT_CODE'>CERT&#95;CODE</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='COURSE_CERT.C_CODE'>C&#95;CODE</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>COURSE&#95;CERT&#95;PK</td>
+		<td> ON CERT&#95;CODE&#44; C&#95;CODE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>CERT_REQUIRES_PK</td>
+		<td > ( CERT&#95;CODE ) ref <a href='#CERT'>CERT</a> (CERT&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>COURSE_REQUIRED_PK</td>
+		<td > ( C&#95;CODE ) ref <a href='#COURSE'>COURSE</a> (C&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='GICS' onclick='window.scrollTo(1765, 720);return false;' style='cursor:pointer;'><h4 class='card-title'>Table GICS</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#ref'/></svg></td>
+		<td><a name='GICS.PRIMARY_SECTOR_CODE'>PRIMARY&#95;SECTOR&#95;CODE</a></td>
+		<td> varchar2&#40; 8 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='GICS.CODE_NAME'>CODE&#95;NAME</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='GICS.CODE_DESCRIPTION'>CODE&#95;DESCRIPTION</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='GICS.PARENT_SECTOR_CODE'>PARENT&#95;SECTOR&#95;CODE</a></td>
+		<td> varchar2&#40; 8 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>SYS&#95;C00146234</td>
+		<td> ON PRIMARY&#95;SECTOR&#95;CODE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PARENT_GICS_SECTOR_FK</td>
+		<td > ( PARENT&#95;SECTOR&#95;CODE ) ref <a href='#GICS'>GICS</a> (PRIMARY&#95;SECTOR&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='HAS_CERT' onclick='window.scrollTo(1165, 360);return false;' style='cursor:pointer;'><h4 class='card-title'>Table HAS_CERT</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='HAS_CERT.PERS_ID'>PERS&#95;ID</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='HAS_CERT.CERT_CODE'>CERT&#95;CODE</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>HAS&#95;CERT&#95;PK</td>
+		<td> ON PERS&#95;ID&#44; CERT&#95;CODE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>HAS_CERT_FK</td>
+		<td > ( CERT&#95;CODE ) ref <a href='#CERT'>CERT</a> (CERT&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PERS_CERT_FK</td>
+		<td > ( PERS&#95;ID ) ref <a href='#PERSON'>PERSON</a> (PERS&#95;ID) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='HAS_SKILL' onclick='window.scrollTo(1000, 495);return false;' style='cursor:pointer;'><h4 class='card-title'>Table HAS_SKILL</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='HAS_SKILL.PERS_ID'>PERS&#95;ID</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='HAS_SKILL.KS_CODE'>KS&#95;CODE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>HAS&#95;SKILL&#95;PK</td>
+		<td> ON PERS&#95;ID&#44; KS&#95;CODE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>KS_SKILL_FK</td>
+		<td > ( KS&#95;CODE ) ref <a href='#KNOW&#95;SKILL'>KNOW&#95;SKILL</a> (KS&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PERS_SKILL_FK</td>
+		<td > ( PERS&#95;ID ) ref <a href='#PERSON'>PERSON</a> (PERS&#95;ID) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='JOB_CATEGORY' onclick='window.scrollTo(160, 75);return false;' style='cursor:pointer;'><h4 class='card-title'>Table JOB_CATEGORY</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#ref'/></svg></td>
+		<td><a name='JOB_CATEGORY.CAT_CODE'>CAT&#95;CODE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='JOB_CATEGORY.PARENT_CAT_CODE'>PARENT&#95;CAT&#95;CODE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='JOB_CATEGORY.CORE_SKILL'>CORE&#95;SKILL</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='JOB_CATEGORY.JOB_CATEGORY_TITLE'>JOB&#95;CATEGORY&#95;TITLE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='JOB_CATEGORY.DESCRIPTION'>DESCRIPTION</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='JOB_CATEGORY.PAY_RANGE_HIGH'>PAY&#95;RANGE&#95;HIGH</a></td>
+		<td> float&#40; 15&#44; 0 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='JOB_CATEGORY.PAY_RANGE_LOW'>PAY&#95;RANGE&#95;LOW</a></td>
+		<td> float&#40; 15&#44; 0 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>SYS&#95;C00146271</td>
+		<td> ON CAT&#95;CODE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PARENT_CAT_FK</td>
+		<td > ( PARENT&#95;CAT&#95;CODE ) ref <a href='#JOB&#95;CATEGORY'>JOB&#95;CATEGORY</a> (CAT&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>CAT_NWCET_FK</td>
+		<td > ( CORE&#95;SKILL ) ref <a href='#NWCET'>NWCET</a> (NWCET&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='KNOW_SKILL' onclick='window.scrollTo(580, 75);return false;' style='cursor:pointer;'><h4 class='card-title'>Table KNOW_SKILL</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#ref'/></svg></td>
+		<td><a name='KNOW_SKILL.KS_CODE'>KS&#95;CODE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='KNOW_SKILL.NWCET_CODE'>NWCET&#95;CODE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='KNOW_SKILL.KS_TITLE'>KS&#95;TITLE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='KNOW_SKILL.DESCRIPTION'>DESCRIPTION</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='KNOW_SKILL.TRAINING_LEVEL'>TRAINING&#95;LEVEL</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>SYS&#95;C00146261</td>
+		<td> ON KS&#95;CODE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>KS_NWCET_FK</td>
+		<td > ( NWCET&#95;CODE ) ref <a href='#NWCET'>NWCET</a> (NWCET&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='NWCET' onclick='window.scrollTo(370, 75);return false;' style='cursor:pointer;'><h4 class='card-title'>Table NWCET</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#ref'/></svg></td>
+		<td><a name='NWCET.NWCET_CODE'>NWCET&#95;CODE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='NWCET.PARENT_NWCET_CODE'>PARENT&#95;NWCET&#95;CODE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='NWCET.NWCET_TITLE'>NWCET&#95;TITLE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='NWCET.DESCRIPTION'>DESCRIPTION</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>SYS&#95;C00146255</td>
+		<td> ON NWCET&#95;CODE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PARENT_NWCET_FK</td>
+		<td > ( PARENT&#95;NWCET&#95;CODE ) ref <a href='#NWCET'>NWCET</a> (NWCET&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='PERSON' onclick='window.scrollTo(1000, 225);return false;' style='cursor:pointer;'><h4 class='card-title'>Table PERSON</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#ref'/></svg></td>
+		<td><a name='PERSON.PERS_ID'>PERS&#95;ID</a></td>
+		<td> number   DEFAULT "TBOURG"."ISEQ$$_276978".nextval </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='PERSON.LAST_NAME'>LAST&#95;NAME</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='PERSON.FIRST_NAME'>FIRST&#95;NAME</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='PERSON.MI'>MI</a></td>
+		<td> varchar2&#40; 1 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='PERSON.ADDRESS1'>ADDRESS1</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='PERSON.ADDRESS2'>ADDRESS2</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='PERSON.CITY'>CITY</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='PERSON.STATE'>STATE</a></td>
+		<td> varchar2&#40; 2 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='PERSON.ZIP'>ZIP</a></td>
+		<td> varchar2&#40; 9 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='PERSON.EMAIL'>EMAIL</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='PERSON.GENDER'>GENDER</a></td>
+		<td> varchar2&#40; 2 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>SYS&#95;C00146217</td>
+		<td> ON PERS&#95;ID</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='PERSON_PHONE_NUMBERS' onclick='window.scrollTo(805, 345);return false;' style='cursor:pointer;'><h4 class='card-title'>Table PERSON_PHONE_NUMBERS</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='PERSON_PHONE_NUMBERS.PERS_ID'>PERS&#95;ID</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg></td>
+		<td><a name='PERSON_PHONE_NUMBERS.PHONE'>PHONE</a></td>
+		<td> varchar2&#40; 10 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='PERSON_PHONE_NUMBERS.PHONE_NUMBER_TYPE'>PHONE&#95;NUMBER&#95;TYPE</a></td>
+		<td> varchar2&#40; 6 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>PERSON&#95;PH&#95;PK</td>
+		<td> ON PERS&#95;ID&#44; PHONE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PERSON_PH_FK</td>
+		<td > ( PERS&#95;ID ) ref <a href='#PERSON'>PERSON</a> (PERS&#95;ID) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='POSITION' onclick='window.scrollTo(60, 75);return false;' style='cursor:pointer;'><h4 class='card-title'>Table POSITION</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#ref'/></svg></td>
+		<td><a name='POSITION.POS_CODE'>POS&#95;CODE</a></td>
+		<td> number   DEFAULT "TBOURG"."ISEQ$$_277005".nextval </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='POSITION.COMP_ID'>COMP&#95;ID</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='POSITION.POS_TITLE'>POS&#95;TITLE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='POSITION.EMP_MODE'>EMP&#95;MODE</a></td>
+		<td> varchar2&#40; 2 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='POSITION.CAT_CODE'>CAT&#95;CODE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='POSITION.PAY_RATE'>PAY&#95;RATE</a></td>
+		<td> number&#40; 10&#44; 2 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='POSITION.PAY_TYPE'>PAY&#95;TYPE</a></td>
+		<td> varchar2&#40; 1 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>SYS&#95;C00146280</td>
+		<td> ON POS&#95;CODE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>POS_COMPANY_FK</td>
+		<td > ( COMP&#95;ID ) ref <a href='#COMPANY'>COMPANY</a> (COMP&#95;ID) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>POS_CATEGORY_FK</td>
+		<td > ( CAT&#95;CODE ) ref <a href='#JOB&#95;CATEGORY'>JOB&#95;CATEGORY</a> (CAT&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='POSITION_CERT' onclick='window.scrollTo(160, 285);return false;' style='cursor:pointer;'><h4 class='card-title'>Table POSITION_CERT</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='POSITION_CERT.CERT_CODE'>CERT&#95;CODE</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='POSITION_CERT.POS_CODE'>POS&#95;CODE</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='POSITION_CERT.PREFER'>PREFER</a></td>
+		<td> varchar2&#40; 2 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>POSITION&#95;CERT&#95;PK</td>
+		<td> ON CERT&#95;CODE&#44; POS&#95;CODE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PC_CERT_FK</td>
+		<td > ( CERT&#95;CODE ) ref <a href='#CERT'>CERT</a> (CERT&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PC_POS_FK</td>
+		<td > ( POS&#95;CODE ) ref <a href='#POSITION'>POSITION</a> (POS&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='POSITION_SKILLS' onclick='window.scrollTo(60, 135);return false;' style='cursor:pointer;'><h4 class='card-title'>Table POSITION_SKILLS</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='POSITION_SKILLS.KS_CODE'>KS&#95;CODE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='POSITION_SKILLS.POS_CODE'>POS&#95;CODE</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='POSITION_SKILLS.PREFER'>PREFER</a></td>
+		<td> char&#40; 1 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>POSITION&#95;PK</td>
+		<td> ON KS&#95;CODE&#44; POS&#95;CODE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PS_KS_FK</td>
+		<td > ( KS&#95;CODE ) ref <a href='#KNOW&#95;SKILL'>KNOW&#95;SKILL</a> (KS&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PS_POS_FK</td>
+		<td > ( POS&#95;CODE ) ref <a href='#POSITION'>POSITION</a> (POS&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='PREREQUISITE' onclick='window.scrollTo(1720, 75);return false;' style='cursor:pointer;'><h4 class='card-title'>Table PREREQUISITE</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='PREREQUISITE.C_CODE'>C&#95;CODE</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='PREREQUISITE.PREREQ_CODE'>PREREQ&#95;CODE</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>PREREQ&#95;PK</td>
+		<td> ON C&#95;CODE&#44; PREREQ&#95;CODE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>C_CODE_FK</td>
+		<td > ( C&#95;CODE ) ref <a href='#COURSE'>COURSE</a> (C&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PREREQ_CODE</td>
+		<td > ( PREREQ&#95;CODE ) ref <a href='#COURSE'>COURSE</a> (C&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='PROVIDES_SKILL' onclick='window.scrollTo(1540, 285);return false;' style='cursor:pointer;'><h4 class='card-title'>Table PROVIDES_SKILL</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='PROVIDES_SKILL.KS_CODE'>KS&#95;CODE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='PROVIDES_SKILL.C_CODE'>C&#95;CODE</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>PROVIDE&#95;SKILL&#95;PK</td>
+		<td> ON KS&#95;CODE&#44; C&#95;CODE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>COURSE_PROVIDE_FK</td>
+		<td > ( C&#95;CODE ) ref <a href='#COURSE'>COURSE</a> (C&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>SKILL_PROVIDE_FK</td>
+		<td > ( KS&#95;CODE ) ref <a href='#KNOW&#95;SKILL'>KNOW&#95;SKILL</a> (KS&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='SECTION' onclick='window.scrollTo(1540, 375);return false;' style='cursor:pointer;'><h4 class='card-title'>Table SECTION</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='SECTION.C_CODE'>C&#95;CODE</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#ref'/></svg></td>
+		<td><a name='SECTION.SEC_CODE'>SEC&#95;CODE</a></td>
+		<td> number&#40; 10 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#ref'/></svg></td>
+		<td><a name='SECTION.COMPLETE_DATE'>COMPLETE&#95;DATE</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='SECTION.OFFERED_BY'>OFFERED&#95;BY</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='SECTION.FORMAT'>FORMAT</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>SECTION&#95;PK</td>
+		<td> ON C&#95;CODE&#44; SEC&#95;CODE&#44; COMPLETE&#95;DATE</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>SEC_COURSE_FK</td>
+		<td > ( C&#95;CODE ) ref <a href='#COURSE'>COURSE</a> (C&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>SECT_OFFERED_BY_FK</td>
+		<td > ( OFFERED&#95;BY ) ref <a href='#TRAINING&#95;PROVIDER'>TRAINING&#95;PROVIDER</a> (COMP&#95;ID) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='TAKES' onclick='window.scrollTo(1150, 495);return false;' style='cursor:pointer;'><h4 class='card-title'>Table TAKES</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='TAKES.C_CODE'>C&#95;CODE</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='TAKES.SEC_CODE'>SEC&#95;CODE</a></td>
+		<td> number&#40; 10 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='TAKES.COMPLETE_DATE'>COMPLETE&#95;DATE</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='TAKES.PERS_ID'>PERS&#95;ID</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>TAKES&#95;PK</td>
+		<td> ON C&#95;CODE&#44; SEC&#95;CODE&#44; COMPLETE&#95;DATE&#44; PERS&#95;ID</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PERS_TAKES_FK</td>
+		<td > ( PERS&#95;ID ) ref <a href='#PERSON'>PERSON</a> (PERS&#95;ID) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>SEC_TAKES_FK</td>
+		<td > ( C&#95;CODE&#44; SEC&#95;CODE&#44; COMPLETE&#95;DATE ) ref <a href='#SECTION'>SECTION</a> (C&#95;CODE&#44; SEC&#95;CODE&#44; COMPLETE&#95;DATE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='TRAINING_PROVIDER' onclick='window.scrollTo(1555, 945);return false;' style='cursor:pointer;'><h4 class='card-title'>Table TRAINING_PROVIDER</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='TRAINING_PROVIDER.COMP_ID'>COMP&#95;ID</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='TRAINING_PROVIDER.TRAIN_TYPE'>TRAIN&#95;TYPE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>SYS&#95;C00146251</td>
+		<td> ON COMP&#95;ID</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PROVIDER_COMP_FK</td>
+		<td > ( COMP&#95;ID ) ref <a href='#COMPANY'>COMPANY</a> (COMP&#95;ID) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='WORKS' onclick='window.scrollTo(60, 285);return false;' style='cursor:pointer;'><h4 class='card-title'>Table WORKS</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='WORKS.POS_CODE'>POS&#95;CODE</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='WORKS.PERS_ID'>PERS&#95;ID</a></td>
+		<td> number   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#unq'/></svg></td>
+		<td><a name='WORKS.START_DATE'>START&#95;DATE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='WORKS.END_DATE'>END&#95;DATE</a></td>
+		<td> varchar2&#40; 255 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#unq'/></svg></td><td>POS&#95;START&#95;DATE&#95;UNIQ</td>
+		<td> ON POS&#95;CODE&#44; START&#95;DATE</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>WORKS&#95;PK</td>
+		<td> ON POS&#95;CODE&#44; PERS&#95;ID</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Foreign Keys</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>PERS_WORKS_FK</td>
+		<td > ( PERS&#95;ID ) ref <a href='#PERSON'>PERSON</a> (PERS&#95;ID) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>POS_WORKS_FK</td>
+		<td > ( POS&#95;CODE ) ref <a href='#POSITION'>POSITION</a> (POS&#95;CODE) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<p align='right'><a href='https://www.dbschema.com' style='color:#aaa'>Powered by DbSchema</a></p></body></html>
