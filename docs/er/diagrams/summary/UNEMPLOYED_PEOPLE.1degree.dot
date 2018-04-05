@@ -1,0 +1,30 @@
+// dot 2.38.0 on Linux 4.10.0-38-generic
+// SchemaSpy rev 590
+digraph "UNEMPLOYED_PEOPLE" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "UNEMPLOYED_PEOPLE" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">UNEMPLOYED_PEOPLE</TD></TR>
+      <TR><TD PORT="PERS_ID" COLSPAN="3" ALIGN="LEFT">PERS_ID</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">view</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/UNEMPLOYED_PEOPLE.html"
+    tooltip="UNEMPLOYED_PEOPLE"
+  ];
+}

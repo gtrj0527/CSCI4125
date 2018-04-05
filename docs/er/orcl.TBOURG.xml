@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="orcl" schema="TBOURG" type="Oracle - Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production&#10;With the Partitioning, Automatic Storage Management, OLAP, Advanced Analytics&#10;and Real Application Testing options">
+   <tables>
+      <table name="CERT" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" defaultValue="&quot;TBOURG&quot;.&quot;ISEQ$$_277012&quot;.nextval" digits="-127" id="0" name="CERT_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <child column="CERT_CODE" foreignKey="CERT_REQUIRES_PK" implied="false" onDeleteCascade="false" table="COURSE_CERT"/>
+            <child column="CERT_CODE" foreignKey="HAS_CERT_FK" implied="false" onDeleteCascade="false" table="HAS_CERT"/>
+            <child column="CERT_CODE" foreignKey="PC_CERT_FK" implied="false" onDeleteCascade="false" table="POSITION_CERT"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="CERT_NAME" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="2" name="ISSUED_BY" nullable="false" remarks="" size="8" type="NUMBER">
+            <parent column="COMP_ID" foreignKey="CERT_ISSUED_BY" implied="false" onDeleteCascade="false" table="TRAINING_PROVIDER"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="TOOL" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <primaryKey column="CERT_CODE" sequenceNumberInPK="1"/>
+         <index name="SYS_C00146299" unique="true">
+            <column ascending="true" name="CERT_CODE"/>
+         </index>
+      </table>
+      <table name="CERT_QUAL" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="SELECT DISTINCT pers_id FROM has_cert hc1&#10;WHERE NOT EXISTS&#10;      (SELECT * FROM position_cert pc1&#10;       WHERE pos_code = 10 AND NOT EXISTS&#10;          (SELECT * FROM has_cert hc2&#10;           WHERE hc1.pers_id = hc2.pers_id AND&#10;                 hc2.cert_code = pc1.cert_code))">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="PERSON"/>
+         </column>
+      </table>
+      <table name="COMPANY" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" defaultValue="&quot;TBOURG&quot;.&quot;ISEQ$$_276990&quot;.nextval" digits="-127" id="0" name="COMP_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <child column="COMP_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="COMPANY_EMPLOYEE_COUNT"/>
+            <child column="COMP_ID" foreignKey="COMP_SPEC_FK" implied="false" onDeleteCascade="false" table="COMPANY_SPECIALTY"/>
+            <child column="COMP_ID" foreignKey="POS_COMPANY_FK" implied="false" onDeleteCascade="false" table="POSITION"/>
+            <child column="COMP_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="SALARY_COST"/>
+            <child column="COMP_ID" foreignKey="PROVIDER_COMP_FK" implied="false" onDeleteCascade="false" table="TRAINING_PROVIDER"/>
+            <child column="COMP_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="WAGE_COST"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="COMP_NAME" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="2" name="ADDRESS1" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="3" name="ADDRESS2" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="4" name="CITY" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="5" name="STATE" nullable="false" remarks="" size="2" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="6" name="ZIP" nullable="false" remarks="" size="9" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="7" name="PRIMARY_SECTOR_CODE" nullable="false" remarks="" size="8" type="VARCHAR2">
+            <parent column="PRIMARY_SECTOR_CODE" foreignKey="SECTOR_FK" implied="false" onDeleteCascade="false" table="GICS"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="8" name="PHONE" nullable="true" remarks="" size="10" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="9" name="WEBSITE" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <primaryKey column="COMP_ID" sequenceNumberInPK="1"/>
+         <index name="SYS_C00146243" unique="true">
+            <column ascending="true" name="COMP_ID"/>
+         </index>
+      </table>
+      <table name="COMPANY_EMPLOYEE_COUNT" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(SELECT comp_id, COUNT(*) AS empl_count FROM works NATURAL JOIN position WHERE end_date IS NULL GROUP BY comp_id)">
+         <column autoUpdated="false" digits="-127" id="0" name="COMP_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="COMP_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="COMPANY"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="EMPL_COUNT" nullable="true" remarks="" size="0" type="NUMBER"/>
+      </table>
+      <table name="COMPANY_SPECIALTY" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="-127" id="0" name="COMP_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="COMP_ID" foreignKey="COMP_SPEC_FK" implied="false" onDeleteCascade="false" table="COMPANY"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="SPECIALTY" nullable="false" remarks="" size="8" type="VARCHAR2">
+            <parent column="PRIMARY_SECTOR_CODE" foreignKey="SPECIALTY_FK" implied="false" onDeleteCascade="false" table="GICS"/>
+         </column>
+         <primaryKey column="COMP_ID" sequenceNumberInPK="1"/>
+         <primaryKey column="SPECIALTY" sequenceNumberInPK="2"/>
+         <index name="COMP_SPEC_PK" unique="true">
+            <column ascending="true" name="COMP_ID"/>
+            <column ascending="true" name="SPECIALTY"/>
+         </index>
+      </table>
+      <table name="COURSE" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" defaultValue="&quot;TBOURG&quot;.&quot;ISEQ$$_276983&quot;.nextval" digits="-127" id="0" name="C_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <child column="C_CODE" foreignKey="COURSE_REQUIRED_PK" implied="false" onDeleteCascade="false" table="COURSE_CERT"/>
+            <child column="C_CODE" foreignKey="C_CODE_FK" implied="false" onDeleteCascade="false" table="PREREQUISITE"/>
+            <child column="PREREQ_CODE" foreignKey="PREREQ_CODE" implied="false" onDeleteCascade="false" table="PREREQUISITE"/>
+            <child column="C_CODE" foreignKey="COURSE_PROVIDE_FK" implied="false" onDeleteCascade="false" table="PROVIDES_SKILL"/>
+            <child column="C_CODE" foreignKey="SEC_COURSE_FK" implied="false" onDeleteCascade="false" table="SECTION"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="TITLE" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="2" name="TRAINING_LEVEL" nullable="true" remarks="" size="12" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="3" name="DESCRIPTION" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="4" name="STATUS" nullable="false" remarks="" size="1" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="2" id="5" name="RETAIL_PRICE" nullable="true" remarks="" size="10" type="NUMBER"/>
+         <column autoUpdated="false" digits="0" id="6" name="TRAIN_TYPE" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <primaryKey column="C_CODE" sequenceNumberInPK="1"/>
+         <index name="SYS_C00146227" unique="true">
+            <column ascending="true" name="C_CODE"/>
+         </index>
+      </table>
+      <table name="COURSE_CERT" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="-127" id="0" name="CERT_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="CERT_CODE" foreignKey="CERT_REQUIRES_PK" implied="false" onDeleteCascade="false" table="CERT"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="C_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="C_CODE" foreignKey="COURSE_REQUIRED_PK" implied="false" onDeleteCascade="false" table="COURSE"/>
+         </column>
+         <primaryKey column="CERT_CODE" sequenceNumberInPK="1"/>
+         <primaryKey column="C_CODE" sequenceNumberInPK="2"/>
+         <index name="COURSE_CERT_PK" unique="true">
+            <column ascending="true" name="CERT_CODE"/>
+            <column ascending="true" name="C_CODE"/>
+         </index>
+      </table>
+      <table name="DATE_TEST" numRows="2" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="TEST_DATE" nullable="true" remarks="" size="7" type="DATE"/>
+      </table>
+      <table name="GICS" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="PRIMARY_SECTOR_CODE" nullable="false" remarks="" size="8" type="VARCHAR2">
+            <child column="PRIMARY_SECTOR_CODE" foreignKey="SECTOR_FK" implied="false" onDeleteCascade="false" table="COMPANY"/>
+            <child column="SPECIALTY" foreignKey="SPECIALTY_FK" implied="false" onDeleteCascade="false" table="COMPANY_SPECIALTY"/>
+            <child column="PARENT_SECTOR_CODE" foreignKey="PARENT_GICS_SECTOR_FK" implied="false" onDeleteCascade="false" table="GICS"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="CODE_NAME" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="2" name="CODE_DESCRIPTION" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="3" name="PARENT_SECTOR_CODE" nullable="true" remarks="" size="8" type="VARCHAR2">
+            <parent column="PRIMARY_SECTOR_CODE" foreignKey="PARENT_GICS_SECTOR_FK" implied="false" onDeleteCascade="false" table="GICS"/>
+         </column>
+         <primaryKey column="PRIMARY_SECTOR_CODE" sequenceNumberInPK="1"/>
+         <index name="SYS_C00146234" unique="true">
+            <column ascending="true" name="PRIMARY_SECTOR_CODE"/>
+         </index>
+      </table>
+      <table name="HAS_CERT" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="PERS_CERT_FK" implied="false" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="CERT_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="CERT_CODE" foreignKey="HAS_CERT_FK" implied="false" onDeleteCascade="false" table="CERT"/>
+         </column>
+         <primaryKey column="CERT_CODE" sequenceNumberInPK="1"/>
+         <primaryKey column="PERS_ID" sequenceNumberInPK="2"/>
+         <index name="HAS_CERT_PK" unique="true">
+            <column ascending="true" name="PERS_ID"/>
+            <column ascending="true" name="CERT_CODE"/>
+         </index>
+      </table>
+      <table name="HAS_SKILL" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="PERS_SKILL_FK" implied="false" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="KS_CODE" nullable="false" remarks="" size="255" type="VARCHAR2">
+            <parent column="KS_CODE" foreignKey="KS_SKILL_FK" implied="false" onDeleteCascade="false" table="KNOW_SKILL"/>
+         </column>
+         <primaryKey column="KS_CODE" sequenceNumberInPK="1"/>
+         <primaryKey column="PERS_ID" sequenceNumberInPK="2"/>
+         <index name="HAS_SKILL_PK" unique="true">
+            <column ascending="true" name="PERS_ID"/>
+            <column ascending="true" name="KS_CODE"/>
+         </index>
+      </table>
+      <table name="JOB_CATEGORY" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="CAT_CODE" nullable="false" remarks="" size="255" type="VARCHAR2">
+            <child column="PARENT_CAT_CODE" foreignKey="PARENT_CAT_FK" implied="false" onDeleteCascade="false" table="JOB_CATEGORY"/>
+            <child column="CAT_CODE" foreignKey="POS_CATEGORY_FK" implied="false" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="PARENT_CAT_CODE" nullable="true" remarks="" size="255" type="VARCHAR2">
+            <parent column="CAT_CODE" foreignKey="PARENT_CAT_FK" implied="false" onDeleteCascade="false" table="JOB_CATEGORY"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="CORE_SKILL" nullable="false" remarks="" size="255" type="VARCHAR2">
+            <parent column="NWCET_CODE" foreignKey="CAT_NWCET_FK" implied="false" onDeleteCascade="false" table="NWCET"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="JOB_CATEGORY_TITLE" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="4" name="DESCRIPTION" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="5" name="PAY_RANGE_HIGH" nullable="true" remarks="" size="15" type="FLOAT"/>
+         <column autoUpdated="false" digits="0" id="6" name="PAY_RANGE_LOW" nullable="true" remarks="" size="15" type="FLOAT"/>
+         <primaryKey column="CAT_CODE" sequenceNumberInPK="1"/>
+         <index name="SYS_C00146271" unique="true">
+            <column ascending="true" name="CAT_CODE"/>
+         </index>
+      </table>
+      <table name="KNOW_SKILL" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="KS_CODE" nullable="false" remarks="" size="255" type="VARCHAR2">
+            <child column="KS_CODE" foreignKey="KS_SKILL_FK" implied="false" onDeleteCascade="false" table="HAS_SKILL"/>
+            <child column="KS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="MISSING_SKILLS"/>
+            <child column="KS_CODE" foreignKey="PS_KS_FK" implied="false" onDeleteCascade="false" table="POSITION_SKILLS"/>
+            <child column="KS_CODE" foreignKey="SKILL_PROVIDE_FK" implied="false" onDeleteCascade="false" table="PROVIDES_SKILL"/>
+            <child column="KS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="TEMP_PS_SK"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="NWCET_CODE" nullable="false" remarks="" size="255" type="VARCHAR2">
+            <parent column="NWCET_CODE" foreignKey="KS_NWCET_FK" implied="false" onDeleteCascade="false" table="NWCET"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="KS_TITLE" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="3" name="DESCRIPTION" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="4" name="TRAINING_LEVEL" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <primaryKey column="KS_CODE" sequenceNumberInPK="1"/>
+         <index name="SYS_C00146261" unique="true">
+            <column ascending="true" name="KS_CODE"/>
+         </index>
+      </table>
+      <table name="MISSING_COUNT" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(SELECT pers_id, pos_code, COUNT(*) AS num_missing FROM missing_skills GROUP BY pers_id, pos_code)">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="true" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="POS_CODE" nullable="true" remarks="" size="0" type="NUMBER">
+            <parent column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="2" name="NUM_MISSING" nullable="true" remarks="" size="0" type="NUMBER"/>
+      </table>
+      <table name="MISSING_SKILLS" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(SELECT pers_id, pos_code, ks_code FROM person, position_skills MINUS SELECT pers_id, pos_code, pos_skill FROM relevant_skills2)">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="true" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="POS_CODE" nullable="true" remarks="" size="0" type="NUMBER">
+            <parent column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="KS_CODE" nullable="true" remarks="" size="255" type="VARCHAR2">
+            <parent column="KS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="KNOW_SKILL"/>
+         </column>
+      </table>
+      <table name="MISSING_SKILLS2" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(SELECT pers_id, pos_code, (req_skills-skills) AS num_missing FROM rev_skills_count NATURAL JOIN skills_count WHERE req_skills-skills &gt; 0)">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="true" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="POS_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="2" name="NUM_MISSING" nullable="true" remarks="" size="0" type="NUMBER"/>
+      </table>
+      <table name="NWCET" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="NWCET_CODE" nullable="false" remarks="" size="255" type="VARCHAR2">
+            <child column="CORE_SKILL" foreignKey="CAT_NWCET_FK" implied="false" onDeleteCascade="false" table="JOB_CATEGORY"/>
+            <child column="NWCET_CODE" foreignKey="KS_NWCET_FK" implied="false" onDeleteCascade="false" table="KNOW_SKILL"/>
+            <child column="PARENT_NWCET_CODE" foreignKey="PARENT_NWCET_FK" implied="false" onDeleteCascade="false" table="NWCET"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="PARENT_NWCET_CODE" nullable="true" remarks="" size="255" type="VARCHAR2">
+            <parent column="NWCET_CODE" foreignKey="PARENT_NWCET_FK" implied="false" onDeleteCascade="false" table="NWCET"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="NWCET_TITLE" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="3" name="DESCRIPTION" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <primaryKey column="NWCET_CODE" sequenceNumberInPK="1"/>
+         <index name="SYS_C00146255" unique="true">
+            <column ascending="true" name="NWCET_CODE"/>
+         </index>
+      </table>
+      <table name="PERSON" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" defaultValue="&quot;TBOURG&quot;.&quot;ISEQ$$_276978&quot;.nextval" digits="-127" id="0" name="PERS_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <child column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="CERT_QUAL"/>
+            <child column="PERS_ID" foreignKey="PERS_CERT_FK" implied="false" onDeleteCascade="false" table="HAS_CERT"/>
+            <child column="PERS_ID" foreignKey="PERS_SKILL_FK" implied="false" onDeleteCascade="false" table="HAS_SKILL"/>
+            <child column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="MISSING_COUNT"/>
+            <child column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="MISSING_SKILLS"/>
+            <child column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="MISSING_SKILLS2"/>
+            <child column="PERS_ID" foreignKey="PERSON_PH_FK" implied="false" onDeleteCascade="false" table="PERSON_PHONE_NUMBERS"/>
+            <child column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="RELEVANT_SKILLS"/>
+            <child column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="RELEVANT_SKILLS2"/>
+            <child column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="REV_SKILLS_COUNT"/>
+            <child column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="SKILL_QUAL"/>
+            <child column="PERS_ID" foreignKey="PERS_TAKES_FK" implied="false" onDeleteCascade="false" table="TAKES"/>
+            <child column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="TEMP2"/>
+            <child column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="TEMP4"/>
+            <child column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="TEMP_PS_SK"/>
+            <child column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="UNEMPLOYED_PEOPLE"/>
+            <child column="PERS_ID" foreignKey="PERS_WORKS_FK" implied="false" onDeleteCascade="false" table="WORKS"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="LAST_NAME" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="2" name="FIRST_NAME" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="3" name="MI" nullable="true" remarks="" size="1" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="4" name="ADDRESS1" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="5" name="ADDRESS2" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="6" name="CITY" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="7" name="STATE" nullable="false" remarks="" size="2" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="8" name="ZIP" nullable="false" remarks="" size="9" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="9" name="EMAIL" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="10" name="GENDER" nullable="true" remarks="" size="2" type="VARCHAR2"/>
+         <primaryKey column="PERS_ID" sequenceNumberInPK="1"/>
+         <index name="SYS_C00146217" unique="true">
+            <column ascending="true" name="PERS_ID"/>
+         </index>
+      </table>
+      <table name="PERSON_PHONE_NUMBERS" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="PERSON_PH_FK" implied="false" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="PHONE" nullable="false" remarks="" size="10" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="2" name="PHONE_NUMBER_TYPE" nullable="false" remarks="" size="6" type="VARCHAR2"/>
+         <primaryKey column="PERS_ID" sequenceNumberInPK="1"/>
+         <primaryKey column="PHONE" sequenceNumberInPK="2"/>
+         <index name="PERSON_PH_PK" unique="true">
+            <column ascending="true" name="PERS_ID"/>
+            <column ascending="true" name="PHONE"/>
+         </index>
+      </table>
+      <table name="POSITION" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" defaultValue="&quot;TBOURG&quot;.&quot;ISEQ$$_277005&quot;.nextval" digits="-127" id="0" name="POS_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <child column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="MISSING_COUNT"/>
+            <child column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="MISSING_SKILLS"/>
+            <child column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="MISSING_SKILLS2"/>
+            <child column="POS_CODE" foreignKey="PC_POS_FK" implied="false" onDeleteCascade="false" table="POSITION_CERT"/>
+            <child column="POS_CODE" foreignKey="PS_POS_FK" implied="false" onDeleteCascade="false" table="POSITION_SKILLS"/>
+            <child column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="RELEVANT_SKILLS"/>
+            <child column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="RELEVANT_SKILLS2"/>
+            <child column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="REV_SKILLS_COUNT"/>
+            <child column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="SKILLS_COUNT"/>
+            <child column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="TEMP2"/>
+            <child column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="TEMP4"/>
+            <child column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="TEMP5"/>
+            <child column="POS_CODE" foreignKey="POS_WORKS_FK" implied="false" onDeleteCascade="false" table="WORKS"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="COMP_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="COMP_ID" foreignKey="POS_COMPANY_FK" implied="false" onDeleteCascade="false" table="COMPANY"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="POS_TITLE" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="3" name="EMP_MODE" nullable="false" remarks="" size="2" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="4" name="CAT_CODE" nullable="false" remarks="" size="255" type="VARCHAR2">
+            <parent column="CAT_CODE" foreignKey="POS_CATEGORY_FK" implied="false" onDeleteCascade="false" table="JOB_CATEGORY"/>
+         </column>
+         <column autoUpdated="false" digits="2" id="5" name="PAY_RATE" nullable="false" remarks="" size="10" type="NUMBER"/>
+         <column autoUpdated="false" digits="0" id="6" name="PAY_TYPE" nullable="true" remarks="" size="1" type="VARCHAR2"/>
+         <primaryKey column="POS_CODE" sequenceNumberInPK="1"/>
+         <index name="SYS_C00146280" unique="true">
+            <column ascending="true" name="POS_CODE"/>
+         </index>
+      </table>
+      <table name="POSITION_CERT" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="-127" id="0" name="CERT_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="CERT_CODE" foreignKey="PC_CERT_FK" implied="false" onDeleteCascade="false" table="CERT"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="POS_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="POS_CODE" foreignKey="PC_POS_FK" implied="false" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="PREFER" nullable="true" remarks="" size="2" type="VARCHAR2"/>
+         <primaryKey column="CERT_CODE" sequenceNumberInPK="1"/>
+         <primaryKey column="POS_CODE" sequenceNumberInPK="2"/>
+         <index name="POSITION_CERT_PK" unique="true">
+            <column ascending="true" name="CERT_CODE"/>
+            <column ascending="true" name="POS_CODE"/>
+         </index>
+      </table>
+      <table name="POSITION_SKILLS" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="KS_CODE" nullable="false" remarks="" size="255" type="VARCHAR2">
+            <parent column="KS_CODE" foreignKey="PS_KS_FK" implied="false" onDeleteCascade="false" table="KNOW_SKILL"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="POS_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="POS_CODE" foreignKey="PS_POS_FK" implied="false" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="PREFER" nullable="false" remarks="" size="1" type="CHAR"/>
+         <primaryKey column="KS_CODE" sequenceNumberInPK="1"/>
+         <primaryKey column="POS_CODE" sequenceNumberInPK="2"/>
+         <index name="POSITION_PK" unique="true">
+            <column ascending="true" name="KS_CODE"/>
+            <column ascending="true" name="POS_CODE"/>
+         </index>
+      </table>
+      <table name="PREREQUISITE" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="-127" id="0" name="C_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="C_CODE" foreignKey="C_CODE_FK" implied="false" onDeleteCascade="false" table="COURSE"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="PREREQ_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="C_CODE" foreignKey="PREREQ_CODE" implied="false" onDeleteCascade="false" table="COURSE"/>
+         </column>
+         <primaryKey column="C_CODE" sequenceNumberInPK="1"/>
+         <primaryKey column="PREREQ_CODE" sequenceNumberInPK="2"/>
+         <index name="PREREQ_PK" unique="true">
+            <column ascending="true" name="C_CODE"/>
+            <column ascending="true" name="PREREQ_CODE"/>
+         </index>
+      </table>
+      <table name="PROVIDES_SKILL" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="KS_CODE" nullable="false" remarks="" size="255" type="VARCHAR2">
+            <parent column="KS_CODE" foreignKey="SKILL_PROVIDE_FK" implied="false" onDeleteCascade="false" table="KNOW_SKILL"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="C_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="C_CODE" foreignKey="COURSE_PROVIDE_FK" implied="false" onDeleteCascade="false" table="COURSE"/>
+         </column>
+         <primaryKey column="C_CODE" sequenceNumberInPK="1"/>
+         <primaryKey column="KS_CODE" sequenceNumberInPK="2"/>
+         <index name="PROVIDE_SKILL_PK" unique="true">
+            <column ascending="true" name="KS_CODE"/>
+            <column ascending="true" name="C_CODE"/>
+         </index>
+      </table>
+      <table name="RELEVANT_SKILLS" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(SELECT person.pers_id, position.pos_code, has_skill.ks_code AS pers_skill, position_skills.ks_code AS pos_skill FROM person FULL OUTER JOIN has_skill ON person.pers_id = has_skill.pers_id FULL OUTER JOIN position_skills ON has_skill.ks_code = position_skills.ks_code FULL OUTER JOIN position ON position.pos_code = position_skills.pos_code)">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="true" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="POS_CODE" nullable="true" remarks="" size="0" type="NUMBER">
+            <parent column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="PERS_SKILL" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="3" name="POS_SKILL" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+      </table>
+      <table name="RELEVANT_SKILLS2" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(SELECT pers_id, pos_code, ks_code AS pers_skill, ks_code AS pos_skill FROM person NATURAL JOIN has_skill NATURAL JOIN position_skills NATURAL JOIN position)">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="POS_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="PERS_SKILL" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="3" name="POS_SKILL" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+      </table>
+      <table name="REV_SKILLS_COUNT" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(SELECT pers_id, pos_code, COUNT(pers_skill) AS skills FROM relevant_skills GROUP BY pers_id, pos_code)">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="true" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="POS_CODE" nullable="true" remarks="" size="0" type="NUMBER">
+            <parent column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="2" name="SKILLS" nullable="true" remarks="" size="0" type="NUMBER"/>
+      </table>
+      <table name="SALARY_COST" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(&#10;SELECT comp_id,comp_name, SUM(pay_rate) AS cost&#10;FROM company&#10;NATURAL JOIN position&#10;NATURAL JOIN works&#10;--left join position p on c.comp_id = p.comp_id&#10;--left join works w on p.pos_code = w.pos_code&#10;WHERE pay_type = 'S'&#10;    AND end_date IS NULL&#10;    GROUP BY comp_id, comp_name&#10;)">
+         <column autoUpdated="false" digits="-127" id="0" name="COMP_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="COMP_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="COMPANY"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="COMP_NAME" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="-127" id="2" name="COST" nullable="true" remarks="" size="0" type="NUMBER"/>
+      </table>
+      <table name="SECTION" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="-127" id="0" name="C_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <child column="C_CODE" foreignKey="SEC_TAKES_FK" implied="false" onDeleteCascade="false" table="TAKES"/>
+            <parent column="C_CODE" foreignKey="SEC_COURSE_FK" implied="false" onDeleteCascade="false" table="COURSE"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="SEC_CODE" nullable="false" remarks="" size="10" type="NUMBER">
+            <child column="SEC_CODE" foreignKey="SEC_TAKES_FK" implied="false" onDeleteCascade="false" table="TAKES"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="COMPLETE_DATE" nullable="false" remarks="" size="7" type="DATE">
+            <child column="COMPLETE_DATE" foreignKey="SEC_TAKES_FK" implied="false" onDeleteCascade="false" table="TAKES"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="3" name="OFFERED_BY" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="COMP_ID" foreignKey="SECT_OFFERED_BY_FK" implied="false" onDeleteCascade="false" table="TRAINING_PROVIDER"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="4" name="FORMAT" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <primaryKey column="COMPLETE_DATE" sequenceNumberInPK="1"/>
+         <primaryKey column="C_CODE" sequenceNumberInPK="2"/>
+         <primaryKey column="SEC_CODE" sequenceNumberInPK="3"/>
+         <index name="SECTION_PK" unique="true">
+            <column ascending="true" name="C_CODE"/>
+            <column ascending="true" name="SEC_CODE"/>
+            <column ascending="true" name="COMPLETE_DATE"/>
+         </index>
+      </table>
+      <table name="SKILL_QUAL" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="SELECT DISTINCT pers_id FROM has_skill hs1&#10;WHERE NOT EXISTS&#10;      (SELECT * FROM position_skills ps1&#10;       WHERE pos_code = 10 AND NOT EXISTS&#10;          (SELECT * FROM has_skill hs2&#10;           WHERE hs1.pers_id = hs2.pers_id AND&#10;                 hs2.ks_code = ps1.ks_code))">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="PERSON"/>
+         </column>
+      </table>
+      <table name="SKILLS_COUNT" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(SELECT pos_code, COUNT(*) AS req_skills FROM position_skills GROUP BY pos_code)">
+         <column autoUpdated="false" digits="-127" id="0" name="POS_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="REQ_SKILLS" nullable="true" remarks="" size="0" type="NUMBER"/>
+      </table>
+      <table name="TAKES" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="-127" id="0" name="C_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="C_CODE" foreignKey="SEC_TAKES_FK" implied="false" onDeleteCascade="false" table="SECTION"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="SEC_CODE" nullable="false" remarks="" size="10" type="NUMBER">
+            <parent column="SEC_CODE" foreignKey="SEC_TAKES_FK" implied="false" onDeleteCascade="false" table="SECTION"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="COMPLETE_DATE" nullable="false" remarks="" size="7" type="DATE">
+            <parent column="COMPLETE_DATE" foreignKey="SEC_TAKES_FK" implied="false" onDeleteCascade="false" table="SECTION"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="3" name="PERS_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="PERS_TAKES_FK" implied="false" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <primaryKey column="COMPLETE_DATE" sequenceNumberInPK="1"/>
+         <primaryKey column="C_CODE" sequenceNumberInPK="2"/>
+         <primaryKey column="PERS_ID" sequenceNumberInPK="3"/>
+         <primaryKey column="SEC_CODE" sequenceNumberInPK="4"/>
+         <index name="TAKES_PK" unique="true">
+            <column ascending="true" name="C_CODE"/>
+            <column ascending="true" name="SEC_CODE"/>
+            <column ascending="true" name="COMPLETE_DATE"/>
+            <column ascending="true" name="PERS_ID"/>
+         </index>
+      </table>
+      <table name="TEMP2" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(SELECT person.pers_id, position.pos_code, has_skill.ks_code AS pers_skill, position_skills.ks_code AS pos_skill FROM person LEFT JOIN has_skill ON person.pers_id = has_skill.pers_id FULL OUTER JOIN position_skills ON has_skill.ks_code = position_skills.ks_code RIGHT JOIN position ON position.pos_code = position_skills.pos_code)">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="true" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="POS_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="PERS_SKILL" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="3" name="POS_SKILL" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+      </table>
+      <table name="TEMP4" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(SELECT pers_id, pos_code, COUNT(pers_skill) AS skills FROM temp3 GROUP BY pers_id, pos_code)">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="true" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="POS_CODE" nullable="true" remarks="" size="0" type="NUMBER">
+            <parent column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="2" name="SKILLS" nullable="true" remarks="" size="0" type="NUMBER"/>
+      </table>
+      <table name="TEMP5" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(select pos_code, COUNT(*) AS req_skills FROM position_skills GROUP BY pos_code)">
+         <column autoUpdated="false" digits="-127" id="0" name="POS_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="POS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="REQ_SKILLS" nullable="true" remarks="" size="0" type="NUMBER"/>
+      </table>
+      <table name="TEMP_PS_SK" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(select person.pers_id, ks_code FROM person LEFT JOIN has_skill ON person.pers_id = has_skill.pers_id)">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="KS_CODE" nullable="true" remarks="" size="255" type="VARCHAR2">
+            <parent column="KS_CODE" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="KNOW_SKILL"/>
+         </column>
+      </table>
+      <table name="TRAINING_PROVIDER" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="-127" id="0" name="COMP_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <child column="ISSUED_BY" foreignKey="CERT_ISSUED_BY" implied="false" onDeleteCascade="false" table="CERT"/>
+            <child column="OFFERED_BY" foreignKey="SECT_OFFERED_BY_FK" implied="false" onDeleteCascade="false" table="SECTION"/>
+            <parent column="COMP_ID" foreignKey="PROVIDER_COMP_FK" implied="false" onDeleteCascade="false" table="COMPANY"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="TRAIN_TYPE" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <primaryKey column="COMP_ID" sequenceNumberInPK="1"/>
+         <index name="SYS_C00146251" unique="true">
+            <column ascending="true" name="COMP_ID"/>
+         </index>
+      </table>
+      <table name="UNEMPLOYED_PEOPLE" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(SELECT pers_id FROM person MINUS SELECT DISTINCT pers_id FROM works WHERE end_date IS NULL)">
+         <column autoUpdated="false" digits="-127" id="0" name="PERS_ID" nullable="true" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="PERSON"/>
+         </column>
+      </table>
+      <table name="WAGE_COST" numRows="0" remarks="" schema="TBOURG" type="VIEW" viewSql="(&#10;SELECT comp_id,comp_name, SUM(pay_rate*1920) AS cost&#10;FROM company&#10;NATURAL JOIN position&#10;NATURAL JOIN works&#10;WHERE pay_type = 'W'&#10;    AND end_date IS NULL&#10;    GROUP BY comp_id, comp_name)">
+         <column autoUpdated="false" digits="-127" id="0" name="COMP_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="COMP_ID" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="COMPANY"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="COMP_NAME" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="-127" id="2" name="COST" nullable="true" remarks="" size="0" type="NUMBER"/>
+      </table>
+      <table name="WORKS" numRows="0" remarks="" schema="TBOURG" type="TABLE">
+         <column autoUpdated="false" digits="-127" id="0" name="POS_CODE" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="POS_CODE" foreignKey="POS_WORKS_FK" implied="false" onDeleteCascade="false" table="POSITION"/>
+         </column>
+         <column autoUpdated="false" digits="-127" id="1" name="PERS_ID" nullable="false" remarks="" size="0" type="NUMBER">
+            <parent column="PERS_ID" foreignKey="PERS_WORKS_FK" implied="false" onDeleteCascade="false" table="PERSON"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="START_DATE" nullable="false" remarks="" size="255" type="VARCHAR2"/>
+         <column autoUpdated="false" digits="0" id="3" name="END_DATE" nullable="true" remarks="" size="255" type="VARCHAR2"/>
+         <primaryKey column="PERS_ID" sequenceNumberInPK="1"/>
+         <primaryKey column="POS_CODE" sequenceNumberInPK="2"/>
+         <index name="WORKS_PK" unique="true">
+            <column ascending="true" name="POS_CODE"/>
+            <column ascending="true" name="PERS_ID"/>
+         </index>
+         <index name="POS_START_DATE_UNIQ" unique="true">
+            <column ascending="true" name="POS_CODE"/>
+            <column ascending="true" name="START_DATE"/>
+         </index>
+      </table>
+   </tables>
+</database>
