@@ -572,28 +572,29 @@ WHERE pay_type = 'W'
 	</schema>
 	<connector name="Oracle" database="Oracle" driver_class="oracle.jdbc.OracleDriver" driver_jar="ojdbc7-12.1.0.2.jar" driver_desc="Connect via SID" host="dbsvcs.cs.uno.edu" port="1521" instance="ORCL" user="tbourg" passwd="SzNMV1hDUHQ=" />
 	<layout name="Default Layout" id="Layout_13434b1" joined_routing="y" show_relation="columns" >
-		<entity schema="TBOURG" name="CERT" color="c8f5bf" x="1365" y="225" />
-		<entity schema="TBOURG" name="COMPANY" color="bfbff5" x="1740" y="720" />
-		<entity schema="TBOURG" name="COMPANY_SPECIALTY" color="bfbff5" x="1965" y="975" />
-		<entity schema="TBOURG" name="COURSE" color="bfd4f5" x="1740" y="75" />
-		<entity schema="TBOURG" name="COURSE_CERT" color="bfd4f5" x="1920" y="285" />
-		<entity schema="TBOURG" name="GICS" color="bfbff5" x="1965" y="720" />
-		<entity schema="TBOURG" name="HAS_SKILL" color="c8f5bf" x="1200" y="495" />
-		<entity schema="TBOURG" name="JOB_CATEGORY" color="f5ddbf" x="360" y="75" />
-		<entity schema="TBOURG" name="KNOW_SKILL" color="f5ddbf" x="780" y="75" />
-		<entity schema="TBOURG" name="NWCET" color="f5ddbf" x="570" y="75" />
-		<entity schema="TBOURG" name="PERSON" color="c8f5bf" x="1200" y="225" />
-		<entity schema="TBOURG" name="POSITION" color="f5ddbf" x="210" y="75" />
-		<entity schema="TBOURG" name="POSITION_CERT" color="f5ddbf" x="360" y="285" />
-		<entity schema="TBOURG" name="POSITION_SKILLS" color="f5ddbf" x="45" y="135" />
-		<entity schema="TBOURG" name="PREREQUISITE" color="bfd4f5" x="1920" y="75" />
-		<entity schema="TBOURG" name="PROVIDES_SKILL" color="bfd4f5" x="1740" y="285" />
-		<entity schema="TBOURG" name="WORKS" color="f5ddbf" x="195" y="285" />
-		<entity schema="TBOURG" name="TRAINING_PROVIDER" color="c8f5bf" x="1755" y="945" />
-		<entity schema="TBOURG" name="SECTION" color="c8f5bf" x="1740" y="375" />
-		<entity schema="TBOURG" name="TAKES" color="c8f5bf" x="1350" y="495" />
-		<entity schema="TBOURG" name="HAS_CERT" color="c8f5bf" x="1365" y="360" />
-		<entity schema="TBOURG" name="PERSON_PHONE_NUMBERS" color="c8f5bf" x="1005" y="345" />
+		<comment><![CDATA[Default Layout]]></comment>
+		<entity schema="TBOURG" name="CERT" color="c8f5bf" x="405" y="480" />
+		<entity schema="TBOURG" name="COMPANY" color="bfbff5" x="795" y="570" />
+		<entity schema="TBOURG" name="COMPANY_SPECIALTY" color="bfbff5" x="1020" y="825" />
+		<entity schema="TBOURG" name="COURSE" color="bfd4f5" x="945" y="75" />
+		<entity schema="TBOURG" name="COURSE_CERT" color="bfd4f5" x="1125" y="285" />
+		<entity schema="TBOURG" name="GICS" color="bfbff5" x="1020" y="570" />
+		<entity schema="TBOURG" name="HAS_SKILL" color="c8f5bf" x="240" y="750" />
+		<entity schema="TBOURG" name="JOB_CATEGORY" color="f5ddbf" x="375" y="90" />
+		<entity schema="TBOURG" name="NWCET" color="f5ddbf" x="585" y="90" />
+		<entity schema="TBOURG" name="PERSON" color="c8f5bf" x="240" y="480" />
+		<entity schema="TBOURG" name="POSITION" color="f5ddbf" x="225" y="90" />
+		<entity schema="TBOURG" name="POSITION_CERT" color="f5ddbf" x="375" y="300" />
+		<entity schema="TBOURG" name="POSITION_SKILLS" color="f5ddbf" x="60" y="150" />
+		<entity schema="TBOURG" name="PREREQUISITE" color="bfd4f5" x="1125" y="75" />
+		<entity schema="TBOURG" name="PROVIDES_SKILL" color="bfd4f5" x="945" y="285" />
+		<entity schema="TBOURG" name="WORKS" color="f5ddbf" x="210" y="300" />
+		<entity schema="TBOURG" name="TRAINING_PROVIDER" color="c8f5bf" x="810" y="795" />
+		<entity schema="TBOURG" name="SECTION" color="c8f5bf" x="945" y="375" />
+		<entity schema="TBOURG" name="TAKES" color="c8f5bf" x="390" y="750" />
+		<entity schema="TBOURG" name="HAS_CERT" color="c8f5bf" x="405" y="615" />
+		<entity schema="TBOURG" name="PERSON_PHONE_NUMBERS" color="c8f5bf" x="45" y="600" />
+		<entity schema="TBOURG" name="KNOW_SKILL" color="f5ddbf" x="600" y="270" />
 		<group name="POSITION" color="f7f3ec" >
 			<entity schema="TBOURG" name="POSITION" />
 			<entity schema="TBOURG" name="JOB_CATEGORY" />
