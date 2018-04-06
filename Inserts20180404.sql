@@ -192,17 +192,17 @@ FROM training_provider;
     CONSTRAINT sect_offered_by_fk FOREIGN KEY (offered_by) REFERENCES training_provider (comp_id),
     CONSTRAINT sec_course_fk FOREIGN KEY (c_code) REFERENCES course (c_code)
 );*/
-INSERT INTO section VALUES(11,1,'11-MAY-18',1111,'');
-INSERT INTO section VALUES(12,6,'25-JUN-18',1117,'');
-INSERT INTO section VALUES(13,4,'06-MAR-18',1120,'');
-INSERT INTO section VALUES(14,3,'31-DEC-18',1120,'');
-INSERT INTO section VALUES(15,4,'15-NOV-18',1117,'');
-INSERT INTO section VALUES(16,2,'05-SEP-18',1111,'');
-INSERT INTO section VALUES(17,5,'15-MAY-18',1117,'');
-INSERT INTO section VALUES(18,6,'17-JUL-18',1111,'');
-INSERT INTO section VALUES(19,3,'31-JAN-18',1120,'');
-INSERT INTO section VALUES(20,4,'19-AUG-18',1111,'');
-INSERT INTO section VALUES(21,1,'21-MAY-18',1120,'');
+INSERT INTO section VALUES(1,1,'11-MAY-18',1111,'');
+INSERT INTO section VALUES(2,6,'25-JUN-18',1117,'');
+INSERT INTO section VALUES(3,4,'06-MAR-18',1120,'');
+INSERT INTO section VALUES(4,3,'31-DEC-18',1120,'');
+INSERT INTO section VALUES(5,4,'15-NOV-18',1117,'');
+INSERT INTO section VALUES(6,2,'05-SEP-18',1111,'');
+INSERT INTO section VALUES(7,5,'15-MAY-18',1117,'');
+INSERT INTO section VALUES(8,6,'17-JUL-18',1111,'');
+INSERT INTO section VALUES(9,3,'31-JAN-18',1120,'');
+INSERT INTO section VALUES(10,4,'19-AUG-18',1111,'');
+INSERT INTO section VALUES(11,1,'21-MAY-18',1120,'');
  /*Test section*/   
 SELECT * 
 FROM section;
@@ -270,18 +270,22 @@ FROM course_cert;
     CONSTRAINT provide_skill_pk PRIMARY KEY (ks_code, c_code),
     CONSTRAINT skill_provide_fk FOREIGN KEY (ks_code) REFERENCES know_skill(ks_code),
     CONSTRAINT course_provide_fk FOREIGN KEY (c_code) REFERENCES course(c_code));*/
-INSERT INTO provides_skill('Java',11);
-INSERT INTO provides_skill('Java2',12);
-INSERT INTO provides_skill('Java3',13);
-INSERT INTO provides_skill('C1',14);
-INSERT INTO provides_skill('.NET1',15);
-INSERT INTO provides_skill('HTML1',16);
-INSERT INTO provides_skill('HTML2',17);
-INSERT INTO provides_skill('3D Mod 2',18);
-INSERT INTO provides_skill('Angular1',19);
-INSERT INTO provides_skill('Angular2',20);
-INSERT INTO provides_skill('Angular3',21);
-INSERT INTO provides_skill('SQL1',22);
+INSERT INTO provides_skill VALUES('Java',1);
+INSERT INTO provides_skill VALUES('Java2',2);
+INSERT INTO provides_skill VALUES('Java3',3);
+INSERT INTO provides_skill VALUES('C1',4);
+INSERT INTO provides_skill VALUES('.NET1',5);
+INSERT INTO provides_skill VALUES('HTML1',6);
+INSERT INTO provides_skill VALUES('HTML2',7);
+INSERT INTO provides_skill VALUES('3D Mod 2',8);
+INSERT INTO provides_skill VALUES('Angular1',9);
+INSERT INTO provides_skill VALUES('Angular2',10);
+INSERT INTO provides_skill VALUES('Angular3',11);
+INSERT INTO provides_skill VALUES('SQL1',12);
+/*Test provides_skill*/
+SELECT *
+FROM provides_skill;
+
 
 /*PERSON: 
     CREATE TABLE person (
@@ -310,7 +314,7 @@ INSERT INTO person(last_name,first_name,mi, address1, city, state,zip,email,gend
     VALUES('Dumas', 'Alexandra', 'J', '3259 Manhattan','Gretna', 'LA', '70123', 'alexandra.dumas@gmail.com', 'F');
 INSERT INTO person(last_name,first_name,mi, address1, city, state,zip,email,gender) 
     VALUES('Eccleston', 'Christoper', 'J', '5148 Napolean', 'New Orleans', 'LA', '70123', 'chris.eccleston@outlook.com', 'M');
-INSERT INTO person(last_name,first_name,mi, address1,address2 city, state,zip,email,gender) 
+INSERT INTO person(last_name,first_name,mi, address1,address2, city, state,zip,email,gender) 
     VALUES('Dameron','Poe','','2187 Galactic Way','Ste A','Biloxi','MS','62347','acehotshot@galaxy.com','M');
 INSERT INTO person(last_name,first_name,mi, address1,address2, city, state,zip,email,gender) 
     VALUES('None','Finn','T','2187 Galactic Way','Ste B','Biloxi','MS','62347','formertrooper@galaxy.com','M');
