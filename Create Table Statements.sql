@@ -161,9 +161,12 @@ CREATE TABLE section (
     sec_code number(10) NOT NULL,
     complete_date date NOT NULL, -- YYYY-MM-DD
     offered_by number NOT NULL,
+    taught_by number NOT NULL,
     format varchar(255),
+    price number(10,2),
     CONSTRAINT section_pk PRIMARY KEY (c_code, sec_code, complete_date), 
     CONSTRAINT sect_offered_by_fk FOREIGN KEY (offered_by) REFERENCES training_provider (comp_id),
+    CONSTRAINT sect_taught_by_fk FOREIGN KEY (taught_by) REFERENCES person (pers_id),
     CONSTRAINT sec_course_fk FOREIGN KEY (c_code) REFERENCES course (c_code)
 );
 
