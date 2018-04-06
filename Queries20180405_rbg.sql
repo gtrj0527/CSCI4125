@@ -207,7 +207,7 @@ multiple course sets are found, list the course sets (with their course IDs) in 
 course sets? total costs.*/
 
 
-/*13. Given a person?s identifier, list all the job categories that a person is qualified for.*/
+/*13. Given a person?s identifier, list all the job categories that a person is qualified for. ++++*/
 DROP VIEW category_qual;
 DROP VIEW missing_category_skills;
 DROP VIEW category_skills;
@@ -277,11 +277,11 @@ WHERE   pay_rate =
                     (SELECT MAX(pay_rate) 
                      FROM qualified_job_skills);
 
-/*15. Given a position code, list all the names along with the emails of the persons who are qualified for this position.*/
+/*15. Given a position code, list all the names along with the emails of the persons who are qualified for this position. ++++ BUT could be better (more generic)*/
 DROP VIEW skill_qual;
 CREATE VIEW skill_qual AS (
     SELECT DISTINCT pers_id 
-    FROM has_skill hs1)
+    FROM has_skill hs1
     WHERE NOT EXISTS
       (SELECT * 
        FROM position_skills ps1
@@ -290,7 +290,8 @@ CREATE VIEW skill_qual AS (
           (SELECT * 
            FROM has_skill hs2
            WHERE hs1.pers_id = hs2.pers_id 
-           AND   hs2.ks_code = ps1.ks_code));
+           AND   hs2.ks_code = ps1.ks_code))
+);
 DROP VIEW cert_qual;
 CREATE VIEW cert_qual AS (
     SELECT DISTINCT pers_id 
@@ -303,7 +304,8 @@ CREATE VIEW cert_qual AS (
           (SELECT * 
            FROM has_cert hc2
            WHERE hc1.pers_id = hc2.pers_id 
-           AND   hc2.cert_code = pc1.cert_code));
+           AND   hc2.cert_code = pc1.cert_code))
+);
                  
 SELECT last_name, first_name, mi, email 
 FROM person 
@@ -311,7 +313,7 @@ NATURAL JOIN skill_qual;
                                                     
 /*16. When a company cannot find any qualified person for a job position, a secondary solution is to find a person who
 is almost qualified to the job position. Make a ?missing-one? list that lists people who miss only one skill for a
-specified pos_code.*/
+specified pos_code. ++++Double check data, but appears to work. */
 -- missing_count, missing_skills, and relevant_skills moved up to... ?
 SELECT pers_id 
 FROM missing_count 
@@ -319,7 +321,7 @@ WHERE pos_code = 10
 AND num_missing = 1;
 
 /*17. List each of the skill code and the number of people who misses the skill and are in the missing-one list for a
-given position code in the ascending order of the people counts.*/
+given position code in the ascending order of the people counts. ++++*/
 WITH missing_one AS (
     SELECT pers_id 
     FROM missing_count 
@@ -340,7 +342,7 @@ GROUP BY ks_code
 ORDER BY person_count;*/
 
 /*18. Suppose there is a new position that has nobody qualified. List the persons who miss the least number of skills
-that are required by this pos_code and report the ?least number?.*/
+that are required by this pos_code and report the ?least number?. ++++ */
 SELECT pers_id, num_missing 
 FROM missing_count 
 WHERE num_missing = 
@@ -350,18 +352,19 @@ WHERE num_missing =
                  AND pos_code = 10;
 
 /*19. For a specified position code and a given small number k, make a ?missing-k? list that lists the people?s IDs and
-the number of missing skills for the people who miss only up to k skills in the ascending order of missing skills.*/
+the number of missing skills for the people who miss only up to k skills in the ascending order of missing skills. ++++*/
 SELECT pers_id, num_missing 
 FROM missing_count 
 WHERE num_missing <= 10 
-AND pos_code = 10;
+AND pos_code = 7
+ORDER BY num_missing;
 
 /*20. Given a position code and its corresponding missing-k list specified in Question 19. Find every skill that is
 needed by at least one person in the given missing-k list. List each skill code and the number of people who need
 it in the descending order of the people counts.*/
 SELECT DISTINCT ks_code 
 FROM missing_skills 
-WHERE pos_code = 10;
+WHERE pos_code = 7;
 
 /*21. In a local or national crisis, we need to find all the people who once held a job position of the special job category
 identifier. List per_id, name, job position title and the years the person worked (starting year and ending year).*/
