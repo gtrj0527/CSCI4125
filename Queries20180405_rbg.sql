@@ -1,4 +1,4 @@
-/*1. List a specific company?s workers by names.*/
+/*1. List a specific company?s workers by names. ++++*/
 SELECT DISTINCT last_name,first_name,mi
 FROM works w
 NATURAL JOIN person pers
@@ -7,16 +7,17 @@ WHERE comp_id = 1113
 AND end_date IS NULL
 ORDER BY last_name;
 
-/*2. List a specific company?s staff by salary in descending order.*/
+/*2. List a specific company?s staff by salary in descending order. ++++*/
 DROP VIEW position_yearly_pay;
 CREATE VIEW position_yearly_pay AS (
-    SELECT pos_code, primary_sector, pay_rate AS yearly_pay 
+    SELECT pos_code, primary_sector_code, pay_rate AS yearly_pay 
     FROM position 
     NATURAL JOIN company 
     WHERE pay_type = 'S' 
     UNION 
-    SELECT pos_code, primary_sector, pay_rate*1920 AS pay_rate 
-    FROM position 
+    SELECT pos_code, primary_sector_code, pay_rate*1920 AS pay_rate 
+    FROM position
+    NATURAL JOIN company
     WHERE pay_type = 'W');
 
 SELECT last_name,first_name,mi,yearly_pay
@@ -28,7 +29,7 @@ WHERE comp_id = 1112
 AND end_date IS NULL
 ORDER BY yearly_pay DESC;
 
-/*3. List companies' labor cost (total salaries and wage rates by 1920 hours) in descending order.*/
+/*3. List companies' labor cost (total salaries and wage rates by 1920 hours) in descending order. ++++Both++++*/
 DROP VIEW total_cost;
 DROP VIEW wage_cost;
 DROP VIEW salary_cost;
@@ -74,22 +75,24 @@ WHERE end_date IS NULL
 GROUP BY comp_id, comp_name
 ORDER BY labor_cost DESC;
 
-/*4. Given a person?s identifier, find all the job positions this person is currently holding and worked in the past.*/
-SELECT pers_id,first_name,mi,last_name,pos_code, pos_title,start_date,end_date
+/*4. Given a person?s identifier, find all the job positions this person is currently holding and worked in the past. ++++*/
+--SELECT pers_id,first_name,mi,last_name,pos_code, pos_title,start_date,end_date
+SELECT pos_code, pos_title,start_date,end_date
 FROM person 
 NATURAL JOIN position 
 NATURAL JOIN works
 WHERE pers_id = 3;
 
-/*5. Given a person?s identifier, list this person?s knowledge/skills in a readable format.*/
-SELECT first_name,mi,last_name,ks_title,description,training_level
+/*5. Given a person?s identifier, list this person?s knowledge/skills in a readable format. ++++*/
+--SELECT first_name,mi,last_name,ks_title,description,training_level
+SELECT ks_title,description,training_level
 FROM person p
 NATURAL JOIN has_skill hs
 NATURAL JOIN know_skill ks
-WHERE p.pers_id = 7;
+WHERE pers_id = 7;
 
 /*6. Given a person?s identifier, list the skill gap between the requirements of this worker?s job position(s) and his/her
-skills.*/
+skills. +++Both+++*/
 DROP VIEW missing_count;
 DROP VIEW missing_skills;
 DROP VIEW relevant_skills;
@@ -117,10 +120,10 @@ NATURAL JOIN works w
 WHERE pers_id = 3
 	AND end_date IS NULL)
 MINUS 
-(SELECT hs.ks_code,pos_code, prefer
+(SELECT ks_code,pos_code, prefer
 FROM has_skill hs
-LEFT JOIN know_skill ks ON hs.ks_code = ks.ks_code
-LEFT JOIN position_skills ps ON hs.ks_code = ps.ks_code
+NATURAL JOIN know_skill ks
+NATURAL JOIN position_skills ps
 WHERE pers_id = 3);
 
 /* Option 2? */
@@ -132,7 +135,7 @@ WHERE pers_id = 3
 AND end_date IS NULL;
 
 /*7. List the required knowledge/skills of a pos_code and a job category code in a readable format. 
-     (Two queries)*/
+     (Two queries) +++Both+++*/
 /*First query*/
 SELECT pos_code, pos_title, ks_title, description
 FROM   position p
@@ -140,46 +143,21 @@ NATURAL JOIN position_skills ps
 NATURAL JOIN know_skill ks
 WHERE  pos_code = 10;
 
-/*Second query*/
-SELECT  DISTINCT pos_code, pos_title, n.nwcet_code job_cat_code, n.nwcet_title cat_title, n.description 
-FROM    nwcet n
-LEFT JOIN know_skill ks ON n.nwcet_code = ks.nwcet_code 
-LEFT JOIN position p ON ks.ks_code = p.primary_skill
-WHERE   n.nwcet_code = 'WDA';
 
-/* Second option. */
+/* Second query.*/
 --SELECT job_category_title, nwcet_title, LISTAGG(ks_title, ', ') 
 SELECT job_category_title, nwcet_title, ks_title 
 FROM job_category jc
 JOIN nwcet ON jc.core_skill = nwcet.nwcet_code
-NATURAL JOIN ks_code
+NATURAL JOIN know_skill
+WHERE cat_code = '15-1250';
 
-/*8. Given a person?s identifier, list a person?s missing knowledge/skills for a specific pos_code in a readable format.*/
-/* New */
+/*8. Given a person?s identifier, list a person?s missing knowledge/skills for a specific pos_code in a readable format. +++*/
+
 SELECT pos_code, ks_title
 FROM missing_skills 
 NATURAL JOIN know_skill
-WHERE pers_id = 1 AND pos_code = 1;
-
-/* old */
-/*
-DROP VIEW missing_skill;
-CREATE VIEW missing_skill AS (
-    (SELECT pers_id,first_name,mi,last_name,ks_code
-    FROM position_skills 
-    NATURAL JOIN PERSON -- imitates cartesian product, probably should just use comma. 
-    WHERE prefer = 'R'
-    AND pers_id = 1)
-    MINUS
-    (SELECT pers_id,first_name,mi,last_name,ks_code
-    FROM has_skill 
-    NATURAL JOIN person
-    WHERE pers_id = 1));
-SELECT pers_id,first_name,mi,last_name,ks_title missing_skill, description missing_skill_desc
-FROM know_skill ks 
-LEFT JOIN missing_skill ms ON ks.ks_code = ms.ks_code
-WHERE pers_id = 1;
-*/
+WHERE pers_id = 7 AND pos_code = 10;
 
 /*9. Given a person?s identifier and a pos_code, list the courses (course id and title) that each alone teaches all the
 missing knowledge/skills for this person to pursue the specific job position.*/
@@ -230,27 +208,34 @@ course sets? total costs.*/
 
 
 /*13. Given a person?s identifier, list all the job categories that a person is qualified for.*/
-CREATE VIEW category_skills (
-    SELECT ks_code 
+DROP VIEW category_qual;
+DROP VIEW missing_category_skills;
+DROP VIEW category_skills;
+DROP VIEW relevant_category_skills;
+CREATE VIEW category_skills AS (
+    SELECT cat_code, ks_code 
     FROM know_skill 
     NATURAL JOIN nwcet
-    JOIN job_category ON nwcet.nwcet_code job_category.core_skill);
+    JOIN job_category ON nwcet_code = job_category.core_skill);
 CREATE VIEW relevant_category_skills AS (
     SELECT pers_id, cat_code, ks_code 
     FROM person 
     NATURAL JOIN has_skill 
     NATURAL JOIN know_skill
     NATURAL JOIN nwcet 
-    JOIN job_category ON nwcet.nwcet_code = job_category.core_skill);
+    JOIN job_category ON nwcet_code = job_category.core_skill);
 CREATE VIEW missing_category_skills AS (
     SELECT pers_id, cat_code, ks_code 
     FROM person, category_skills 
     MINUS 
-    SELECT pers_id, cat_code, pos_skill 
+    SELECT pers_id, cat_code, ks_code
     FROM relevant_category_skills);
-SELECT pers_id FROM person
+CREATE VIEW category_qual AS (
+SELECT pers_id, cat_code FROM person,job_category
 MINUS
-SELECT DISTINCT pers_id FROM missing_category_skills;
+SELECT DISTINCT pers_id, cat_code FROM missing_category_skills
+);
+SELECT cat_code FROM category_qual WHERE pers_id = 7;
 
 /*14. Given a person?s identifier, find the job position with the highest pay rate for this person according to his/her skill
 possession.*/
