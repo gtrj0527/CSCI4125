@@ -10,8 +10,8 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            String userName = "";
-            String password = "";
+            String userName = "jtmarch1";
+            String password = "Tg4zJWx7";
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
             String sid = "orcl";

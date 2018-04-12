@@ -157,7 +157,7 @@ public class Course {
         try {
             PreparedStatement preparedStatement =
                     conn.prepareStatement("INSERT INTO course (title, training_level, description, status, retail_price, train_type) " +
-                                               "VALUES (NULL, ?, ?, ?, ?, ?, ?)");
+                                               "VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, title);
             preparedStatement.setString(2, trainingLevel);
             preparedStatement.setString(3, description);
