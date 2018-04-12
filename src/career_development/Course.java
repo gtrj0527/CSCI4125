@@ -158,11 +158,11 @@ public class Course {
     // TODO -- not tested
     private void store(Connection conn) {
         try {
+
             OraclePreparedStatement preparedStatement =
                     (OraclePreparedStatement)conn.prepareStatement("INSERT INTO course (title, training_level, description, status, retail_price, train_type) " +
                                                "VALUES (?, ?, ?, ?, ?, ?) RETURNING c_code INTO ?");
             preparedStatement.registerReturnParameter(7, OracleTypes.INTEGER);
-
             preparedStatement.setString(1, title);
             preparedStatement.setString(2, trainingLevel);
             preparedStatement.setString(3, description);
