@@ -2,6 +2,8 @@ package career_development;
 
 import java.sql.*;
 import java.util.LinkedList;
+import oracle.jdbc.OracleTypes;
+import oracle.jdbc.internal.OraclePreparedStatement;
 
 public class Course {
 
@@ -67,6 +69,7 @@ public class Course {
         this.retailPrice = retailPrice;
         this.trainingType = trainingType;
         this.description = description;
+        this.dirty = true;
     }
 
     private Course(int cCode, String title, String trainingLevel, String status, double retailPrice,
@@ -75,7 +78,7 @@ public class Course {
         this.cCode = cCode;
     }
 
-    public int getCCode() {
+    public Integer getCCode() {
         return cCode;
     }
 
@@ -133,17 +136,17 @@ public class Course {
         this.trainingType = trainingType;
     }
 
-    // TODO -- not tested
+    // TODO -- not tested && add "UPDATES" function
+    // On commit, if there's a new insert, the cCode, etc will be set to the actual value
     public void commit(Connection conn) {
         if(!this.dirty) {
             return;
         }
 
-        Course dbCourse = Course.retrieveCourse(cCode, conn);
-        if(dbCourse != null) {
-
-        } else {
+        if(cCode == null){
             this.store(conn);
+        } else {
+            Course dbCourse = Course.retrieveCourse(cCode, conn);
         }
     }
 
@@ -155,9 +158,10 @@ public class Course {
     // TODO -- not tested
     private void store(Connection conn) {
         try {
-            PreparedStatement preparedStatement =
-                    conn.prepareStatement("INSERT INTO course (title, training_level, description, status, retail_price, train_type) " +
-                                               "VALUES (NULL, ?, ?, ?, ?, ?, ?)");
+            OraclePreparedStatement preparedStatement =
+                    (OraclePreparedStatement)conn.prepareStatement("INSERT INTO course (title, training_level, description, status, retail_price, train_type) " +
+                                               "VALUES (?, ?, ?, ?, ?, ?) RETURNING c_code INTO ?");
+            preparedStatement.registerReturnParameter(7, OracleTypes.INTEGER);
             preparedStatement.setString(1, title);
             preparedStatement.setString(2, trainingLevel);
             preparedStatement.setString(3, description);
@@ -165,6 +169,13 @@ public class Course {
             preparedStatement.setDouble(5, retailPrice);
             preparedStatement.setString(6, trainingType);
             preparedStatement.execute();
+            ResultSet lastIDrs = preparedStatement.getReturnResultSet();
+            if (lastIDrs.next() ) {
+                // The generated id
+                Integer cCode = lastIDrs.getInt(1);
+                System.out.println (cCode);
+                this.cCode = cCode;
+            }
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
         }
