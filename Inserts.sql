@@ -331,7 +331,7 @@ INSERT INTO provides_skill VALUES('SQL1',12);
 SELECT *
 FROM provides_skill;
 
-/*job_category
+/*job_category  --NOTE: core_skill taken out and made into its own table
     CREATE TABLE job_category( 
     cat_code varchar (255) NOT NULL PRIMARY KEY,
     parent_cat_code varchar(255),
@@ -343,12 +343,32 @@ FROM provides_skill;
     CONSTRAINT cat_nwcet_fk FOREIGN KEY (core_skill) REFERENCES NWCET (nwcet_code),
     CONSTRAINT parent_cat_fk FOREIGN KEY (parent_cat_code) REFERENCES job_category (cat_code)
 );*/
-INSERT into job_category VALUES ('15-1200',null,'COMPMATH','Computer and Mathematical Occupations','Occupations specializing in computers and math',20000.00,300000.00);--SOC is parent 15-0000 Computer & Math Occupations, no parent
-INSERT into job_category VALUES ('15-1250','15-1200','PSE','Software and Web Developers, Programmers, and Testers','Occupations specializing in Software and Web Development',20000.00,300000.00);
-INSERT into job_category VALUES ('15-1254','15-1250','WDA','Web Developers','Web Development Occupations',23000.00,100000.00);
-INSERT into job_category VALUES ('15-1240','15-1200','DDA','Database and Network Administratiors and Architects','Occupations specializing Databases',50000.00,250000.00);
---INSERT into job_category VALUES ('15-0000',null,'COMPMATH','Computer and Mathematical Occupations','Occupations specializing in computers and math',20000.00,300000.00);
---INSERT into job_category VALUES ('15-0000',null,'COMPMATH','Computer and Mathematical Occupations','Occupations specializing in computers and math',20000.00,300000.00);
+INSERT into job_category VALUES ('15-1200',null,'Computer and Mathematical Occupations','Occupations specializing in computers and math',20000.00,300000.00);--SOC is parent 15-0000 Computer & Math Occupations, no parent
+INSERT into job_category VALUES ('15-1250','15-1200','Software and Web Developers, Programmers, and Testers','Occupations specializing in Software and Web Development',20000.00,300000.00);
+INSERT into job_category VALUES ('15-1254','15-1250','Web Developers','Web Development Occupations',23000.00,100000.00);
+INSERT into job_category VALUES ('15-1240','15-1200','Database and Network Administratiors and Architects','Occupations specializing Databases',50000.00,250000.00);
+
+
+
+/*CREATE TABLE core_skill (
+    nwcet_code varchar (255) NOT NULL,
+    cat_code varchar (255) NOT NULL,
+    CONSTRAINT core_skill_pk PRIMARY KEY (nwcet_code, cat_code),
+    CONSTRAINT core_skill_nwcetcode_fk FOREIGN KEY (nwcet_code) REFERENCES NWCET (nwcet_code),
+    CONSTRAINT core_skill_catcode_fk FOREIGN KEY (cat_code) REFERENCES job_category(cat_code)
+);*/
+
+INSERT INTO core_skill VALUES ('Programming Language','15-1200');
+INSERT INTO core_skill VALUES ('DDA','15-1240');
+INSERT INTO core_skill VALUES ('DM','15-1250');
+INSERT INTO core_skill VALUES ('ESAI','15-1250');
+INSERT INTO core_skill VALUES ('NDA','15-1250');
+INSERT INTO core_skill VALUES ('PSE','15-1250');
+INSERT INTO core_skill VALUES ('WDA','15-1254');
+INSERT INTO core_skill VALUES ('COMPMATH','15-1200');
+INSERT INTO core_skill VALUES ('TS','15-1250');
+INSERT INTO core_skill VALUES ('TW','15-1250');
+
 
 
 
