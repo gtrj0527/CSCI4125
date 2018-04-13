@@ -2,6 +2,7 @@
   <library name="ojdbc8">
     <CLASSES>
       <root url="file://$USER_HOME$/Downloads/Unconfirmed 11226.crdownload" />
+      <root url="jar://$USER_HOME$/Downloads/ojdbc8 (3).jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
