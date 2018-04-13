@@ -13,27 +13,27 @@
 INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
     VALUES('Adamus','Michael',null,'123 Washington Rd', '70110','mike_adam@gmail.com','M');
 INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Adamstein','Michael',null,'123 Washington Rd', '','New Orleans','LA','70110','mikastein@gmail.com','M');
+    VALUES('Adamstein','Michael',null,'123 Washington Rd', '','70110','mikastein@gmail.com','M');
 INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Adamson','Michelle',null,'384 Broad Ave','New Orleans','LA','70110','madams@gmail.com','F');
+    VALUES('Adamson','Michelle',null,'384 Broad Ave','70110','madams@gmail.com','F');
 INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Benavides', 'Ricardo', 'M', '564 Canal', 'New Orleans', 'LA', '70123', 'ricardo.benavides@hotmail.com', 'M');
+    VALUES('Benavides', 'Ricardo', 'M', '564 Canal', '70123', 'ricardo.benavides@hotmail.com', 'M');
 INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Chung', 'Connie', ' ', '123 Carlisle','New Orleans', 'LA', '70123', 'connie.chung@aol.com', 'F');
+    VALUES('Chung', 'Connie', ' ', '123 Carlisle','70123', 'connie.chung@aol.com', 'F');
 INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Dumas', 'Alexandra', 'J', '3259 Manhattan','Gretna', 'LA', '70123', 'alexandra.dumas@gmail.com', 'F');
+    VALUES('Dumas', 'Alexandra', 'J', '3259 Manhattan','70123', 'alexandra.dumas@gmail.com', 'F');
 INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Eccleston', 'Christoper', 'J', '5148 Napolean', 'New Orleans', 'LA', '70123', 'chris.eccleston@outlook.com', 'M');
+    VALUES('Eccleston', 'Christoper', 'J', '5148 Napolean', '70123', 'chris.eccleston@outlook.com', 'M');
 INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Dameron','Poe','','2187 Galactic Way','Ste A','Biloxi','MS','62347','acehotshot@galaxy.com','M');
+    VALUES('Dameron','Poe','','2187 Galactic Way','Ste A','62347','acehotshot@galaxy.com','M');
 INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Trooper','Finn','T','2187 Galactic Way','Ste B','Biloxi','MS','62347','formertrooper@galaxy.com','M');
+    VALUES('Trooper','Finn','T','2187 Galactic Way','Ste B','62347','formertrooper@galaxy.com','M');
 INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Kenobi','Rey','','94 Freedoms Dr','Baton Rouge','LA','74259','jediintraining@galaxy.com','F');
+    VALUES('Kenobi','Rey','','94 Freedoms Dr','74259','jediintraining@galaxy.com','F');
 INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Tico','Rose','','102 Cobalt St','Port Aransas','TX','77953','freedom1@galaxy.com','F');
+    VALUES('Tico','Rose','','102 Cobalt St','77953','freedom1@galaxy.com','F');
 INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Erso','Jyn','','451 Stardust Ln','Corpus Christi','TX','79483','rogueone@galaxy.com','F');
+    VALUES('Erso','Jyn','','451 Stardust Ln','79483','rogueone@galaxy.com','F');
 
 /*Test person*/
 SELECT *
