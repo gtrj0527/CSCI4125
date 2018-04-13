@@ -1,11 +1,17 @@
+<<<<<<< HEAD
 DROP TABLE zip_code;
 
+=======
+>>>>>>> c10e3547e80d0af1b99ab9c3ed0b845bb40739ab
 CREATE TABLE zip_code (
     zip varchar(5) NOT NULL PRIMARY KEY,
     city varchar (255) NOT NULL,
     state varchar (255) NOT NULL
 );
+<<<<<<< HEAD
 
+=======
+>>>>>>> c10e3547e80d0af1b99ab9c3ed0b845bb40739ab
 INSERT INTO zip_code (zip, city, state) VALUES ('00705', 'AIBONITO', 'PR');
 INSERT INTO zip_code (zip, city, state) VALUES ('00610', 'ANASCO', 'PR');
 INSERT INTO zip_code (zip, city, state) VALUES ('00611', 'ANGELES', 'PR');
