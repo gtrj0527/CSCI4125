@@ -1,3 +1,5 @@
+/*UNFINISHED*/
+
 package career_development;
 
 import java.sql.*;
@@ -173,8 +175,6 @@ public class JobCategory {
                 System.out.println(catCode);
                 this.catCode=catCode;
             }
-
-
 
 
         } catch (SQLException sqlEx) {
