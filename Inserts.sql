@@ -112,7 +112,7 @@ INSERT into company (comp_name, address1, address2, zip, primary_sector_code,pho
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
     VALUES('Chevron','3476 Frenchman St', 'Apt 4A','70015','151010','9565415173','chevron.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Harvey Gulf Marine','173 Washington Ave', '','LA','71187','45102020','5048257964','hgm.com');
+    VALUES('Harvey Gulf Marine','173 Washington Ave', '','71187','45102020','5048257964','hgm.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
     VALUES('Edison Chouest','437 Texas Hwy', '','78795','45102010','5124632983','chouest.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
