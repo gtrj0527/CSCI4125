@@ -104,31 +104,27 @@ FROM GICS;
     CONSTRAINT sector_fk FOREIGN KEY (primary_sector_code) REFERENCES GICS(primary_sector_code)
 );*/
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('General Electric','34 Edison Parkway','', '10562','45102010','9565415176','www.ge.com');
+    VALUES('General Electric','34 Edison Parkway','', '99551','45102010','9565415176','www.ge.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Lucid','2839 St Charles Avenue', '','70447','45102010','9565415175','lucid.com');
+    VALUES('Lucid','2839 St Charles Avenue', '','72001','45102010','9565415175','lucid.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Texaco','2741 Freedom Way', 'Ste 6B','70447','45102010','9565415174','texaco.com');
+    VALUES('Texaco','2741 Freedom Way', 'Ste 6B','36310','45102010','9565415174','texaco.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Chevron','3476 Frenchman St', 'Apt 4A','70015','151010','9565415173','chevron.com');
+    VALUES('Chevron','3476 Frenchman St', 'Apt 4A','39730','151010','9565415173','chevron.com'); 
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Harvey Gulf Marine','173 Washington Ave', '','LA','71187','45102020','5048257964','hgm.com');
+    VALUES('Harvey Gulf Marine','173 Washington Ave', '','64166','45102020','5048257964','hgm.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Edison Chouest','437 Texas Hwy', '','78795','45102010','5124632983','chouest.com');
+    VALUES('Edison Chouest','437 Texas Hwy', '','68362','45102010','5124632983','chouest.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('USA Quarry','18550 McDermott Fwy','','78524','451010','8005317822','usaa.com');
+    VALUES('USA Quarry','18550 McDermott Fwy','','33427','451010','8005317822','usaa.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Exxon','4532 Gas Fwy','','70561','4510','8884579513','exxon.com');
-INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Univision','4365 Global Way','','01293','501020','8009542127','univision.com');
+    VALUES('Exxon','4532 Gas Fwy','','30703','4510','8884579513','exxon.com');
+INSERT into company (comp_name, address1 address2, zip, primary_sector_code,phone, website) 
+    VALUES('Univision','4365 Global Way','','27156','501020','8009542127','univision.com');  
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
     VALUES('Childrens Hospital New Orleans','200 Henry Clay Ave','','70118','35103010','5048999511',
             'chnola.org');
 --UPDATE company SET phone = '9565415172' WHERE comp_id = 1116;
-/*Test company*/
-select *
-from company;
-
 
 /*KNOW_SKILL:
     CREATE TABLE know_skill(
