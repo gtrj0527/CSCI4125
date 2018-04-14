@@ -10,30 +10,30 @@
     zip varchar(9) NOT NULL,
     email varchar(255),
     gender varchar(2)*/
-INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Adamus','Michael',null,'123 Washington Rd', '70110','mike_adam@gmail.com','M');
-INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Adamstein','Michael',null,'123 Washington Rd', '','New Orleans','LA','70110','mikastein@gmail.com','M');
-INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Adamson','Michelle',null,'384 Broad Ave','New Orleans','LA','70110','madams@gmail.com','F');
-INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Benavides', 'Ricardo', 'M', '564 Canal', 'New Orleans', 'LA', '70123', 'ricardo.benavides@hotmail.com', 'M');
-INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Chung', 'Connie', ' ', '123 Carlisle','New Orleans', 'LA', '70123', 'connie.chung@aol.com', 'F');
-INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Dumas', 'Alexandra', 'J', '3259 Manhattan','Gretna', 'LA', '70123', 'alexandra.dumas@gmail.com', 'F');
-INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Eccleston', 'Christoper', 'J', '5148 Napolean', 'New Orleans', 'LA', '70123', 'chris.eccleston@outlook.com', 'M');
-INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Dameron','Poe','','2187 Galactic Way','Ste A','Biloxi','MS','62347','acehotshot@galaxy.com','M');
-INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Trooper','Finn','T','2187 Galactic Way','Ste B','Biloxi','MS','62347','formertrooper@galaxy.com','M');
-INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Kenobi','Rey','','94 Freedoms Dr','Baton Rouge','LA','74259','jediintraining@galaxy.com','F');
-INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Tico','Rose','','102 Cobalt St','Port Aransas','TX','77953','freedom1@galaxy.com','F');
-INSERT INTO person (last_name, first_name, mi, address1, zip, email, gender) 
-    VALUES('Erso','Jyn','','451 Stardust Ln','Corpus Christi','TX','79483','rogueone@galaxy.com','F');
+INSERT INTO person (last_name, first_name, mi, address1, address2, zip, email, gender) 
+    VALUES('Adamus','Michael',null,'123 Washington Rd','', '10196','mike_adam@gmail.com','M');
+INSERT INTO person (last_name, first_name, mi, address1, address2, zip, email, gender) 
+    VALUES('Edelstein','Morgan',null,'132 Worthington Rd', '','21044','medelstein@gmail.com','M');
+INSERT INTO person (last_name, first_name, mi, address1, address2, zip, email, gender) 
+    VALUES('Evasdotter','Eowyn',null,'384 Broad Ave','','32207','ee@gmail.com','F');
+INSERT INTO person (last_name, first_name, mi, address1, address2, zip, email, gender) 
+    VALUES('Benavides', 'Ricardo', 'M', '564 Canal', '','78553', 'ricardo.benavides@hotmail.com', 'M');
+INSERT INTO person (last_name, first_name, mi, address1, address2, zip, email, gender) 
+    VALUES('Chung', 'Connie', ' ', '123 Carlisle','','78586', 'connie.chung@aol.com', 'F');
+INSERT INTO person (last_name, first_name, mi, address1, address2, zip, email, gender) 
+    VALUES('Dumas', 'Alexandra', 'J', '3259 Manhattan','','78566', 'alexandra.dumas@gmail.com', 'F');
+INSERT INTO person (last_name, first_name, mi, address1, address2, zip, email, gender) 
+    VALUES('Eccleston', 'Christoper', 'J', '5148 Napolean','', '70065', 'chris.eccleston@outlook.com', 'M');
+INSERT INTO person (last_name, first_name, mi, address1, address2, zip, email, gender) 
+    VALUES('Dameron','Poe','','2187 Galactic Way','Ste A','27356','acehotshot@galaxy.com','M');
+INSERT INTO person (last_name, first_name, mi, address1, address2, zip, email, gender) 
+    VALUES('Trooper','Finn','T','2187 Galactic Way','Ste B','27356','formertrooper@galaxy.com','M');
+INSERT INTO person (last_name, first_name, mi, address1, address2, zip, email, gender) 
+    VALUES('Kenobi','Rey','','94 Freedoms Dr','','24892','jediintraining@galaxy.com','F');
+INSERT INTO person (last_name, first_name, mi, address1, address2, zip, email, gender) 
+    VALUES('Tico','Rose','','102 Cobalt St','','94108','freedom1@galaxy.com','F');
+INSERT INTO person (last_name, first_name, mi, address1, address2, zip, email, gender) 
+    VALUES('Erso','Jyn','','451 Stardust Ln','','28037','rogueone@galaxy.com','F');
 
 /*Test person*/
 SELECT *
@@ -104,31 +104,27 @@ FROM GICS;
     CONSTRAINT sector_fk FOREIGN KEY (primary_sector_code) REFERENCES GICS(primary_sector_code)
 );*/
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('General Electric','34 Edison Parkway','', '10562','45102010','9565415176','www.ge.com');
+    VALUES('General Electric','34 Edison Parkway','', '99551','45102010','9565415176','www.ge.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Lucid','2839 St Charles Avenue', '','70447','45102010','9565415175','lucid.com');
+    VALUES('Lucid','2839 St Charles Avenue', '','72001','45102010','9565415175','lucid.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Texaco','2741 Freedom Way', 'Ste 6B','70447','45102010','9565415174','texaco.com');
+    VALUES('Texaco','2741 Freedom Way', 'Ste 6B','36310','45102010','9565415174','texaco.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Chevron','3476 Frenchman St', 'Apt 4A','70015','151010','9565415173','chevron.com');
+    VALUES('Chevron','3476 Frenchman St', 'Apt 4A','39730','151010','9565415173','chevron.com'); 
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Harvey Gulf Marine','173 Washington Ave', '','LA','71187','45102020','5048257964','hgm.com');
+    VALUES('Harvey Gulf Marine','173 Washington Ave', '','64166','45102020','5048257964','hgm.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Edison Chouest','437 Texas Hwy', '','78795','45102010','5124632983','chouest.com');
+    VALUES('Edison Chouest','437 Texas Hwy', '','68362','45102010','5124632983','chouest.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('USA Quarry','18550 McDermott Fwy','','78524','451010','8005317822','usaa.com');
+    VALUES('USA Quarry','18550 McDermott Fwy','','33427','451010','8005317822','usaa.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Exxon','4532 Gas Fwy','','70561','4510','8884579513','exxon.com');
+    VALUES('Exxon','4532 Gas Fwy','','30703','4510','8884579513','exxon.com');
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
-    VALUES('Univision','4365 Global Way','','01293','501020','8009542127','univision.com');
+    VALUES('Univision','4365 Global Way','','27156','501020','8009542127','univision.com');  
 INSERT into company (comp_name, address1, address2, zip, primary_sector_code,phone, website) 
     VALUES('Childrens Hospital New Orleans','200 Henry Clay Ave','','70118','35103010','5048999511',
             'chnola.org');
 --UPDATE company SET phone = '9565415172' WHERE comp_id = 1116;
-/*Test company*/
-select *
-from company;
-
 
 /*KNOW_SKILL:
     CREATE TABLE know_skill(
@@ -213,8 +209,8 @@ ORDER BY c_code;
     train_type varchar(255), -- University, Training Company, Non-Profit
     CONSTRAINT provider_comp_fk FOREIGN KEY (comp_id) REFERENCES company (comp_id)*/
 INSERT INTO training_provider VALUES(1111, 'Training Company');
+INSERT INTO training_provider VALUES(1114, 'Non-Profit');
 INSERT INTO training_provider VALUES(1117, 'Training Company');
-INSERT INTO training_provider VALUES(1120, 'Non-Profit');
  /*Test training_provider*/   
 SELECT * 
 FROM training_provider;
@@ -233,17 +229,18 @@ FROM training_provider;
     CONSTRAINT sect_taught_by_fk FOREIGN KEY (taught_by) REFERENCES person (pers_id),
     CONSTRAINT sec_course_fk FOREIGN KEY (c_code) REFERENCES course (c_code)
 );*/
-INSERT INTO section VALUES(1,1,'11-MAY-18',1111,11,'In-class',1500.00);
+
+INSERT INTO section VALUES(1,4,'11-MAY-18',1111,11,'In-class',1500.00);
 INSERT INTO section VALUES(2,6,'25-JUN-18',1117,10,'Online',1650.50);
-INSERT INTO section VALUES(3,4,'06-MAR-18',1120,9,'In-class',2000);
-INSERT INTO section VALUES(4,3,'31-DEC-18',1120,8,'In-class',595.99);
+INSERT INTO section VALUES(3,4,'06-MAR-18',1114,9,'In-class',2000);
+INSERT INTO section VALUES(4,3,'31-DEC-18',1114,8,'In-class',595.99);
 INSERT INTO section VALUES(5,4,'15-NOV-18',1117,7,'Online',700);
 INSERT INTO section VALUES(6,2,'05-SEP-18',1111,6,'Online',1500.75);
 INSERT INTO section VALUES(7,5,'15-MAY-18',1117,5,'In-class',2000);
 INSERT INTO section VALUES(8,6,'17-JUL-18',1111,4,'In-class',925.25);
-INSERT INTO section VALUES(9,3,'31-JAN-18',1120,3,'Online',999.99);
+INSERT INTO section VALUES(9,3,'31-JAN-18',1114,3,'Online',999.99);
 INSERT INTO section VALUES(10,4,'19-AUG-18',1111,2,'In-class',1000);
-INSERT INTO section VALUES(11,1,'21-MAY-18',1120,1,'Online',1650.75);
+INSERT INTO section VALUES(11,1,'21-MAY-18',1114,1,'Online',1650.75);
  /*Test section*/   
 SELECT * 
 FROM section;
@@ -258,8 +255,8 @@ FROM section;
 );*/
 INSERT INTO cert(cert_name,issued_by,tool) VALUES('Oracle Database',1111,'SQL for Oracle DB 12c');
 INSERT INTO cert(cert_name,issued_by,tool) VALUES('jCert 1',1117,'Certified Java Programmer');
-INSERT INTO cert(cert_name,issued_by,tool) VALUES('CLA',1120,'C Programming Language Certified Associate');
-INSERT INTO cert(cert_name,issued_by,tool) VALUES('Oracle Java',1120,'Certified Profession Java SE Programmer');
+INSERT INTO cert(cert_name,issued_by,tool) VALUES('CLA',1114,'C Programming Language Certified Associate');
+INSERT INTO cert(cert_name,issued_by,tool) VALUES('Oracle Java',1114,'Certified Profession Java SE Programmer');
 --INSERT INTO cert(cert_name,issued_by,tool) VALUES('',1117,'');
 --INSERT INTO cert(cert_name,issued_by,tool) VALUES('',1111,'');
 /*Test cert*/
