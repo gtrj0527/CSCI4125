@@ -151,8 +151,16 @@ public class Course {
     }
 
     // TODO
-    private void update(Connection conn) {
-
+    private void update(Connection conn, Position dbCourse) {
+        PreparedStatement updateCourse;
+        try {
+            updateCourse = conn.prepareStatement("UPDATE course SET title = ?, training_level = ?, description = ?, " +
+                    "status = ?, retail_price = ?, train_type = ? WHERE pos_code = ?");
+            int rowsAffected = updateCourse.executeUpdate();
+            System.out.println(rowsAffected + " were updated.");
+        } catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+        }
     }
 
     // TODO -- not tested

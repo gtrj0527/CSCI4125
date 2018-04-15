@@ -81,7 +81,7 @@ public class Position {
         //this.cat_code = cat_code;
     }
 
-    public Integer getPos_code() {
+    public Integer getPosCode() {
         return pos_code;
     }
 
