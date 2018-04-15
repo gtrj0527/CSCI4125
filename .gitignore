@@ -3,6 +3,8 @@
 .idea/**/tasks.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/workspace.xml
+
 
 .gradle
 *.sw?
