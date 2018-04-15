@@ -25,9 +25,9 @@ public class Skill {
             while(rs.next()) {
                 String nwcet_code = rs.getString(1);
                 String ks_title = rs.getString(2);
-                String ks_description = rs.getString(3;
+                String ks_description = rs.getString(3);
                 String training_level = rs.getString(4);
-                String ks_code = rs.getString(5));
+                String ks_code = rs.getString(5);
                 skillList.add(new Skill(ks_code, nwcet_code, ks_title, ks_description, training_level));
             }
 
@@ -133,8 +133,8 @@ public class Skill {
                     "RETURNING ks_code INTO ?");
             preparedStatement.registerReturnParameter(5, OracleTypes.INTEGER);
             preparedStatement.setString(1, nwcet_code);
-            preparedStatement.setStrint(2, ks_title);
-            preparedStatement.setString(3 ks_description);
+            preparedStatement.setString(2, ks_title);
+            preparedStatement.setString(3, ks_description);
             preparedStatement.setString(4, training_level);
             preparedStatement.execute();
             ResultSet lastKScoders = preparedStatement.getReturnResultSet();
