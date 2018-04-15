@@ -129,22 +129,6 @@ CREATE VIEW skill_qual AS (
            AND   hs2.ks_code = ps1.ks_code))
 );
 
-/*Used in Query 15*/
---We never actually use this one.
-CREATE VIEW cert_qual AS (
-    SELECT DISTINCT pers_id 
-    FROM has_cert hc1
-    WHERE NOT EXISTS
-      (SELECT * 
-       FROM position_cert pc1
-       WHERE pos_code = 10 
-       AND NOT EXISTS
-          (SELECT * 
-           FROM has_cert hc2
-           WHERE hc1.pers_id = hc2.pers_id 
-           AND   hc2.cert_code = pc1.cert_code))
-);
-
 /*Used in Query 22*/
 CREATE VIEW unemployed_people AS (
     SELECT pers_id 
@@ -229,3 +213,19 @@ CREATE VIEW pay_change AS (
     SELECT pers_id, SUM(pay_diff) AS diff 
     FROM pay_change_by_sector 
     GROUP BY pers_id);
+    
+/*Saved for Queries 26-28
+  Potentially needs changes.*/
+CREATE VIEW cert_qual AS (
+    SELECT DISTINCT pers_id 
+    FROM has_cert hc1
+    WHERE NOT EXISTS
+      (SELECT * 
+       FROM position_cert pc1
+       WHERE pos_code = 10 
+       AND NOT EXISTS
+          (SELECT * 
+           FROM has_cert hc2
+           WHERE hc1.pers_id = hc2.pers_id 
+           AND   hc2.cert_code = pc1.cert_code))
+);

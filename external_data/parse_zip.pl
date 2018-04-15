@@ -9,8 +9,14 @@ $header =~ s/\"//g;
 
 my @headers = split ",", $header;
 
+print OUT "CREATE TABLE zip_code (\n";
+print OUT "    zip varchar(5) NOT NULL PRIMARY KEY,\n";
+print OUT "    city varchar (255) NOT NULL,\n";
+print OUT "    state varchar (255) NOT NULL\n";
+print OUT ");\n";
+
 my %zip_hash;
-my $base_zip_sql = "INSERT INTO zip_code (zip_code, city, state) (ZIP, CITY, STATE)";
+my $base_zip_sql = "INSERT INTO zip_code (zip, city, state) VALUES (ZIP, CITY, STATE)";
 while(<ZIP>) {
 
 	my ($zip_code, $a, $city, $state, $b) = split ",";
