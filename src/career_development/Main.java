@@ -18,12 +18,12 @@ public class Main {
             String sid = "orcl";
             Connection conn = DriverManager.getConnection("jdbc:oracle:thin:" + userName + "/" + password + "@" + hostName + ":" + port + ":" + sid);
 
-            /**/
+            /*COURSE*/
             Course course = Course.retrieveCourse(1, conn);
             System.out.println("Title: " + course.getTitle());
             List<Course> list = Course.retrieveAllCourses(conn);
             Iterator<Course> courseIterator = list.iterator();
-            while(courseIterator.hasNext()) {
+            while (courseIterator.hasNext()) {
                 Course c = courseIterator.next();
                 System.out.println("c_code: " + c.getCCode() + " Title: " + c.getTitle());
             }
@@ -36,26 +36,41 @@ public class Main {
 //            Course testCourse = Course.retrieveCourse(newCCode, conn);
 //            System.out.println(testCourse.getRetailPrice());
 
-            /*Test Person */
+            /*PERSON*/
             Person person = Person.retrievePerson(1, conn);
             System.out.println("Last Name: " + person.getLastName());
             List<Person> listPerson = Person.retrieveAllPeople(conn);
             Iterator<Person> personIterator = listPerson.iterator();
-            while(personIterator.hasNext()) {
+            while (personIterator.hasNext()) {
                 Person p = personIterator.next();
                 System.out.println("pers_id: " + p.getPersID() + " Last Name: " + p.getLastName());
             }
-            Person p = new Person ("Organa", "Leia", "S",
+            Person p = new Person("Organa", "Leia", "S",
                     "87 Republic Way", "Suite 27A", "84392", "leia.organa@republic.org",
                     "F");
             p.commit(conn);
             Integer newPersID = p.getPersID();
             Person testPerson = Person.retrievePerson(newPersID, conn);
             System.out.println(testPerson.getEmail());
+
+            /*POSITION*/
+            Position position = Position.retrievePosition(1, conn);
+            System.out.println("Position Title: " + position.getPosTitle());
+            List<Position> listPosition = Position.retrieveAllPositions(conn);
+            Iterator<Position> positionIterator = listPosition.iterator();
+            while (positionIterator.hasNext()) {
+                Position pos = positionIterator.next();
+                System.out.println("pos_code: " + pos.getPosCode() + " Position Title: " + pos.getPosTitle());
+            }
+            Position pos = new Position("1116", "DB Administrator", "FT",
+                    "15-1240", "98000", "S");
+            pos.commit(conn);
+            Integer newPosCode = pos.getPosCode();
+            Position testPosition = Position.retrievePosition(newPosCode, conn);
+            System.out.println(testPosition.getPosTitle());
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             System.err.println("Connection failed");
         }
-	// write your code here
     }
 }
