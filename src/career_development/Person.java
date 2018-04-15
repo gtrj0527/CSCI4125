@@ -27,17 +27,17 @@ public class Person {
                     "city, state, zip, email, gender FROM person NATURAL JOIN zip_code");
             ResultSet rs = retrPerson.executeQuery();
             while(rs.next()) {
-                String last_name = rs.getString(1);
-                String first_name = rs.getString(2);
-                String mi = rs.getString(3);
-                String address1 = rs.getString(4);
-                String address2 = rs.getString(5);
-                String city = rs.getString(6);
-                String state = rs.getString(7);
-                String zip = rs.getString(8);
-                String email = rs.getString(9);
-                String gender = rs.getString(10);
-                Integer pers_id = rs.getInt(11);
+                Integer pers_id = rs.getInt(1);
+                String last_name = rs.getString(2);
+                String first_name = rs.getString(3);
+                String mi = rs.getString(4);
+                String address1 = rs.getString(5);
+                String address2 = rs.getString(6);
+                String city = rs.getString(7);
+                String state = rs.getString(8);
+                String zip = rs.getString(9);
+                String email = rs.getString(10);
+                String gender = rs.getString(11);
                 personList.add(new Person(pers_id, last_name, first_name, mi, address1, address2, city, state,
                                           zip, email, gender));
             }
@@ -209,8 +209,16 @@ public class Person {
     }
 
     // TODO
-    private void update(Connection conn) {
-
+    private void update(Connection conn, Position dbPerson) {
+        PreparedStatement updatePerson;
+        try {
+            updatePerson = conn.prepareStatement("UPDATE person SET last_name = ?, first_name = ?, mi = ?, " +
+                    "address1 = ?, address2 = ?,zip = ?, email = ?, gender = ? WHERE pos_code = ?");
+            int rowsAffected = updatePerson.executeUpdate();
+            System.out.println(rowsAffected + " were updated.");
+        } catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+        }
     }
 
     // TODO -- not tested
