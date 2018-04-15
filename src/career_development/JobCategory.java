@@ -20,7 +20,7 @@ public class JobCategory {
 
     public static LinkedList<JobCategory> retrieveAllJobCategories(Connection conn) {
         PreparedStatement retrJobCategory;
-        LinkedList<JobCategory> jobCategoryList = new LinkedList<>();
+        LinkedList<JobCategory> jobCategoryList = new LinkedList<JobCategory>();
         try {
             retrJobCategory = conn.prepareStatement("SELECT catCode, parentCatCode, coreSkillCode, jobCategoryTitle, " +
                     "jobCategoryDescription,payRangeHigh, payRangeLow FROM job_category");
@@ -43,29 +43,34 @@ public class JobCategory {
         return jobCategoryList;
     }
 
-//    public static retrieveJobCategory (String catCode, Connection conn) {
-//        PreparedStatement retrJobCategory;
-//        try {
-//            retrJobCategory = conn.prepareStatement("SELECT catCode, parentCatCode, coreSkillCode, jobCategoryTitle," +
-//                    "jobCategoryDescription,payRangeHigh, payRangeLow FROM job_category WHERE cat_code = ?");
-//            retrJobCategory.setString(1,catCode);
-//            ResultSet rs = retrJobCategory.executeQuery();
-//            rs.next();
-//            String parentCatCode = rs.getString(1);
-//            String coreSkillCode = rs.getString(2);
-//            String jobCategoryTitle = rs.getString(3);
-//            String jobCategoryDescription =rs.getString(4);
-//            Float payRangeHigh = rs.getFloat(5);
-//            Float payRangeLow = rs.getFloat(6);
-//            return new JobCategory(catCode, parentCatCode, coreSkillCode, jobCategoryTitle, jobCategoryDescription, payRangeHigh, payRangeLow);
-//        } catch (SQLException sqlEx) {
-//            System.err.println(sqlEx.toString());
-//        }
-//    }
+    public static JobCategory retrieveJobCategory (String catCode, Connection conn) {
+        PreparedStatement retrJobCategory;
+        try {
+            retrJobCategory = conn.prepareStatement("SELECT catCode, parentCatCode, coreSkillCode, jobCategoryTitle," +
+                    "jobCategoryDescription,payRangeHigh, payRangeLow FROM job_category WHERE cat_code = ?");
+            retrJobCategory.setString(1,catCode);
+            ResultSet rs = retrJobCategory.executeQuery();
+            if(rs.next()) {
+                String parentCatCode = rs.getString(1);
+                String coreSkillCode = rs.getString(2);
+                String jobCategoryTitle = rs.getString(3);
+                String jobCategoryDescription = rs.getString(4);
+                Float payRangeHigh = rs.getFloat(5);
+                Float payRangeLow = rs.getFloat(6);
+                return new JobCategory(catCode, parentCatCode, coreSkillCode, jobCategoryTitle, jobCategoryDescription, payRangeHigh, payRangeLow);
+            }
+            else{
+                return null;
+            }
+        } catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+            return null;
+        }
+    }
 
 
-    public JobCategory() {
-        this.catCode = catCode;
+    public JobCategory(String parentCatCode, String coreSkillCode, String jobCategoryTitle, String jobCategoryDescription, Float payRangeHigh, Float payRangeLow) {
+        //this.catCode = catCode;
         this.parentCatCode = parentCatCode;
         this.coreSkillCode = coreSkillCode;
         this.jobCategoryTitle = jobCategoryTitle;
@@ -76,7 +81,8 @@ public class JobCategory {
 
     private JobCategory(String catCode, String parentCatCode, String coreSkillCode, String jobCategoryTitle,
                        String jobCategoryDescription, Float payRangeHigh, Float payRangeLow) {
-       // this(catCode, parentCatCode, coreSkillCode, jobCategoryTitle, jobCategoryDescription, payRangeHigh, payRangeLow);
+       this(parentCatCode, coreSkillCode, jobCategoryTitle, jobCategoryDescription, payRangeHigh, payRangeLow);
+       this.catCode = catCode;
     }
 
 
@@ -84,10 +90,10 @@ public class JobCategory {
         return catCode;
     }
 
-    public void setCatCode(String catCode) {
-        this.dirty = this.catCode.equals(catCode);
-        this.catCode = catCode;
-    }
+//    public void setCatCode(String catCode) {
+//        this.dirty = this.catCode.equals(catCode);
+//        this.catCode = catCode;
+//    }
 
     public String getParentCatCode() {
         return parentCatCode;
@@ -144,31 +150,36 @@ public class JobCategory {
     }
 
 
-//    public void commit (Connection conn) {
-//        if(!this.dirty) {
-//            return;
-//        }
-//        if(catCode==null) {
-//            this.store(conn);
-//        } else {
-//            JobCategory dbJobCategory = JobCategory.retrieveAllJobCategories(conn);
-//        }
-//    }
+    public void commit (Connection conn) {
+        if(!this.dirty) {
+            return;
+        }
+        if(catCode==null) {
+            this.store(conn);
+        } else {
+            JobCategory dbJobCategory = JobCategory.retrieveJobCategory(catCode, conn);
+        }
+    }
+
+    // TODO
+    private void update(Connection conn) {
+
+    }
 
 
     private void store (Connection conn) {
         try {
             OraclePreparedStatement preparedStatement =
-                    (OraclePreparedStatement)conn.prepareStatement("INSERT INTO job_category (cat_code, parent_cat_code, core_skill, job_category_title, " +
-                            "job_description, pay_range_high, pay_range_low) VALUES (?,?,?,?,?,?,?)");
+                    (OraclePreparedStatement)conn.prepareStatement("INSERT INTO job_category (parent_cat_code, core_skill, job_category_title, " +
+                            "job_description, pay_range_high, pay_range_low) VALUES (?,?,?,?,?,?,?) returning cat_code INTO ?");
             preparedStatement.registerReturnParameter(7, OracleTypes.INTEGER);
-            preparedStatement.setString(1, catCode);
-            preparedStatement.setString(2, parentCatCode);
-            preparedStatement.setString(3, coreSkillCode);
-            preparedStatement.setString(4, jobCategoryTitle);
-            preparedStatement.setString(5, jobCategoryDescription);
-            preparedStatement.setFloat(6, payRangeHigh);
-            preparedStatement.setFloat(7, payRangeLow);
+            //preparedStatement.setString(1, catCode);
+            preparedStatement.setString(1, parentCatCode);
+            preparedStatement.setString(2, coreSkillCode);
+            preparedStatement.setString(3, jobCategoryTitle);
+            preparedStatement.setString(4, jobCategoryDescription);
+            preparedStatement.setFloat(5, payRangeHigh);
+            preparedStatement.setFloat(6, payRangeLow);
             ResultSet lastIDrs = preparedStatement.getReturnResultSet();
             if(lastIDrs.next()) {
                 String catCode = lastIDrs.getString(1);
