@@ -11,8 +11,8 @@ public class Main {
     //TODO: Add close for statements and connection
     public static void main(String[] args) {
         try {
-            String userName = "";
-            String password = "";
+            String userName = "jtmarch1";
+            String password = "Tg4zJWx7";
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
             String sid = "orcl";
@@ -84,10 +84,10 @@ public class Main {
 //            String newcatCode = jc.getCatCode();
 //            JobCategory testJobCategory = JobCategory.retrieveJobCategory(newcatCode, conn);
 //            System.out.println(testJobCategory.getPayRangeHigh());
-//        } catch (SQLException sqlEx) {
-//            System.err.println(sqlEx.toString());
-//            System.err.println("Connection failed");
-//        }
+        } catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+            System.err.println("Connection failed");
+        }
     }
 }
 
