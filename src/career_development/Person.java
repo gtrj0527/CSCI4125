@@ -143,7 +143,7 @@ public class Person {
         return address2;
     }
 
-    public void setAddress2(String address1) {
+    public void setAddress2(String address2) {
         this.dirty = this.address2.equals(address2);
         this.address2 = address2;
     }
