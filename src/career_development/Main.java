@@ -61,7 +61,7 @@ public class Main {
             Skill testSkillB = Skill.retrieveSkill("Java", conn);
 
             System.out.println(testPerson.getFirstName());
-            System.out.println(testPerson.hasSkill(testPerson, testSkillB, conn));
+            System.out.println(testPerson.hasSkill(testPerson, testSkillB, conn));   //RETURNS NULL FIX METHOD IN PERSON, FIX CLASS SKILL IF NEEDED
 
 
             /*POSITION*/
@@ -103,7 +103,7 @@ public class Main {
             Iterator<Skill> skillIterator = listSkill.iterator();
             while (skillIterator.hasNext()){
                 Skill s = skillIterator.next();
-                System.out.println("KS Title: " + s.getKs_title() + ". KS Description: " + s.getKs_description());
+                System.out.println("KS Title: " + s.getKs_title() + ". KS Description: " + s.getDescription());
             }
             Skill s = new Skill("ESAI", "Systems Analysis", "Enterprise systems analysis", "Intermediate");
             s.commit(conn);
