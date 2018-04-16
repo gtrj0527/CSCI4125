@@ -19,7 +19,7 @@ public class Skill {
         PreparedStatement retrSkill;
         LinkedList<Skill> skillList = new LinkedList<Skill>();
         try {
-            retrSkill = conn.prepareStatement("SELECT ks_code, nwcet_code, ks_title, ks_description, training_level " +
+            retrSkill = conn.prepareStatement("SELECT ks_code, nwcet_code, ks_title, description, training_level " +
                                                     "FROM know_skill");
             ResultSet rs = retrSkill.executeQuery();
             while(rs.next()) {

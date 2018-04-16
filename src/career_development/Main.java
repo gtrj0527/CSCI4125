@@ -1,5 +1,6 @@
 package career_development;
 
+import javax.tools.JavaCompiler;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,8 +12,11 @@ public class Main {
     //TODO: Add close for statements and connection
     public static void main(String[] args) {
         try {
-            String userName = "gtswanso";
-            String password = "sNNP9R9R";
+
+
+            String userName = "";
+            String password = "";
+
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
             String sid = "orcl";
@@ -49,7 +53,14 @@ public class Main {
             p.commit(conn);
             Integer newPersID = p.getPersID();
             Person testPerson = Person.retrievePerson(newPersID, conn);
+
+            System.out.println(testPerson.getEmail());
+
+            Skill testSkillB = Skill.retrieveSkill("Java", conn);
+
             System.out.println(testPerson.getFirstName());
+            System.out.println(testPerson.hasSkill(testPerson, testSkillB, conn));   //RETURNS NULL FIX METHOD IN PERSON, FIX CLASS SKILL IF NEEDED
+
 
             /*POSITION*/
             Position position = Position.retrievePosition(1, conn);
@@ -92,16 +103,25 @@ public class Main {
                 Skill s = skillIterator.next();
                 System.out.println("KS Title: " + s.getKs_title() + ". KS Description: " + s.getDescription());
             }
-            Skill s = new Skill("ESAI", "Systems Analysis", "Enterprise systems " +
-                                 "analysis", "Intermediate");
+            Skill s = new Skill("ESAI", "Systems Analysis", "Enterprise systems analysis", "Intermediate");
             s.commit(conn);
             String newKsCode = s.getKs_code();
             Skill testSkill = Skill.retrieveSkill(newKsCode, conn);
             System.out.println(testSkill.getTraining_level());
 
+//        } catch (SQLException sqlEx) {
+//            System.err.println(sqlEx.toString());
+//            System.err.println("Connection failed");
+//        }
+
+
+
+
+
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             System.err.println("Connection failed");
         }
+
     }
 }
