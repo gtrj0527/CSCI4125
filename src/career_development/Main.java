@@ -68,6 +68,23 @@ public class Main {
             Integer newPosCode = pos.getPosCode();
             Position testPosition = Position.retrievePosition(newPosCode, conn);
             System.out.println(testPosition.getPosTitle());
+
+            /*JOB CATEGORY*/
+            JobCategory jobCategory = JobCategory.retrieveJobCategory("1", conn);
+            System.out.println("Job Category Title: " + jobCategory.getJobCategoryTitle());
+            List<JobCategory> listJobCategory = JobCategory.retrieveAllJobCategories(conn);
+            Iterator<JobCategory> jobCategoryIterator = listJobCategory.iterator();
+            while(jobCategoryIterator.hasNext()) {
+                JobCategory jc = jobCategoryIterator.next();
+                System.out.println("cat_code: " + jc.getCatCode() + " Job Category Title: " + jc.getJobCategoryTitle());
+            }
+            JobCategory jc = new JobCategory ("Sample Job General", "General Job", "Job Worker",
+                    "This is a job for a person who can do a job", 20000.00f, 10000.00f);
+            jc.commit(conn);
+            String newcatCode = jc.getCatCode();
+            JobCategory testJobCategory = JobCategory.retrieveJobCategory(newcatCode, conn);
+            System.out.println(testJobCategory.getPayRangeHigh());
+            
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             System.err.println("Connection failed");
