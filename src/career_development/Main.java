@@ -36,7 +36,7 @@ public class Main {
             c.commit(conn);
             Integer newCCode = c.getCCode();
             Course testCourse = Course.retrieveCourse(newCCode, conn);
-            System.out.println(testCourse.getRetailPrice());
+            System.out.println("Retail Price: " + testCourse.getRetailPrice());
 
             /*PERSON*/
             Person person = Person.retrievePerson(1, conn);
