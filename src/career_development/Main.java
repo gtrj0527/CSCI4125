@@ -11,8 +11,8 @@ public class Main {
     //TODO: Add close for statements and connection
     public static void main(String[] args) {
         try {
-            String userName = "";
-            String password = "";
+            String userName = "jtmarch1";
+            String password = "Tg4zJWx7";
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
             String sid = "orcl";
@@ -46,12 +46,14 @@ public class Main {
                 System.out.println("pers_id: " + p.getPersID() + " Last Name: " + p.getLastName());
             }
             Person p = new Person("Organa", "Leia", "S",
-                    "87 Republic Way", "Suite 27A", "84392", "leia.organa@republic.org",
+                    "87 Republic Way", "Suite 27A", "70447", "leia.organa@republic.org",
                     "F");
             p.commit(conn);
             Integer newPersID = p.getPersID();
             Person testPerson = Person.retrievePerson(newPersID, conn);
             System.out.println(testPerson.getEmail());
+            System.out.println(testPerson.hasSkill(testPerson, Java))
+
 
             /*POSITION*/
             Position position = Position.retrievePosition(1, conn);
@@ -92,5 +94,7 @@ public class Main {
 //            System.err.println(sqlEx.toString());
 //            System.err.println("Connection failed");
 //        }
+
+
     }
 }

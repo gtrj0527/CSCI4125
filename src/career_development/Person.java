@@ -1,7 +1,10 @@
 package career_development;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+
 import oracle.jdbc.OracleTypes;
 import oracle.jdbc.internal.OraclePreparedStatement;
 
@@ -249,5 +252,38 @@ public class Person {
             System.err.println(sqlEx.toString());
         }
         this.dirty = false;
+    }
+
+
+    public LinkedList<String> hasSkill (Person person, Skill skill, Connection conn) {
+        PreparedStatement retrPersonHasSkills;
+        LinkedList<String> personHasSkillsList = new LinkedList<>();
+
+        try{
+            retrPersonHasSkills=conn.prepareStatement("SELECT pers_id, ks_code FROM has_skill WHERE pers_id=?"
+                    );
+            //retrPersonHasSkills.setInt(1, pers_id);
+            ResultSet rs = retrPersonHasSkills.executeQuery();
+            if(rs.next()) {
+                String pers_id = rs.getString(1);
+
+               String ks_code = rs.getString(2);
+               personHasSkillsList.add(new String (ks_code));
+               System.out.println(pers_id);
+               System.out.println(ks_code);
+
+
+               // personHasSkillsList.add();
+                //personHasSkillsList.add(new String(ks_code));
+                //personHasSkillsList.add();
+                //return new personHasSkillsList.add()
+                //retrPersonHasSkills.execute();
+                //ResultSet skillReturn = retrPersonHasSkills.getReturnResultSet();
+            }
+
+        } catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+            return null;
+        } return personHasSkillsList;
     }
 }
