@@ -1,0 +1,28 @@
+select hs.PERS_ID, p.first_name, p.last_name, hs.ks_code, c.c_code, s.sec_code, c.title, c.description, s.complete_date
+from has_skill hs
+left join person p 
+    on hs.pers_id = p.pers_id
+left join provides_skill ps
+    on hs.ks_code = ps.KS_CODE
+left join course c
+    on ps.c_code = c.c_code
+left join section s
+    on ps.c_code = S.C_CODE
+WHERE hs.pers_id = 7;
+
+select PERS_ID, first_name, last_name, ks_code, c_code, sec_code, title, description, complete_date
+from has_skill 
+natural join person 
+--    on hs.pers_id = p.pers_id
+natural join provides_skill 
+--    on hs.ks_code = ps.KS_CODE
+natural join course 
+--    on ps.c_code = c.c_code
+natural join section 
+--    on ps.c_code = S.C_CODE
+WHERE pers_id = 7;
+
+/*Testing JDBC Inserts*/
+select *
+from person
+order by pers_id;
