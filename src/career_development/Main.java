@@ -27,14 +27,12 @@ public class Main {
                 Course c = courseIterator.next();
                 System.out.println("c_code: " + c.getCCode() + " Title: " + c.getTitle());
             }
-//
-//            /*Test Course */
-//            Course c = new Course ("Sample Course2", "Intermediate", "E", 1234.54,
-//                    "Traditional", "Check to see if this is working.");
-//            c.commit(conn);
-//            Integer newCCode = c.getCCode();
-//            Course testCourse = Course.retrieveCourse(newCCode, conn);
-//            System.out.println(testCourse.getRetailPrice());
+            Course c = new Course ("Sample Course2", "Intermediate", "E", 1234.54,
+                    "Traditional", "Check to see if this is working.");
+            c.commit(conn);
+            Integer newCCode = c.getCCode();
+            Course testCourse = Course.retrieveCourse(newCCode, conn);
+            System.out.println(testCourse.getRetailPrice());
 
             /*PERSON*/
             Person person = Person.retrievePerson(1, conn);
@@ -92,7 +90,7 @@ public class Main {
             Iterator<Skill> skillIterator = listSkill.iterator();
             while (skillIterator.hasNext()){
                 Skill s = skillIterator.next();
-                System.out.println("KS Title: " + s.getKs_title() + ". KS Description: " + s.getKs_description());
+                System.out.println("KS Title: " + s.getKs_title() + ". KS Description: " + s.getDescription());
             }
             Skill s = new Skill("ESAI", "Systems Analysis", "Enterprise systems " +
                                  "analysis", "Intermediate");
