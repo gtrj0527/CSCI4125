@@ -84,7 +84,7 @@ public class Main {
             String newcatCode = jc.getCatCode();
             JobCategory testJobCategory = JobCategory.retrieveJobCategory(newcatCode, conn);
             System.out.println(testJobCategory.getPayRangeHigh());
-            
+
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             System.err.println("Connection failed");

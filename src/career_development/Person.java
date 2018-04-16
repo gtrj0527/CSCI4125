@@ -208,6 +208,10 @@ public class Person {
         }
     }
 
+    public void takeCourse(Section keys){
+        //import c_code, sect_code, complete_date, pers_id 
+    }
+
     // TODO
     private void update(Connection conn, Position dbPerson) {
         PreparedStatement updatePerson;
