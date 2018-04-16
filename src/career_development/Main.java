@@ -31,14 +31,12 @@ public class Main {
                 Course c = courseIterator.next();
                 System.out.println("c_code: " + c.getCCode() + " Title: " + c.getTitle());
             }
-//
-//            /*Test Course */
-//            Course c = new Course ("Sample Course2", "Intermediate", "E", 1234.54,
-//                    "Traditional", "Check to see if this is working.");
-//            c.commit(conn);
-//            Integer newCCode = c.getCCode();
-//            Course testCourse = Course.retrieveCourse(newCCode, conn);
-//            System.out.println(testCourse.getRetailPrice());
+            Course c = new Course ("Sample Course2", "Intermediate", "E", 1234.54,
+                    "Traditional", "Check to see if this is working.");
+            c.commit(conn);
+            Integer newCCode = c.getCCode();
+            Course testCourse = Course.retrieveCourse(newCCode, conn);
+            System.out.println(testCourse.getRetailPrice());
 
             /*PERSON*/
             Person person = Person.retrievePerson(1, conn);
