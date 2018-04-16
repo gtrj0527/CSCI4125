@@ -11,8 +11,10 @@ public class Main {
     //TODO: Add close for statements and connection
     public static void main(String[] args) {
         try {
+
             String userName = "jtmarch1";
             String password = "Tg4zJWx7";
+
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
             String sid = "orcl";
@@ -20,7 +22,7 @@ public class Main {
 
             /*COURSE*/
             Course course = Course.retrieveCourse(1, conn);
-            System.out.println("Title: " + course.getTitle());
+//            System.out.println("Title: " + course.getTitle());
             List<Course> list = Course.retrieveAllCourses(conn);
             Iterator<Course> courseIterator = list.iterator();
             while (courseIterator.hasNext()) {
@@ -38,7 +40,7 @@ public class Main {
 
             /*PERSON*/
             Person person = Person.retrievePerson(1, conn);
-            System.out.println("Last Name: " + person.getLastName());
+//            System.out.println("Last Name: " + person.getLastName());
             List<Person> listPerson = Person.retrieveAllPeople(conn);
             Iterator<Person> personIterator = listPerson.iterator();
             while (personIterator.hasNext()) {
@@ -51,13 +53,16 @@ public class Main {
             p.commit(conn);
             Integer newPersID = p.getPersID();
             Person testPerson = Person.retrievePerson(newPersID, conn);
+
             System.out.println(testPerson.getEmail());
-            System.out.println(testPerson.hasSkill(testPerson, Java))
+            //System.out.println(testPerson.hasSkill(testPerson, Java))
+
+            System.out.println(testPerson.getFirstName());
 
 
             /*POSITION*/
             Position position = Position.retrievePosition(1, conn);
-            System.out.println("Position Title: " + position.getPosTitle());
+//            System.out.println("Position Title: " + position.getPosTitle());
             List<Position> listPosition = Position.retrieveAllPositions(conn);
             Iterator<Position> positionIterator = listPosition.iterator();
             while (positionIterator.hasNext()) {
@@ -70,12 +75,8 @@ public class Main {
             Integer newPosCode = pos.getPosCode();
             Position testPosition = Position.retrievePosition(newPosCode, conn);
             System.out.println(testPosition.getPosTitle());
-        } catch (SQLException sqlEx) {
-            System.err.println(sqlEx.toString());
-            System.err.println("Connection failed");
-        }
-//
-//            /*Test JobCategory */
+
+            /*JOB CATEGORY*/
 //            JobCategory jobCategory = JobCategory.retrieveJobCategory("1", conn);
 //            System.out.println("Job Category Title: " + jobCategory.getJobCategoryTitle());
 //            List<JobCategory> listJobCategory = JobCategory.retrieveAllJobCategories(conn);
@@ -90,11 +91,18 @@ public class Main {
 //            String newcatCode = jc.getCatCode();
 //            JobCategory testJobCategory = JobCategory.retrieveJobCategory(newcatCode, conn);
 //            System.out.println(testJobCategory.getPayRangeHigh());
+
 //        } catch (SQLException sqlEx) {
 //            System.err.println(sqlEx.toString());
 //            System.err.println("Connection failed");
 //        }
 
+
+
+        } catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+            System.err.println("Connection failed");
+        }
 
     }
 }
