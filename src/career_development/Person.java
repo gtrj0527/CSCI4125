@@ -56,16 +56,16 @@ public class Person {
             retrPerson.setInt(1, pers_id);
             ResultSet rs = retrPerson.executeQuery();
             if(rs.next()){
-                String last_name = rs.getString(1);
-                String first_name = rs.getString(2);
-                String mi = rs.getString(3);
-                String address1 = rs.getString(4);
-                String address2 = rs.getString(5);
-                String city = rs.getString(6);
-                String state = rs.getString(7);
-                String zip = rs.getString(8);
-                String email = rs.getString(9);
-                String gender = rs.getString(10);
+                String last_name = rs.getString(2);
+                String first_name = rs.getString(3);
+                String mi = rs.getString(4);
+                String address1 = rs.getString(5);
+                String address2 = rs.getString(6);
+                String city = rs.getString(7);
+                String state = rs.getString(8);
+                String zip = rs.getString(9);
+                String email = rs.getString(10);
+                String gender = rs.getString(11);
                 return new Person(pers_id, last_name, first_name, mi, address1, address2, city, state, zip, email,
                         gender);
             }
@@ -208,9 +208,19 @@ public class Person {
         }
     }
 
-    public void takeCourse(Section keys){
-        //import c_code, sect_code, complete_date, pers_id 
-    }
+//    Section keys = new Section (Integer c_code, Integer sect_code, Date complete_date, Integer pers_id);
+//    select KEYS from section join person on section.pers_id = person.pers_id join course on section.c_code = course.c_code where pers_id = ?;
+//    //import c_code, sect_code, complete_date, pers_id
+//    public void getSectionKeys(){
+//        return keys;
+//    }
+
+//    public void setSectionKeys(Section c_code, Section sect_code, Section complete_date, Section pers_id){
+//        this.c_code = c_code;
+//        this.sect_code = sect_code;
+//        this.complete_date = complete_date;
+//        this.pers_id = pers_id;
+//    }
 
     // TODO
     private void update(Connection conn, Position dbPerson) {

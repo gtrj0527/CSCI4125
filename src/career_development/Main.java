@@ -11,8 +11,8 @@ public class Main {
     //TODO: Add close for statements and connection
     public static void main(String[] args) {
         try {
-            String userName = "gtswanso";
-            String password = "sNNP9R9R";
+            String userName = " ";
+            String password = " ";
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
             String sid = "orcl";
@@ -20,7 +20,7 @@ public class Main {
 
             /*COURSE*/
             Course course = Course.retrieveCourse(1, conn);
-            System.out.println("Title: " + course.getTitle());
+//            System.out.println("Title: " + course.getTitle());
             List<Course> list = Course.retrieveAllCourses(conn);
             Iterator<Course> courseIterator = list.iterator();
             while (courseIterator.hasNext()) {
@@ -38,7 +38,7 @@ public class Main {
 
             /*PERSON*/
             Person person = Person.retrievePerson(1, conn);
-            System.out.println("Last Name: " + person.getLastName());
+//            System.out.println("Last Name: " + person.getLastName());
             List<Person> listPerson = Person.retrieveAllPeople(conn);
             Iterator<Person> personIterator = listPerson.iterator();
             while (personIterator.hasNext()) {
@@ -46,16 +46,16 @@ public class Main {
                 System.out.println("pers_id: " + p.getPersID() + " Last Name: " + p.getLastName());
             }
             Person p = new Person("Organa", "Leia", "S",
-                    "87 Republic Way", "Suite 27A", "84392", "leia.organa@republic.org",
+                    "87 Republic Way", "Suite 27A", "70447", "leia.organa@republic.org",
                     "F");
             p.commit(conn);
             Integer newPersID = p.getPersID();
             Person testPerson = Person.retrievePerson(newPersID, conn);
-            System.out.println(testPerson.getEmail());
+            System.out.println(testPerson.getFirstName());
 
             /*POSITION*/
             Position position = Position.retrievePosition(1, conn);
-            System.out.println("Position Title: " + position.getPosTitle());
+//            System.out.println("Position Title: " + position.getPosTitle());
             List<Position> listPosition = Position.retrieveAllPositions(conn);
             Iterator<Position> positionIterator = listPosition.iterator();
             while (positionIterator.hasNext()) {
@@ -70,27 +70,6 @@ public class Main {
             System.out.println(testPosition.getPosTitle());
 
             /*JOB CATEGORY*/
-            JobCategory jobCategory = JobCategory.retrieveJobCategory("1", conn);
-            System.out.println("Job Category Title: " + jobCategory.getJobCategoryTitle());
-            List<JobCategory> listJobCategory = JobCategory.retrieveAllJobCategories(conn);
-            Iterator<JobCategory> jobCategoryIterator = listJobCategory.iterator();
-            while(jobCategoryIterator.hasNext()) {
-                JobCategory jc = jobCategoryIterator.next();
-                System.out.println("cat_code: " + jc.getCatCode() + " Job Category Title: " + jc.getJobCategoryTitle());
-            }
-            JobCategory jc = new JobCategory ("Sample Job General", "General Job", "Job Worker",
-                    "This is a job for a person who can do a job", 20000.00f, 10000.00f);
-            jc.commit(conn);
-            String newcatCode = jc.getCatCode();
-            JobCategory testJobCategory = JobCategory.retrieveJobCategory(newcatCode, conn);
-            System.out.println(testJobCategory.getPayRangeHigh());
-
-        } catch (SQLException sqlEx) {
-            System.err.println(sqlEx.toString());
-            System.err.println("Connection failed");
-        }
-//
-//            /*Test JobCategory */
 //            JobCategory jobCategory = JobCategory.retrieveJobCategory("1", conn);
 //            System.out.println("Job Category Title: " + jobCategory.getJobCategoryTitle());
 //            List<JobCategory> listJobCategory = JobCategory.retrieveAllJobCategories(conn);
@@ -105,10 +84,10 @@ public class Main {
 //            String newcatCode = jc.getCatCode();
 //            JobCategory testJobCategory = JobCategory.retrieveJobCategory(newcatCode, conn);
 //            System.out.println(testJobCategory.getPayRangeHigh());
-//        } catch (SQLException sqlEx) {
-//            System.err.println(sqlEx.toString());
-//            System.err.println("Connection failed");
-//        }
+
+        } catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+            System.err.println("Connection failed");
+        }
     }
 }
-
