@@ -1,5 +1,6 @@
 package career_development;
 
+import javax.tools.JavaCompiler;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -56,9 +57,11 @@ public class Main {
             Person testPerson = Person.retrievePerson(newPersID, conn);
 
             System.out.println(testPerson.getEmail());
-            //System.out.println(testPerson.hasSkill(testPerson, Java))
+
+            Skill testSkillB = Skill.retrieveSkill("Java", conn);
 
             System.out.println(testPerson.getFirstName());
+            System.out.println(testPerson.hasSkill(testPerson, testSkillB, conn));
 
 
             /*POSITION*/
@@ -102,8 +105,7 @@ public class Main {
                 Skill s = skillIterator.next();
                 System.out.println("KS Title: " + s.getKs_title() + ". KS Description: " + s.getKs_description());
             }
-            Skill s = new Skill("ESAI", "Systems Analysis", "Enterprise systems " +
-                                 "analysis", "Intermediate");
+            Skill s = new Skill("ESAI", "Systems Analysis", "Enterprise systems analysis", "Intermediate");
             s.commit(conn);
             String newKsCode = s.getKs_code();
             Skill testSkill = Skill.retrieveSkill(newKsCode, conn);
@@ -113,6 +115,8 @@ public class Main {
 //            System.err.println(sqlEx.toString());
 //            System.err.println("Connection failed");
 //        }
+
+
 
 
 
