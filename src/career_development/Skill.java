@@ -28,7 +28,7 @@ public class Skill {
                 String description = rs.getString(3);
                 String training_level = rs.getString(4);
                 String ks_code = rs.getString(5);
-                skillList.add(new Skill(ks_code, nwcet_code, ks_title, ks_description, training_level));
+                skillList.add(new Skill(ks_code, nwcet_code, ks_title, description, training_level));
             }
 
         } catch (SQLException sqlEx) {

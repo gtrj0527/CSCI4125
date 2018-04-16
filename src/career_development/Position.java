@@ -47,12 +47,12 @@ public class Position {
             retrPosition.setInt(1, pos_code);
             ResultSet rs = retrPosition.executeQuery();
             if (rs.next()) {
-                String comp_id = rs.getString(1);
-                String pos_title = rs.getString(2);
-                String emp_mode = rs.getString(3);
-                String cat_code = rs.getString(4);
-                String pay_rate = rs.getString(5);
-                String pay_type = rs.getString(6);
+                String comp_id = rs.getString(2);
+                String pos_title = rs.getString(3);
+                String emp_mode = rs.getString(4);
+                String cat_code = rs.getString(5);
+                String pay_rate = rs.getString(6);
+                String pay_type = rs.getString(7);
                 return new Position(pos_code, comp_id, pos_title, emp_mode, cat_code, pay_rate, pay_type);
             } else {
                 return null;
