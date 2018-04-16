@@ -14,8 +14,8 @@ public class Main {
         try {
 
 
-            String userName = "jtmarch1";
-            String password = "Tg4zJWx7";
+            String userName = "";
+            String password = "";
 
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
