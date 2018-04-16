@@ -11,8 +11,8 @@ public class Main {
     //TODO: Add close for statements and connection
     public static void main(String[] args) {
         try {
-            String userName = " ";
-            String password = " ";
+            String userName = "gtswanso";
+            String password = "sNNP9R9R";
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
             String sid = "orcl";
@@ -70,20 +70,36 @@ public class Main {
             System.out.println(testPosition.getPosTitle());
 
             /*JOB CATEGORY*/
-//            JobCategory jobCategory = JobCategory.retrieveJobCategory("1", conn);
-//            System.out.println("Job Category Title: " + jobCategory.getJobCategoryTitle());
-//            List<JobCategory> listJobCategory = JobCategory.retrieveAllJobCategories(conn);
-//            Iterator<JobCategory> jobCategoryIterator = listJobCategory.iterator();
-//            while(jobCategoryIterator.hasNext()) {
-//                JobCategory jc = jobCategoryIterator.next();
-//                System.out.println("cat_code: " + jc.getCatCode() + " Job Category Title: " + jc.getJobCategoryTitle());
-//            }
-//            JobCategory jc = new JobCategory ("Sample Job General", "General Job", "Job Worker",
-//                    "This is a job for a person who can do a job", 20000.00f, 10000.00f);
-//            jc.commit(conn);
-//            String newcatCode = jc.getCatCode();
-//            JobCategory testJobCategory = JobCategory.retrieveJobCategory(newcatCode, conn);
-//            System.out.println(testJobCategory.getPayRangeHigh());
+            JobCategory jobCategory = JobCategory.retrieveJobCategory("1", conn);
+            System.out.println("Job Category Title: " + jobCategory.getJobCategoryTitle());
+            List<JobCategory> listJobCategory = JobCategory.retrieveAllJobCategories(conn);
+            Iterator<JobCategory> jobCategoryIterator = listJobCategory.iterator();
+            while(jobCategoryIterator.hasNext()) {
+                JobCategory jc = jobCategoryIterator.next();
+                System.out.println("cat_code: " + jc.getCatCode() + " Job Category Title: " + jc.getJobCategoryTitle());
+            }
+            JobCategory jc = new JobCategory ("Sample Job General", "General Job", "Job Worker",
+                    "This is a job for a person who can do a job", 20000.00f, 10000.00f);
+            jc.commit(conn);
+            String newCatCode = jc.getCatCode();
+            JobCategory testJobCategory = JobCategory.retrieveJobCategory(newCatCode, conn);
+            System.out.println(testJobCategory.getPayRangeHigh());
+
+            /*SKILL*/
+            Skill skill = Skill.retrieveSkill("Java", conn);
+            System.out.println("KS_Code: " + skill.getKs_code());
+            List<Skill> listSkill = Skill.retrieveAllSkills(conn);
+            Iterator<Skill> skillIterator = listSkill.iterator();
+            while (skillIterator.hasNext()){
+                Skill s = skillIterator.next();
+                System.out.println("KS Title: " + s.getKs_title() + ". KS Description: " + s.getKs_description());
+            }
+            Skill s = new Skill("ESAI", "Systems Analysis", "Enterprise systems " +
+                                 "analysis", "Intermediate");
+            s.commit(conn);
+            String newKsCode = s.getKs_code();
+            Skill testSkill = Skill.retrieveSkill(newKsCode, conn);
+            System.out.println(testSkill.getTraining_level());
 
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
