@@ -64,7 +64,7 @@ CREATE TABLE prerequisite (
 CREATE TABLE GICS (
     primary_sector_code varchar(8) NOT NULL PRIMARY KEY,
     code_name varchar(255),
-    code_description varchar(255),
+    code_description varchar(500),
     parent_sector_code varchar(8),
     CONSTRAINT parent_gics_sector_fk FOREIGN KEY (parent_sector_code) REFERENCES GICS (primary_sector_code)
 );
