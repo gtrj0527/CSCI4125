@@ -58,8 +58,6 @@ INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_descr
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('20201060', 'Office Services and Supplies', '202010', 'Providers of office services and manufacturers of office supplies and equipment not classified elsewhere.');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('20201070', 'Diversified Support Services', '202010', 'Companies primarily providing labor oriented support services to businesses and governments.  Includes commercial cleaning services');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('20201080', 'Security and Alarm Services', '202010', 'Companies providing security and protection services to business and governments. Includes companies providing services such as correctional facilities');
-INSERT INTO GICS (primary_sector_code, code_name) VALUES ('20', 'Industrials');
-INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code) VALUES ('2020', 'Commercial  and Professional Services', '20');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code) VALUES ('202020', 'Professional Services', '2020');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('20202010', 'Human Resource and Employment Services', '202020', 'Companies providing business support services relating to human capital management. Includes employment agencies');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('20202020', 'Research and Consulting Services', '202020', 'Companies primarily providing research and consulting services to businesses and governments not classified elsewhere.  Includes companies involved in management consulting services');
@@ -97,7 +95,6 @@ INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_descr
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code) VALUES ('252030', 'Textiles', '2520');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('25203020', 'Footwear', '252030', 'Manufacturers of footwear. Includes sport and leather shoes.');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('25203030', 'Textiles', '252030', 'Manufacturers of textile and related products not classified in the Apparel');
-INSERT INTO GICS (primary_sector_code, code_name) VALUES ('25', 'Consumer Discretionary');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code) VALUES ('2530', 'Consumer Services', '25');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code) VALUES ('253010', 'Hotels', '2530');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('25301020', 'Hotels', '253010', 'Owners and operators of hotels');
@@ -185,7 +182,6 @@ INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_descr
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('40203030', 'Diversified Capital Markets', '402030', 'Financial institutions primarily engaged in diversified capital markets activities');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('40203040', 'Financial Exchanges and Data', '402030', 'Financial  exchanges  for  securities');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code) VALUES ('402040', 'Mortgage Real Estate Investment', '4020');
-INSERT INTO GICS (primary_sector_code, code_name) VALUES ('40', 'Financials');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code) VALUES ('4030', 'Insurance', '40');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code) VALUES ('403010', 'Insurance', '4030');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('40301010', 'Insurance Brokers', '403010', 'Insurance and reinsurance brokerage firms.');
@@ -204,7 +200,6 @@ INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code) VALUES ('4
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('45103010', 'Application Software', '451030', 'Companies engaged in developing and producing software designed for specialized applications for the business or consumer market. Includes enterprise and technical software. Excludes companies classified in the Home Entertainment Software Sub-Industry. Also excludes companies producing systems or database management software classified in the Systems Software Sub-Industry.');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('45103020', 'Systems Software', '451030', 'Companies engaged in developing and producing systems and database management software.');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('45103030', 'Home Entertainment Software', '451030', 'Manufacturers of home entertainment software and educational software used primarily in the home.');
-INSERT INTO GICS (primary_sector_code, code_name) VALUES ('45', 'Information Technology');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code) VALUES ('4520', 'Technology Hardware and Equipment', '45');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code) VALUES ('452010', 'Communications Equipment', '4520');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code, code_description) VALUES ('45201020', 'Communications Equipment', '452010', 'Manufacturers of communication equipment and products');
