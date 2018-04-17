@@ -14,8 +14,8 @@ public class Main {
         try {
 
 
-            String userName = "";
-            String password = "";
+            String userName = "gtswanso";
+            String password = "sNNP9R9R";
 
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
@@ -56,10 +56,10 @@ public class Main {
 
             System.out.println(testPerson.getEmail());
 
-            Skill testSkillB = Skill.retrieveSkill("Java", conn);
+            //Skill testSkillB = Skill.retrieveSkill("Java", conn);
 
             System.out.println(testPerson.getFirstName());
-            System.out.println(testPerson.hasSkill(testPerson, testSkillB, conn));   //RETURNS NULL FIX METHOD IN PERSON, FIX CLASS SKILL IF NEEDED
+            System.out.println(testPerson.getSkills(conn));   //RETURNS NULL FIX METHOD IN PERSON, FIX CLASS SKILL IF NEEDED
 
 
             /*POSITION*/
@@ -72,7 +72,7 @@ public class Main {
                 System.out.println("pos_code: " + pos.getPosCode() + " Position Title: " + pos.getPosTitle());
             }
             Position pos = new Position("1116", "DB Administrator", "FT",
-                    "15-1240", "98000", "S");
+                    "15-1250", "98000", "S");
             pos.commit(conn);
             Integer newPosCode = pos.getPosCode();
             Position testPosition = Position.retrievePosition(newPosCode, conn);
@@ -80,7 +80,7 @@ public class Main {
 
             /*JOB CATEGORY*/
             JobCategory jobCategory = JobCategory.retrieveJobCategory("1", conn);
-            System.out.println("Job Category Title: " + jobCategory.getJobCategoryTitle());
+            //System.out.println("Job Category Title: " + jobCategory.getJobCategoryTitle());
             List<JobCategory> listJobCategory = JobCategory.retrieveAllJobCategories(conn);
             Iterator<JobCategory> jobCategoryIterator = listJobCategory.iterator();
             while(jobCategoryIterator.hasNext()) {
@@ -92,7 +92,6 @@ public class Main {
             jc.commit(conn);
             String newCatCode = jc.getCatCode();
             JobCategory testJobCategory = JobCategory.retrieveJobCategory(newCatCode, conn);
-            System.out.println(testJobCategory.getPayRangeHigh());
 
             /*SKILL*/
             Skill skill = Skill.retrieveSkill("Java", conn);
@@ -103,11 +102,14 @@ public class Main {
                 Skill s = skillIterator.next();
                 System.out.println("KS Title: " + s.getKs_title() + ". KS Description: " + s.getDescription());
             }
-            Skill s = new Skill("ESAI", "Systems Analysis", "Enterprise systems analysis", "Intermediate");
+            Skill s = new Skill("Java3","ESAI", "Systems Analysis",
+                                "Enterprise systems analysis", "Intermediate");
             s.commit(conn);
             String newKsCode = s.getKs_code();
             Skill testSkill = Skill.retrieveSkill(newKsCode, conn);
             System.out.println(testSkill.getTraining_level());
+
+            testPerson.addSkill(s, conn);
 
 //        } catch (SQLException sqlEx) {
 //            System.err.println(sqlEx.toString());

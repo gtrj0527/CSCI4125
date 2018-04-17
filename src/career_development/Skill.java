@@ -23,12 +23,12 @@ public class Skill {
                                                     "FROM know_skill");
             ResultSet rs = retrSkill.executeQuery();
             while(rs.next()) {
-                String nwcet_code = rs.getString(1);
-                String ks_title = rs.getString(2);
-                String description = rs.getString(3);
-                String training_level = rs.getString(4);
-                String ks_code = rs.getString(5);
-                skillList.add(new Skill(ks_code, nwcet_code, ks_title, description, training_level));
+                String ks_code = rs.getString(1);
+                String nwcet_code = rs.getString(2);
+                String ks_title = rs.getString(3);
+                String description = rs.getString(4);
+                String training_level = rs.getString(5);
+                skillList.add(new Skill(ks_code, nwcet_code, ks_title, description, training_level, true));
             }
 
         } catch (SQLException sqlEx) {
@@ -49,7 +49,7 @@ public class Skill {
                 String ks_title = rs.getString(2);
                 String description = rs.getString(3);
                 String training_level = rs.getString(4);
-                return new Skill(ks_code, nwcet_code, ks_title, description, training_level);
+                return new Skill(ks_code, nwcet_code, ks_title, description, training_level, true);
             } else {
                 return null;
             }
@@ -60,7 +60,8 @@ public class Skill {
         }
     }
 
-    public Skill(String nwcet_code, String ks_title, String description, String training_level) {
+    public Skill(String ks_code, String nwcet_code, String ks_title, String description, String training_level) {
+        this.ks_code = ks_code;
         this.nwcet_code = nwcet_code;
         this.ks_title = ks_title;
         this.description = description;
@@ -68,9 +69,9 @@ public class Skill {
         this.dirty = true;
     }
 
-    private Skill(String ks_code, String nwcet_code, String ks_title, String description, String training_level) {
-        this(nwcet_code, ks_title, description, training_level);
-        this.ks_code = ks_code;
+    private Skill(String ks_code, String nwcet_code, String ks_title, String description, String training_level, boolean dirty) {
+        this(ks_code, nwcet_code, ks_title, description, training_level);
+        this.dirty = dirty;
     }
 
     public String getKs_code() {
@@ -129,20 +130,18 @@ public class Skill {
     private void store (Connection conn) {
         try {
             OraclePreparedStatement preparedStatement = (
-                    OraclePreparedStatement)conn.prepareStatement("INSERT INTO skill(nwcet_code, ks_title, description, training_level) VALUES (?,?,?,?)" +
+                    OraclePreparedStatement)conn.prepareStatement("INSERT INTO skill(ks_code, nwcet_code, ks_title, description, training_level) VALUES (?,?,?,?)" +
                     "RETURNING ks_code INTO ?");
-            preparedStatement.registerReturnParameter(5, OracleTypes.INTEGER);
-            preparedStatement.setString(1, nwcet_code);
-            preparedStatement.setString(2, ks_title);
-            preparedStatement.setString(3, description);
-            preparedStatement.setString(4, training_level);
+            preparedStatement.setString(1, ks_code);
+            preparedStatement.setString(2, nwcet_code);
+            preparedStatement.setString(3, ks_title);
+            preparedStatement.setString(4, description);
+            preparedStatement.setString(5, training_level);
             preparedStatement.execute();
             ResultSet lastKScoders = preparedStatement.getReturnResultSet();
             if (lastKScoders.next()) {
             String ks_code = lastKScoders.getString(1);
             System.out.println(ks_code);
-            this.ks_code = ks_code;
-
             }
         }catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());

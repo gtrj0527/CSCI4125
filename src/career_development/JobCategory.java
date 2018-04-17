@@ -21,8 +21,8 @@ public class JobCategory {
         PreparedStatement retrJobCategory;
         LinkedList<JobCategory> jobCategoryList = new LinkedList<JobCategory>();
         try {
-            retrJobCategory = conn.prepareStatement("SELECT catCode, parentCatCode, coreSkillCode, jobCategoryTitle, " +
-                    "jobCategoryDescription,payRangeHigh, payRangeLow FROM job_category");
+            retrJobCategory = conn.prepareStatement("SELECT cat_Code, parent_Cat_Code, core_Skill, job_Category_Title, " +
+                    "description, pay_Range_High, pay_Range_Low FROM job_category");
             ResultSet rs = retrJobCategory.executeQuery();
             while (rs.next()) {
                 String catCode = rs.getString(1);
@@ -45,17 +45,17 @@ public class JobCategory {
     public static JobCategory retrieveJobCategory (String catCode, Connection conn) {
         PreparedStatement retrJobCategory;
         try {
-            retrJobCategory = conn.prepareStatement("SELECT catCode, parentCatCode, coreSkillCode, jobCategoryTitle," +
-                    "jobCategoryDescription,payRangeHigh, payRangeLow FROM job_category WHERE cat_code = ?");
+            retrJobCategory = conn.prepareStatement("SELECT cat_Code, parent_Cat_Code, core_Skill, job_Category_Title," +
+                    "description, pay_Range_High, pay_Range_Low FROM job_category WHERE cat_code = ?");
             retrJobCategory.setString(1,catCode);
             ResultSet rs = retrJobCategory.executeQuery();
             if(rs.next()) {
-                String parentCatCode = rs.getString(1);
-                String coreSkillCode = rs.getString(2);
-                String jobCategoryTitle = rs.getString(3);
-                String jobCategoryDescription = rs.getString(4);
-                Float payRangeHigh = rs.getFloat(5);
-                Float payRangeLow = rs.getFloat(6);
+                String parentCatCode = rs.getString(2);
+                String coreSkillCode = rs.getString(3);
+                String jobCategoryTitle = rs.getString(4);
+                String jobCategoryDescription = rs.getString(5);
+                Float payRangeHigh = rs.getFloat(6);
+                Float payRangeLow = rs.getFloat(7);
                 return new JobCategory(catCode, parentCatCode, coreSkillCode, jobCategoryTitle, jobCategoryDescription, payRangeHigh, payRangeLow);
             }
             else{
