@@ -19,6 +19,7 @@ while(<IN>) {
 
 		if($vals[$i] =~ /^\d{2}$/) {
 			my $sector_code = $vals[$i];
+			next if $parent_stack[0] eq $sector_code;
 			my $sector_name = $vals[$i+1];
 			$sector_name =~ s/\"//g;
 			$sector_name =~ s/\n//g;
@@ -29,6 +30,7 @@ while(<IN>) {
 			$parent_stack[0] = $sector_code;
 		} elsif ($vals[$i] =~ /^\d{4}$/) {
 			my $sector_code = $vals[$i];
+			next if $parent_stack[1] eq $sector_code;
 			my $sector_name = $vals[$i+1];
 			$sector_name =~ s/\"//g;
 			$sector_name =~ s/\n//g;
@@ -39,6 +41,7 @@ while(<IN>) {
 			$parent_stack[1] = $sector_code;
 		} elsif ($vals[$i] =~ /^\d{6}$/) {
 			my $sector_code = $vals[$i];
+			next if $parent_stack[2] eq $sector_code;
 			my $sector_name = $vals[$i+1];
 			$sector_name =~ s/\"//g;
 			$sector_name =~ s/\n//g;
