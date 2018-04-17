@@ -269,24 +269,21 @@ public class Person {
     }
 
 
-    public LinkedList<String> hasSkill (Person person, Skill skill, Connection conn) {
-        PreparedStatement retrPersonHasSkills;
-        LinkedList<String> personHasSkillsList = new LinkedList<>();
+    public LinkedList<String> getSkills (Connection conn) {
+        PreparedStatement retrPersonSkills;
+        LinkedList<String> personSkillsList = new LinkedList<>();
 
         try{
-            retrPersonHasSkills=conn.prepareStatement("SELECT pers_id, ks_code FROM has_skill WHERE pers_id=?"
-                    );
-            //retrPersonHasSkills.setInt(1, pers_id);
-            ResultSet rs = retrPersonHasSkills.executeQuery();
+            retrPersonSkills=conn.prepareStatement("SELECT ks_code FROM has_skill WHERE pers_id=?");
+            retrPersonSkills.setInt(1, pers_id);
+            ResultSet rs = retrPersonSkills.executeQuery();
             if(rs.next()) {
                 String pers_id = rs.getString(1);
 
                String ks_code = rs.getString(2);
-               personHasSkillsList.add(new String (ks_code));
+                personSkillsList.add(new String (ks_code));
                System.out.println(pers_id);
                System.out.println(ks_code);
-
-
                // personHasSkillsList.add();
                 //personHasSkillsList.add(new String(ks_code));
                 //personHasSkillsList.add();
@@ -298,6 +295,21 @@ public class Person {
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             return null;
-        } return personHasSkillsList;
+        }
+        return personSkillsList;
     }
+
+    public void addSkill (Skill skill, Connection conn) {
+        PreparedStatement addSkill;
+        try{
+            addSkill = conn.prepareStatement("INSERT INTO has_skill(pers_id, ks_code) VALUES (?, ?)");
+            addSkill.setInt(1,pers_id);
+            addSkill.setString(2, skill.getKs_code());
+            addSkill.execute();
+        }
+        catch (SQLException sqlEx){
+            System.err.println(sqlEx.toString());
+        }
+    }
+
 }
