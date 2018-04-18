@@ -6,6 +6,7 @@ CREATE TABLE GICS (
     CONSTRAINT parent_gics_sector_fk FOREIGN KEY (parent_sector_code) REFERENCES GICS (primary_sector_code)
 );
 
+
 INSERT INTO GICS (primary_sector_code, code_name) VALUES ('10', 'Energy');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code) VALUES ('1010', 'Energy', '10');
 INSERT INTO GICS (primary_sector_code, code_name, parent_sector_code) VALUES ('101010', 'Energy Equipment and Services', '1010');
