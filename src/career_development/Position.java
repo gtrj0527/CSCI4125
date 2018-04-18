@@ -168,6 +168,32 @@ public class Position {
         return qualifiedPeople;
     }
 
+    public LinkedList<Person> isQualified(Connection conn){
+        LinkedList<Person> qualifiedPeople = new LinkedList<>();
+        try {
+            String query = "SELECT pers_id " +
+                    "       FROM (SELECT * " +
+                    "             FROM has_skill hs1 " +
+                    "             WHERE pers_id = ?) hs1" +
+                    "       WHERE NOT EXISTS " +
+                    "            (SELECT * " +
+                    "             FROM position_skills ps1 " +
+                    "             WHERE pos_code = ? " +
+                    "             AND NOT EXISTS " +
+                    "            (SELECT * " +
+                    "             FROM has_skill hs2 " +
+                    "             WHERE hs1.pers_id = hs2.pers_id " +
+                    "             AND hs2.ks_code = ps1.ks_code))";
+            PreparedStatement isQualified = conn.prepareStatement(query);
+            isQualified.setInt(1,this.pos_code);
+            ResultSet rs = isQualified.executeQuery();
+        }
+        catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+        }
+        return qualifiedPeople;
+    }
+
     // On commit, if there's a new insert, the pos_code, etc will be set to the actual value
     public void commit(Connection conn) {
         if (!this.dirty) {
