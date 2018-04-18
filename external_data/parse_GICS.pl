@@ -11,6 +11,15 @@ $junk = <IN>;
 
 my @parent_stack;
 
+print OUT "CREATE TABLE GICS (\n";
+print OUT "    primary_sector_code varchar(8) NOT NULL PRIMARY KEY,\n";
+print OUT "    code_name varchar(255),\n";
+print OUT "    code_description varchar(500),\n";
+print OUT "    parent_sector_code varchar(8),\n";
+print OUT "    CONSTRAINT parent_gics_sector_fk FOREIGN KEY (parent_sector_code) REFERENCES GICS (primary_sector_code)\n";
+print OUT ");\n";
+print OUT "\n";
+
 while(<IN>) {
 
 	my @vals = split ",";
