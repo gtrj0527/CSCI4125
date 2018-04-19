@@ -192,6 +192,19 @@ SELECT cat_code
 FROM category_qual 
 WHERE pers_id = 7;
 
+--Will this work?
+--SELECT		ks_code, ks_title
+--FROM		know_skill
+--WHERE NOT EXISTS (
+--		      SELECT	hs.ks_code
+--		      FROM	    has_skill hs
+--              JOIN      know_skill ks ON hs.ks_code = ks.ks_code
+--		      WHERE	    pers_ID = 3
+--		      MINUS
+--              SELECT	cs.cat_code
+--              FROM	    core_skill cs
+--              JOIN      job_category jc ON cs.cat_code = jc.cat_code);
+
 /*14. Given a person?s identifier, find the job position with the highest pay rate for this person according to his/her skill
 possession.*/
 SELECT pos_code, pos_title, yearly_pay
