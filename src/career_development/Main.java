@@ -10,6 +10,9 @@ import java.util.Iterator;
 import java.util.List;
 
 
+/*
+ * This was a "set up" class. Don't need to adjust it anymore.
+ */
 
 public class Main {
 
@@ -141,15 +144,6 @@ public class Main {
             System.out.println(testSkill.getTraining_level());
 
             testPerson.addSkill(s, conn);
-
-//        } catch (SQLException sqlEx) {
-//            System.err.println(sqlEx.toString());
-//            System.err.println("Connection failed");
-//        }
-
-
-
-
 
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
