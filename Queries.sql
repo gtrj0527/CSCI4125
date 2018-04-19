@@ -106,12 +106,87 @@ SELECT title, sec_code, complete_date, format
                         NATURAL JOIN section
                         WHERE complete_date > (SELECT SYSDATE FROM DUAL));
                  
-/*12. NOT REQUIRED FOR 05APR18 TURN IN
+/*12. 
 If query #9 returns nothing, then find the course sets that their combination covers all the missing knowledge/
 skills for a person to pursue a pos_code. The considered course sets will not include more than three courses. If
 multiple course sets are found, list the course sets (with their course IDs) in the order of the ascending order of the
 course sets? total costs.*/
+CREATE SEQUENCE courseSet_seq
+    START WITH 1
+    INCREMENT BY 1
+    MAXVALUE 999999999
+    NOCYCLE;
+    
+DROP TABLE courseSet;
+CREATE TABLE courseSet(
+    csetID NUMBER(8,0) PRIMARY KEY,
+    c_code1 NUMBER(6,0),
+    c_code2 NUMBER(6,0),
+    c_code3 NUMBER(6,0),
+    cSetSize NUMBER(2,0));
+    
+INSERT INTO courseSet(
+        SELECT courseSet_seq.NEXTVAL, c1.c_code, c2.c_code, null, 2
+        FROM course c1, course c2
+        WHERE c1.c_code < c2.c_code);
+        
+INSERT INTO courseSet(
+        SELECT courseSet_seq.NEXTVAL, c1.c_code, c2.c_code, c3.c_code, 3
+        FROM course c1, course c2, course c3
+        WHERE c1.c_code < c2.c_code
+        AND c2.c_code < c3.c_code);  
+       
+DROP TABLE courseSkill;
+CREATE TABLE courseSkill(
+    c_code NUMBER(6,0),
+    ks_code VARCHAR(8)
+);
 
+INSERT INTO courseSkill(
+        SELECT c_code, ks_code
+        FROM course, know_skill
+);            
+       
+DROP TABLE courseSet_skill;        
+CREATE TABLE courseSet_skill(
+    csetID NUMBER(8,0) PRIMARY KEY,
+    ks_code VARCHAR(8)    
+);
+
+/* This part is broken.    
+INSERT INTO courseSet_skill(csetID,ks_code)
+    (SELECT csetID, ks_code
+    FROM courseSet cSet1
+    JOIN courseSkill cSkill1
+        ON cSet1.c_code1 = cSkill1.c_code)
+    UNION
+    (SELECT csetID, ks_code
+    FROM courseSet cSet2
+    JOIN courseSkill cSkill2
+        ON cSet2.c_code2 = cSkill2.c_code)
+    UNION 
+    (SELECT csetID, ks_code
+    FROM courseSet cSet3
+    JOIN courseSkill cSkill3
+        ON cSet3.c_code3 = cSkill3.c_code);
+        
+WITH coverCSet(csetID, size) AS(
+    SELECT csetID
+    FROM courseSet cSet
+    WHERE NOT EXISTS(
+        SELECT ks_code
+        FROM missingSkill
+        MINUS
+        SELECT ks_code
+        FROM courseSet_skill cSkill
+        WHERE cSkill.csetID = cSet.cSetID
+    )
+)
+SELECT c_code 1, c_code2, c_code3
+FROM coverCSet NATURAL JOIN courseSet
+WHERE cSetSize = SELECT MIN(SIZE)
+                 FROM coverCSet;
+*/
 /*13. Given a person?s identifier, list all the job categories that a person is qualified for. ++++*/
 SELECT cat_code 
 FROM category_qual 
