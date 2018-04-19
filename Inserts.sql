@@ -63,33 +63,33 @@ INSERT INTO NWCET (nwcet_code, parent_nwcet_code, nwcet_title, description)
 /*Test NWCET*/
 SELECT *
 FROM NWCET;
-/*GICS WORKING
-CREATE TABLE GICS (
-    primary_sector_code varchar(8) NOT NULL PRIMARY KEY,
-    code_name varchar(255),
-    code_description varchar(255),
-    parent_sector_code varchar(8),
-    CONSTRAINT parent_gics_sector_fk FOREIGN KEY (parent_sector_code) REFERENCES GICS (primary_sector_code)
-);*/
---INSERT INTO GICS VALUES ('IT', 'Information Technology', 'Anything to do with technology and computer stuff', '');
---INSERT INTO GICS VALUES ('DBS','Database Systems','Database wizardry', 'IT');
---INSERT INTO GICS VALUES ('DBA', 'Database Administration', 'Database administration ', 'DBS');
-INSERT INTO GICS VALUES ('10', 'Energy', 'Energy-General', ''); --10, Energy
-INSERT INTO GICS VALUES ('15', 'Materials', 'Materials - General ', ''); --15, Materials
-INSERT INTO GICS VALUES ('151010','Materials','Materials-Materials-Chemicals','15');
-INSERT INTO GICS VALUES ('35', 'Health Care Equipment and Services', 'Health Care Equipment and Services-General', ''); 
-INSERT INTO GICS VALUES ('35103010','Health Care Equipment and Services','Health Care Technology--Health Care Technology','35');
-INSERT INTO GICS VALUES ('45', 'Information Technology', 'Information Tech- General', ''); --45, information technolgy
-INSERT INTO GICS VALUES ('4510', 'Software and Services', 'Software and Services--IT', '45'); --4510,Software and services
-INSERT INTO GICS VALUES ('451010', 'Internet Services ', 'Software and Services--IT, internet software and services', '4510'); --4510,Software and services
-INSERT INTO GICS VALUES ('45102010', 'IT Services', 'Software and Services--IT Consulting and Other Services', '4510'); --4510,Software and services
-INSERT INTO GICS VALUES ('45102020', 'IT Services', 'Software and Services--Data Processing and Outsourced Services', '4510'); --4510,Software and services
-INSERT INTO GICS VALUES ('451030', 'Software', 'Software and Services--IT', '45'); --4510,Software and services
-INSERT INTO GICS VALUES ('50', 'Telecommunication Services', 'Telecomm-General', ''); 
-INSERT INTO GICS VALUES ('501020', 'Telecommunication Services ', 'Wireless Telecommunication Services', '50');
-/*Test GICS*/
-SELECT *
-FROM GICS;
+--/*GICS WORKING
+--CREATE TABLE GICS (
+--    primary_sector_code varchar(8) NOT NULL PRIMARY KEY,
+--    code_name varchar(255),
+--    code_description varchar(255),
+--    parent_sector_code varchar(8),
+--    CONSTRAINT parent_gics_sector_fk FOREIGN KEY (parent_sector_code) REFERENCES GICS (primary_sector_code)
+--);*/
+----INSERT INTO GICS VALUES ('IT', 'Information Technology', 'Anything to do with technology and computer stuff', '');
+----INSERT INTO GICS VALUES ('DBS','Database Systems','Database wizardry', 'IT');
+----INSERT INTO GICS VALUES ('DBA', 'Database Administration', 'Database administration ', 'DBS');
+--INSERT INTO GICS VALUES ('10', 'Energy', 'Energy-General', ''); --10, Energy
+--INSERT INTO GICS VALUES ('15', 'Materials', 'Materials - General ', ''); --15, Materials
+--INSERT INTO GICS VALUES ('151010','Materials','Materials-Materials-Chemicals','15');
+--INSERT INTO GICS VALUES ('35', 'Health Care Equipment and Services', 'Health Care Equipment and Services-General', ''); 
+--INSERT INTO GICS VALUES ('35103010','Health Care Equipment and Services','Health Care Technology--Health Care Technology','35');
+--INSERT INTO GICS VALUES ('45', 'Information Technology', 'Information Tech- General', ''); --45, information technolgy
+--INSERT INTO GICS VALUES ('4510', 'Software and Services', 'Software and Services--IT', '45'); --4510,Software and services
+--INSERT INTO GICS VALUES ('451010', 'Internet Services ', 'Software and Services--IT, internet software and services', '4510'); --4510,Software and services
+--INSERT INTO GICS VALUES ('45102010', 'IT Services', 'Software and Services--IT Consulting and Other Services', '4510'); --4510,Software and services
+--INSERT INTO GICS VALUES ('45102020', 'IT Services', 'Software and Services--Data Processing and Outsourced Services', '4510'); --4510,Software and services
+--INSERT INTO GICS VALUES ('451030', 'Software', 'Software and Services--IT', '45'); --4510,Software and services
+--INSERT INTO GICS VALUES ('50', 'Telecommunication Services', 'Telecomm-General', ''); 
+--INSERT INTO GICS VALUES ('501020', 'Telecommunication Services ', 'Wireless Telecommunication Services', '50');
+--/*Test GICS*/
+--SELECT *
+--FROM GICS;
 
 /*Company. NOTE about the constraint: company references GICS, so make sure to insert into GICS before running*/
 /*CREATE TABLE company(
