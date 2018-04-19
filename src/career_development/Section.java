@@ -21,7 +21,7 @@ public class Section {
         PreparedStatement retrSection;
         try {
             retrSection = conn.prepareStatement("SELECT offered_by, taught_by, format, price " +
-                    " FROM section WHERE c_code = ?, sec_code = ?, complete_date = ?");
+                    " FROM section WHERE c_code = ? AND sec_code = ? AND complete_date = ?");
             retrSection.setInt(1, course.getCCode());
             retrSection.setInt(2, secCode);
             retrSection.setDate(3, completeDate);

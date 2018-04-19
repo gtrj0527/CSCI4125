@@ -92,21 +92,25 @@ public class Main {
                                     /*SECTION*/
             //LocalDate date = new LocalDate (2018,5, 11);
             //LocalDate date = LocalDate.of(Integer.parseInt(2018), Integer.parseInt(5), Integer.parseInt(11));
-            java.sql.Date date = new java.sql.Date(2018, 4, 11);
+            //java.sql.Date date = new java.sql.Date(2018, 4, 11);
             Section section = Section.retrieveSection(c, 4, Date.valueOf("2018-04-11"), conn);
-//            System.out.println("Title: " + course.getTitle());
-            List<Section> secList = Section.retrieveCourseSections(c,conn);
-            Iterator<Section> sectionIterator = secList.iterator();
-            while (sectionIterator.hasNext()) {
-                Section section1 = sectionIterator.next();
-                System.out.println("seccode: " + section1.getSecCode() + " teacher: " + section1.getTeacher());
-            }
-            Section section2 = new Section (c, 4, Date.valueOf("2018-04-11"), 1,
-                    p, "Traditional", 19.00f );
-            section2.commit();
-            Integer newsecCode = section2.getSecCode();
-            Section testSection = Section.retrieveSection(c, 4, Date.valueOf("2018-05-11"), conn);
-            System.out.println(" Price: " + testSection.getPrice());
+             //System.out.println("Format: " + section.getFormat());
+//            List<Section> secList = Section.retrieveCourseSections(c,conn);
+//            Iterator<Section> sectionIterator = secList.iterator();
+//            while (sectionIterator.hasNext()) {
+//                Section section1 = sectionIterator.next();
+//                System.out.println("seccode: " + section1.getSecCode() + " teacher: " + section1.getTeacher());
+//            }
+//            Section section2 = new Section (c, 4, Date.valueOf("2018-04-11"), 1,
+//                    p, "Traditional", 19.00f );
+//            section2.commit();
+//            Integer newsecCode = section2.getSecCode();
+//            Section testSection = Section.retrieveSection(c, 4, Date.valueOf("2018-05-11"), conn);
+//            System.out.println(" Price: " + testSection.getPrice());
+//
+//
+
+
 
             /*JOB CATEGORY*/
             JobCategory jobCategory = JobCategory.retrieveJobCategory("1", conn);
