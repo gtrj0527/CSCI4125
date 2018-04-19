@@ -162,6 +162,8 @@ public class Position {
                 Person p = Person.retrievePerson(pers_id, conn);
                 qualifiedPeople.add(p);
             }
+            rs.close();
+            getQualifiedPeople.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
         }
