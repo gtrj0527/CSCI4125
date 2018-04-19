@@ -35,7 +35,8 @@ public class JobCategory {
                 Float payRangeLow = rs.getFloat(7);
                 jobCategoryList.add(new JobCategory(catCode, parentCatCode, coreSkillCode, jobCategoryTitle, jobCategoryDescription, payRangeHigh, payRangeLow));
             }
-
+            rs.close();
+            retrJobCategory.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             return null;
@@ -149,40 +150,6 @@ public class JobCategory {
         this.payRangeLow = payRangeLow;
     }
 
-    // Needs to be listQualifiedJobCategories
-    public LinkedList<JobCategory> listQualifiedJobCategories(Person person, Connection conn){
-        LinkedList<JobCategory> qualifiedJobCategories = new LinkedList<>();
-        try {
-            String query = "WITH category_qual AS (\n" +
-                    "        (SELECT pers_id, cat_code\n" +
-                    "        FROM person, JOB_CATEGORY)\n" +
-                    "        MINUS\n" +
-                    "        (SELECT distinct pers_id, cat_code\n" +
-                    "        FROM (SELECT pers_id, cat_code, ks_code\n" +
-                    "              FROM person, (SELECT cat_code, ks_code \n" +
-                    "                            FROM know_skill ks\n" +
-                    "                            JOIN nwcet n ON ks.nwcet_code = n.nwcet_code\n" +
-                    "                            JOIN job_category j ON n.nwcet_code = j.core_skill)\n" +
-                    "             MINUS \n" +
-                    "             SELECT pers_id, cat_code, ks_code\n" +
-                    "             FROM ( SELECT p.pers_id, j.cat_code, ks.ks_code \n" +
-                    "                    FROM person p\n" +
-                    "                    JOIN has_skill hs ON p.pers_id = hs.pers_id\n" +
-                    "                    JOIN know_skill ks ON hs.ks_code = ks.ks_code\n" +
-                    "                    JOIN nwcet n ON ks.nwcet_code = n.nwcet_code\n" +
-                    "                    JOIN job_category j ON n.nwcet_code = j.core_skill))))\n" +
-                    "SELECT cat_code\n" +
-                    "FROM category_qual\n" +
-                    "WHERE pers_id = ?;";
-            PreparedStatement listQualifiedJobCategories = conn.prepareStatement(query);
-            listQualifiedJobCategories.setInt(1,person.getPersID());
-            ResultSet rs = listQualifiedJobCategories.executeQuery();
-        }
-        catch (SQLException sqlEx) {
-            System.err.println(sqlEx.toString());
-        }
-        return qualifiedJobCategories;
-    }
 
     public void commit (Connection conn) {
         if(!this.dirty) {

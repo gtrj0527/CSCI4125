@@ -31,6 +31,13 @@ public class QualificationTester {
                 while(personIterator.hasNext()) {
                     Person pers = personIterator.next();
                     System.out.println("\t" + pers.getLastName() + ", " + pers.getFirstName());
+                    LinkedList<JobCategory> catList = pers.listQualifiedJobCategories(conn);
+                    Iterator<JobCategory> jobCategoryIterator = catList.iterator();
+                    while(jobCategoryIterator.hasNext()) {
+                        JobCategory jobCat = jobCategoryIterator.next();
+                        System.out.println("\t\t" +jobCat.getCatCode() + "\n");
+                    }
+
                 }
             }
         } catch (SQLException sqlEx) {
