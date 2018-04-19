@@ -156,15 +156,18 @@ public class JobCategory {
         }
     }
 
-    private void update(Connection conn, JobCategory job_cat) {
-        PreparedStatement updateJobCat;
-        try {
-            updateJobCat = conn.prepareStatement("UPDATE job_category SET cat_code = ?, parent_cat_code = ?, " +
-                    "core_skill = ?, job_category_title = ?, description = ?,pay_range_high = ?, pay_range_low = ?");
-            int rowsAffected = updateJobCat.executeUpdate();
-            System.out.println(rowsAffected + " were updated.");
-            updateJobCat.close();
-        } catch (SQLException sqlEx) {
+
+    // TODO  -jtm
+    private void update(Connection conn, JobCategory dbJobCategory ) {
+        PreparedStatement updateJobCategory;
+        try{
+            updateJobCategory=conn.prepareStatement("UPDATE job_category SET cat_code = ?, parent_cat_code=?," +
+                    "core_skill = ?, job_category_title = ?, description = ?, pay_range_high=?, pay_range_low=?");
+            int rowsAffected = updateJobCategory.executeUpdate();
+            System.out.println(rowsAffected + "these job categories were updated.");
+            updateJobCategory.close();
+
+        } catch(SQLException sqlEx) {
             System.err.println(sqlEx.toString());
         }
     }
