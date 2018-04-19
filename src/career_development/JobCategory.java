@@ -163,7 +163,7 @@ public class JobCategory {
     }
 
     // TODO  -jtm
-    private void update(Connection conn, JobCategory jobCategory ) {
+    private void update(Connection conn, JobCategory dbJobCategory ) {
         PreparedStatement updateJobCategory;
         try{
             updateJobCategory=conn.prepareStatement("UPDATE job_category SET cat_code = ?, parent_cat_code=?," +
@@ -174,8 +174,6 @@ public class JobCategory {
         } catch(SQLException sqlEx) {
             System.err.println(sqlEx.toString());
         }
-
-
     }
 
 
