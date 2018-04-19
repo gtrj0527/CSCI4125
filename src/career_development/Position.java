@@ -33,6 +33,8 @@ public class Position {
                 String pay_type = rs.getString(7);
                 positionList.add(new Position(pos_code, comp_id, pos_title, emp_mode, cat_code, pay_rate, pay_type));
             }
+            rs.close();
+            retrPosition.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             return null;
@@ -189,6 +191,8 @@ public class Position {
             PreparedStatement isQualified = conn.prepareStatement(query);
             isQualified.setInt(1,this.pos_code);
             ResultSet rs = isQualified.executeQuery();
+            rs.close();
+            isQualified.close();
         }
         catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
@@ -219,6 +223,7 @@ public class Position {
                 "cat_code = ?, pay_rate = ?,pay_tpe = ? WHERE pos_code = ?");
             int rowsAffected = updatePosition.executeUpdate();
             System.out.println(rowsAffected + " were updated.");
+            updatePosition.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
         }
@@ -246,10 +251,11 @@ public class Position {
                 System.out.println(pos_code);
                 this.pos_code = pos_code;
             }
+            lastCodeRS.close();
+            preparedStatement.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
         }
         this.dirty = false;
-
     }
 }

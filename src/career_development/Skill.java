@@ -30,7 +30,8 @@ public class Skill {
                 String training_level = rs.getString(5);
                 skillList.add(new Skill(ks_code, nwcet_code, ks_title, description, training_level, true));
             }
-
+            rs.close();
+            retrSkill.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             return null;
@@ -49,11 +50,12 @@ public class Skill {
                 String ks_title = rs.getString(2);
                 String description = rs.getString(3);
                 String training_level = rs.getString(4);
+                rs.close();
+                retrSkill.close();
                 return new Skill(ks_code, nwcet_code, ks_title, description, training_level, true);
             } else {
                 return null;
             }
-
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             return null;
@@ -142,6 +144,7 @@ public class Skill {
             if (lastKScoders.next()) {
             String ks_code = lastKScoders.getString(1);
             System.out.println(ks_code);
+            preparedStatement.close();
             }
         }catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());

@@ -32,6 +32,8 @@ public class Section {
                 Person teacher = Person.retrievePerson(taughtBy, conn);
                 String format = rs.getString(3);
                 Float price = rs.getFloat(4);
+                rs.close();
+                retrSection.close();
                 return new Section(course, secCode, completeDate, trainingProvider, teacher, format, price, true);
             }
             return null;
@@ -54,6 +56,8 @@ public class Section {
                 Section sec = retrieveSection(course, secCode, completeData, conn);
                 sectionLinkedList.add(sec);
             }
+            rs.close();
+            getSections.close();
             return sectionLinkedList;
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());

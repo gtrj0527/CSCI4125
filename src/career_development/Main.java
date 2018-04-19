@@ -25,8 +25,7 @@ public class Main {
             Connection conn = DriverManager.getConnection("jdbc:oracle:thin:" + userName + "/" + password + "@" + hostName + ":" + port + ":" + sid);
 
             /*COURSE*/
-            Course course = Course.retrieveCourse(1, conn);
-//            System.out.println("Title: " + course.getTitle());
+            //Course course = Course.retrieveCourse(1, conn);
             List<Course> list = Course.retrieveAllCourses(conn);
             Iterator<Course> courseIterator = list.iterator();
             while (courseIterator.hasNext()) {
@@ -49,7 +48,6 @@ public class Main {
 
             /*PERSON*/
             Person person = Person.retrievePerson(1, conn);
-//            System.out.println("Last Name: " + person.getLastName());
             List<Person> listPerson = Person.retrieveAllPeople(conn);
             Iterator<Person> personIterator = listPerson.iterator();
             while (personIterator.hasNext()) {
@@ -73,7 +71,6 @@ public class Main {
 
             /*POSITION*/
             Position position = Position.retrievePosition(1, conn);
-//            System.out.println("Position Title: " + position.getPosTitle());
             List<Position> listPosition = Position.retrieveAllPositions(conn);
             Iterator<Position> positionIterator = listPosition.iterator();
             while (positionIterator.hasNext()) {
