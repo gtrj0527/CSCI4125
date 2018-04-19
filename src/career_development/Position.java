@@ -162,7 +162,35 @@ public class Position {
                 Person p = Person.retrievePerson(pers_id, conn);
                 qualifiedPeople.add(p);
             }
+            rs.close();
+            getQualifiedPeople.close();
         } catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+        }
+        return qualifiedPeople;
+    }
+
+    public LinkedList<Person> isQualified(Connection conn){
+        LinkedList<Person> qualifiedPeople = new LinkedList<>();
+        try {
+            String query = "SELECT pers_id " +
+                    "       FROM (SELECT * " +
+                    "             FROM has_skill hs1 " +
+                    "             WHERE pers_id = ?) hs1" +
+                    "       WHERE NOT EXISTS " +
+                    "            (SELECT * " +
+                    "             FROM position_skills ps1 " +
+                    "             WHERE pos_code = ? " +
+                    "             AND NOT EXISTS " +
+                    "            (SELECT * " +
+                    "             FROM has_skill hs2 " +
+                    "             WHERE hs1.pers_id = hs2.pers_id " +
+                    "             AND hs2.ks_code = ps1.ks_code))";
+            PreparedStatement isQualified = conn.prepareStatement(query);
+            isQualified.setInt(1,this.pos_code);
+            ResultSet rs = isQualified.executeQuery();
+        }
+        catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
         }
         return qualifiedPeople;

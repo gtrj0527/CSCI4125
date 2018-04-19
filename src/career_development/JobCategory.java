@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import oracle.jdbc.OracleTypes;
 import oracle.jdbc.internal.OraclePreparedStatement;
 
+
 public class JobCategory {
 
     private String catCode;
@@ -34,7 +35,8 @@ public class JobCategory {
                 Float payRangeLow = rs.getFloat(7);
                 jobCategoryList.add(new JobCategory(catCode, parentCatCode, coreSkillCode, jobCategoryTitle, jobCategoryDescription, payRangeHigh, payRangeLow));
             }
-
+            rs.close();
+            retrJobCategory.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             return null;
