@@ -12,8 +12,6 @@ public class Main {
     //TODO: Add close for statements and connection
     public static void main(String[] args) {
         try {
-
-
             String userName = "";
             String password = "";
 

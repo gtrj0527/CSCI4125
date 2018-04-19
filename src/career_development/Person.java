@@ -196,33 +196,6 @@ public class Person {
         this.gender = gender;
     }
 
-    /* Needs to be listQualifiedJobCategories
-     public LinkedList<Person> listQualifiedJobCategories(Connection conn){
-        LinkedList<Person> personQualifiedJobCategories = new LinkedList<>();
-        try {
-            //Need to update Query 13 to change views to WITH ... AS statements
-            String query = "    SELECT cat_code
-                                FROM (SELECT pers_id, cat_code
-                                      FROM person,job_category
-                                      MINUS
-                                      SELECT DISTINCT pers_id, cat_code
-                                      FROM (SELECT pers_id, cat_code, ks_code
-                                            FROM person, category_skills
-                                            MINUS
-                                            SELECT pers_id, cat_code, ks_code
-                                            FROM relevant_category_skills)))
-                                            WHERE pers_id = 7;";
-            PreparedStatement listQualifiedJobCategories = conn.prepareStatement(query);
-            listQualifiedJobCategories.setInt(1,this.pers_id);
-            ResultSet rs = listQualifiedJobCategories.executeQuery();
-        }
-        catch (SQLException sqlEx) {
-            System.err.println(sqlEx.toString());
-        }
-        return personQualifiedJobCategories;
-    }
-*/
-
 
     // TODO -- not tested && add "UPDATES" function
     // On commit, if there's a new insert, the pers_id, etc will be set to the actual value

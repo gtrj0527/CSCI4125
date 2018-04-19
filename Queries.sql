@@ -188,22 +188,30 @@ WHERE cSetSize = SELECT MIN(SIZE)
                  FROM coverCSet;
 */
 /*13. Given a person?s identifier, list all the job categories that a person is qualified for. ++++*/
-SELECT cat_code 
-FROM category_qual 
-WHERE pers_id = 7;
-
---Will this work?
---SELECT		ks_code, ks_title
---FROM		know_skill
---WHERE NOT EXISTS (
---		      SELECT	hs.ks_code
---		      FROM	    has_skill hs
---              JOIN      know_skill ks ON hs.ks_code = ks.ks_code
---		      WHERE	    pers_ID = 3
---		      MINUS
---              SELECT	cs.cat_code
---              FROM	    core_skill cs
---              JOIN      job_category jc ON cs.cat_code = jc.cat_code);
+--SELECT cat_code 
+--FROM category_qual 
+--WHERE pers_id = 7;
+WITH category_qual AS (
+        (SELECT pers_id, cat_code
+        FROM person, JOB_CATEGORY)
+        MINUS
+        (SELECT distinct pers_id, cat_code
+        FROM (SELECT pers_id, cat_code, ks_code
+              FROM person, (SELECT cat_code, ks_code 
+                            FROM know_skill ks
+                            JOIN nwcet n ON ks.nwcet_code = n.nwcet_code
+                            JOIN job_category j ON n.nwcet_code = j.core_skill)
+             MINUS 
+             SELECT pers_id, cat_code, ks_code
+             FROM ( SELECT p.pers_id, j.cat_code, ks.ks_code 
+                    FROM person p
+                    JOIN has_skill hs ON p.pers_id = hs.pers_id
+                    JOIN know_skill ks ON hs.ks_code = ks.ks_code
+                    JOIN nwcet n ON ks.nwcet_code = n.nwcet_code
+                    JOIN job_category j ON n.nwcet_code = j.core_skill))))
+SELECT cat_code
+FROM category_qual
+WHERE pers_id = 1;
 
 /*14. Given a person?s identifier, find the job position with the highest pay rate for this person according to his/her skill
 possession.*/
