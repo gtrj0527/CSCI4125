@@ -148,4 +148,35 @@ public class Section {
             return;
         }
     }
+
+
+    //*INSERT SECTION*//
+
+    private void store (Connection conn) {
+        try {
+            OraclePreparedStatement preparedStatement =
+                    (OraclePreparedStatement)conn.prepareStatement("INSERT INTO section (c_code, sec_code" +
+                            "complete_date, offered_by, taught_by, format_price) VALUES(?,?,?,?,?,?,?,?)");
+            preparedStatement.setInt(1,course.getCCode());
+            preparedStatement.setInt(2, secCode);
+            preparedStatement.setDate(3, completeDate);
+            preparedStatement.setInt(4, trainingProviderID);
+            preparedStatement.setInt(5, teacher.getPersID());
+            preparedStatement.setString(6, format);
+            preparedStatement.setFloat(7, price);
+            preparedStatement.execute();
+
+        }catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+        }
+    }
+
+
+    /*    private Course course;
+    private Integer secCode;
+    private Date completeDate;
+    private Integer trainingProviderID;
+    private Person teacher;
+    private String format;
+    private Float price;*/
 }
