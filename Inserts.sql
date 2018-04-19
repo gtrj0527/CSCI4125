@@ -155,41 +155,6 @@ INSERT INTO cert(cert_name,issued_by,tool) VALUES('jCert 1',1117,'Certified Java
 INSERT INTO cert(cert_name,issued_by,tool) VALUES('CLA',1114,'C Programming Language Certified Associate');
 INSERT INTO cert(cert_name,issued_by,tool) VALUES('Oracle Java',1114,'Certified Profession Java SE Programmer');
 
-/*position_cert: Run cert first!!!
-    CREATE TABLE position_cert (
-    cert_code number NOT NULL,
-    pos_code number NOT NULL,
-    prefer varchar(2), -- R: Required, P: Preferred
-    CONSTRAINT position_cert_pk PRIMARY KEY (cert_code, pos_code),
-    CONSTRAINT pc_cert_fk FOREIGN KEY (cert_code) REFERENCES cert (cert_code),
-    CONSTRAINT pc_pos_fk FOREIGN KEY (pos_code) REFERENCES position (pos_code)
-);*/
---INSERT
-
-INSERT INTO position_cert VALUES (1, 9, 'R' );
-INSERT INTO position_cert VALUES (1, 1, 'P' );
-INSERT INTO position_cert VALUES (3, 10, 'R' );
-INSERT INTO position_cert VALUES (3, 1, 'R' );
-INSERT INTO position_cert VALUES (3, 9, 'R' );
-INSERT INTO position_cert VALUES (1, 11, 'P' );
-INSERT INTO position_cert VALUES (1, 12, 'P' );
-INSERT INTO position_cert VALUES (1, 13, 'R' );
-INSERT INTO position_cert VALUES (2, 14, 'P' );
-INSERT INTO position_cert VALUES (2, 15, 'R' );
-INSERT INTO position_cert VALUES (2, 16, 'P' );
-INSERT INTO position_cert VALUES (4, 1, 'R' );
-INSERT INTO position_cert VALUES (4, 5, 'P' );
-INSERT INTO position_cert VALUES (4, 6, 'R' );
-INSERT INTO position_cert VALUES (4, 7, 'P' );
-INSERT INTO position_cert VALUES (4, 8, 'R' );
-INSERT INTO position_cert VALUES (1, 10, 'P' );
-
-
-
-
-/*Test position_cert*/
-SELECT *
-FROM position_cert;
 
 /*has_cert: Run person and cert first!
     CREATE TABLE has_cert (
@@ -212,8 +177,19 @@ FROM has_cert;
     CONSTRAINT course_required_pk FOREIGN KEY (c_code) REFERENCES course (c_code));*/
 --INSERT
 /*Test course_cert*/
-SELECT *
-FROM course_cert;
+
+Delete from course_cert;
+INSERT INTO course_cert values (2, 1);
+INSERT INTO course_cert values (1, 1);
+INSERT INTO course_cert values (4, 1);
+INSERT INTO course_cert values (4, 2);
+INSERT INTO course_cert values (2, 12);
+INSERT INTO course_cert values (2, 4);
+INSERT INTO course_cert values (1, 12);
+INSERT INTO course_cert values (1, 11);
+INSERT INTO course_cert values (1, 10);
+
+
 
 /*PROVIDES SKILL*/
 INSERT INTO provides_skill VALUES('Java',1);
@@ -269,6 +245,36 @@ INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate, pay_type
 INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate, pay_type) 
     VALUES ('1114','jr HTML dev','ft', '15-1254',16.0, 'W');
 
+
+
+/*position_cert: Run cert first!!!
+    CREATE TABLE position_cert (
+    cert_code number NOT NULL,
+    pos_code number NOT NULL,
+    prefer varchar(2), -- R: Required, P: Preferred
+    CONSTRAINT position_cert_pk PRIMARY KEY (cert_code, pos_code),
+    CONSTRAINT pc_cert_fk FOREIGN KEY (cert_code) REFERENCES cert (cert_code),
+    CONSTRAINT pc_pos_fk FOREIGN KEY (pos_code) REFERENCES position (pos_code)
+);*/
+--INSERT
+
+INSERT INTO position_cert VALUES (1, 9, 'R' );
+INSERT INTO position_cert VALUES (1, 1, 'P' );
+INSERT INTO position_cert VALUES (3, 10, 'R' );
+INSERT INTO position_cert VALUES (3, 1, 'R' );
+INSERT INTO position_cert VALUES (3, 9, 'R' );
+INSERT INTO position_cert VALUES (1, 11, 'P' );
+INSERT INTO position_cert VALUES (1, 12, 'P' );
+INSERT INTO position_cert VALUES (1, 13, 'R' );
+INSERT INTO position_cert VALUES (2, 14, 'P' );
+INSERT INTO position_cert VALUES (2, 15, 'R' );
+INSERT INTO position_cert VALUES (2, 16, 'P' );
+INSERT INTO position_cert VALUES (4, 1, 'R' );
+INSERT INTO position_cert VALUES (4, 5, 'P' );
+INSERT INTO position_cert VALUES (4, 6, 'R' );
+INSERT INTO position_cert VALUES (4, 7, 'P' );
+INSERT INTO position_cert VALUES (4, 8, 'R' );
+INSERT INTO position_cert VALUES (1, 10, 'P' );
 
     
 /*WORKS*/
@@ -397,5 +403,22 @@ INSERT INTO company_specialty VALUES ('1120','35');
     CONSTRAINT pers_takes_fk FOREIGN KEY (pers_id) REFERENCES person (pers_id));*/
 --INSERT
 /*Test takes*/
-SELECT *
-FROM takes;
+
+
+Delete from TAKES;
+INSERT into TAKES values (1,4,'11-MAY-18', 1);
+INSERT into TAKES values (1,4,'11-MAY-18', 2);
+INSERT into TAKES values (1,4,'11-MAY-18', 3);
+INSERT into TAKES values (1,4,'11-MAY-18', 4);
+INSERT into TAKES values (1,4,'11-MAY-18', 5);
+INSERT into TAKES values (2,6,'25-JUN-18', 6);
+INSERT into TAKES values (2,6,'25-JUN-18', 7);
+INSERT into TAKES values (2,6,'25-JUN-18', 8);
+INSERT into TAKES values (2,6,'25-JUN-18', 9);
+
+INSERT into TAKES values (3,4,'06-MAR-18', 10);
+INSERT into TAKES values (3,4,'06-MAR-18', 11);
+INSERT into TAKES values (3,4,'06-MAR-18', 12);
+INSERT into TAKES values (3,4,'06-MAR-18', 1);
+
+
