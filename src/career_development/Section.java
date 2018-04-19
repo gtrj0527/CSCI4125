@@ -176,11 +176,4 @@ public class Section {
     }
 
 
-    /*    private Course course;
-    private Integer secCode;
-    private Date completeDate;
-    private Integer trainingProviderID;
-    private Person teacher;
-    private String format;
-    private Float price;*/
 }

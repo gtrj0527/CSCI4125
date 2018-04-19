@@ -156,7 +156,7 @@ public class JobCategory {
         }
     }
 
-//<<<<<<< HEAD
+
     // TODO  -jtm
     private void update(Connection conn, JobCategory dbJobCategory ) {
         PreparedStatement updateJobCategory;
