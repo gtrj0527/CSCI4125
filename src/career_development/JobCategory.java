@@ -16,7 +16,7 @@ public class JobCategory {
     private String jobCategoryDescription;
     private Float payRangeHigh;
     private Float payRangeLow;
-    private boolean dirty; //potentially inconsistent with DB
+    private boolean dirty;
 
     public static LinkedList<JobCategory> retrieveAllJobCategories(Connection conn) {
         PreparedStatement retrJobCategory;
@@ -58,6 +58,8 @@ public class JobCategory {
                 String jobCategoryDescription = rs.getString(5);
                 Float payRangeHigh = rs.getFloat(6);
                 Float payRangeLow = rs.getFloat(7);
+                rs.close();
+                retrJobCategory.close();
                 return new JobCategory(catCode, parentCatCode, coreSkillCode, jobCategoryTitle, jobCategoryDescription, payRangeHigh, payRangeLow);
             }
             else{
@@ -69,9 +71,8 @@ public class JobCategory {
         }
     }
 
-
-    public JobCategory(String parentCatCode, String coreSkillCode, String jobCategoryTitle, String jobCategoryDescription, Float payRangeHigh, Float payRangeLow) {
-        //this.catCode = catCode;
+    public JobCategory(String parentCatCode, String coreSkillCode, String jobCategoryTitle,
+                       String jobCategoryDescription, Float payRangeHigh, Float payRangeLow) {
         this.parentCatCode = parentCatCode;
         this.coreSkillCode = coreSkillCode;
         this.jobCategoryTitle = jobCategoryTitle;
@@ -86,15 +87,9 @@ public class JobCategory {
        this.catCode = catCode;
     }
 
-
     public String getCatCode() {
         return catCode;
     }
-
-//    public void setCatCode(String catCode) {
-//        this.dirty = this.catCode.equals(catCode);
-//        this.catCode = catCode;
-//    }
 
     public String getParentCatCode() {
         return parentCatCode;
@@ -150,7 +145,6 @@ public class JobCategory {
         this.payRangeLow = payRangeLow;
     }
 
-
     public void commit (Connection conn) {
         if(!this.dirty) {
             return;
@@ -162,11 +156,21 @@ public class JobCategory {
         }
     }
 
-    // TODO
-    private void update(Connection conn) {
 
+    // TODO  -jtm
+    private void update(Connection conn, JobCategory dbJobCategory ) {
+        PreparedStatement updateJobCategory;
+        try{
+            updateJobCategory=conn.prepareStatement("UPDATE job_category SET cat_code = ?, parent_cat_code=?," +
+                    "core_skill = ?, job_category_title = ?, description = ?, pay_range_high=?, pay_range_low=?");
+            int rowsAffected = updateJobCategory.executeUpdate();
+            System.out.println(rowsAffected + "these job categories were updated.");
+            updateJobCategory.close();
+
+        } catch(SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+        }
     }
-
 
     private void store (Connection conn) {
         try {
@@ -187,8 +191,8 @@ public class JobCategory {
                 System.out.println(catCode);
                 this.catCode=catCode;
             }
-
-
+            lastIDrs.close();
+            preparedStatement.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
         }

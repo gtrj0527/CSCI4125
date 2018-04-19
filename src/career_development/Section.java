@@ -5,20 +5,8 @@ import java.util.LinkedList;
 import oracle.jdbc.OracleTypes;
 import oracle.jdbc.internal.OraclePreparedStatement;
 
-/*Just need a retrieve the section information*/
 
 public class Section {
-    //retrieveSection();
-    //retrieveCourseSections(); --Feed it a c_code, and it'll return all sections for the course
-//    public static LinkedList<Course> retrieveAllCourses(Connection conn) {
-//        PreparedStatement retrCourse;
-//        LinkedList<Course> courseList = new LinkedList<Course>();
-//        try {
-//            retrCourse = conn.prepareStatement("SELECT title, training_level, status, retail_price, " +
-//                    "train_type, description, c_code FROM course");
-//            ResultSet rs = retrCourse.executeQuery();
-
-    //Feed retrieveCourseSections a COURSE object
 
     private Course course;
     private Integer secCode;
@@ -33,7 +21,7 @@ public class Section {
         PreparedStatement retrSection;
         try {
             retrSection = conn.prepareStatement("SELECT offered_by, taught_by, format, price " +
-                    " FROM section WHERE c_code = ?, sec_code = ?, complete_date = ?");
+                    " FROM section WHERE c_code = ? AND sec_code = ? AND complete_date = ?");
             retrSection.setInt(1, course.getCCode());
             retrSection.setInt(2, secCode);
             retrSection.setDate(3, completeDate);
@@ -44,6 +32,8 @@ public class Section {
                 Person teacher = Person.retrievePerson(taughtBy, conn);
                 String format = rs.getString(3);
                 Float price = rs.getFloat(4);
+                rs.close();
+                retrSection.close();
                 return new Section(course, secCode, completeDate, trainingProvider, teacher, format, price, true);
             }
             return null;
@@ -66,6 +56,8 @@ public class Section {
                 Section sec = retrieveSection(course, secCode, completeData, conn);
                 sectionLinkedList.add(sec);
             }
+            rs.close();
+            getSections.close();
             return sectionLinkedList;
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
@@ -160,4 +152,28 @@ public class Section {
             return;
         }
     }
+
+
+    //*INSERT SECTION*//
+
+    private void store (Connection conn) {
+        try {
+            OraclePreparedStatement preparedStatement =
+                    (OraclePreparedStatement)conn.prepareStatement("INSERT INTO section (c_code, sec_code" +
+                            "complete_date, offered_by, taught_by, format_price) VALUES(?,?,?,?,?,?,?,?)");
+            preparedStatement.setInt(1,course.getCCode());
+            preparedStatement.setInt(2, secCode);
+            preparedStatement.setDate(3, completeDate);
+            preparedStatement.setInt(4, trainingProviderID);
+            preparedStatement.setInt(5, teacher.getPersID());
+            preparedStatement.setString(6, format);
+            preparedStatement.setFloat(7, price);
+            preparedStatement.execute();
+
+        }catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+        }
+    }
+
+
 }
