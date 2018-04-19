@@ -405,7 +405,6 @@ INSERT INTO company_specialty VALUES ('1120','35');
 /*Test takes*/
 
 
-Delete from TAKES;
 INSERT into TAKES values (1,4,'11-MAY-18', 1);
 INSERT into TAKES values (1,4,'11-MAY-18', 2);
 INSERT into TAKES values (1,4,'11-MAY-18', 3);
