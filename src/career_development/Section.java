@@ -8,18 +8,6 @@ import oracle.jdbc.internal.OraclePreparedStatement;
 /*Just need a retrieve the section information*/
 
 public class Section {
-    //retrieveSection();
-    //retrieveCourseSections(); --Feed it a c_code, and it'll return all sections for the course
-//    public static LinkedList<Course> retrieveAllCourses(Connection conn) {
-//        PreparedStatement retrCourse;
-//        LinkedList<Course> courseList = new LinkedList<Course>();
-//        try {
-//            retrCourse = conn.prepareStatement("SELECT title, training_level, status, retail_price, " +
-//                    "train_type, description, c_code FROM course");
-//            ResultSet rs = retrCourse.executeQuery();
-
-    //Feed retrieveCourseSections a COURSE object
-
     private Course course;
     private Integer secCode;
     private Date completeDate;
@@ -44,6 +32,8 @@ public class Section {
                 Person teacher = Person.retrievePerson(taughtBy, conn);
                 String format = rs.getString(3);
                 Float price = rs.getFloat(4);
+                rs.close();
+                retrSection.close();
                 return new Section(course, secCode, completeDate, trainingProvider, teacher, format, price, true);
             }
             return null;
@@ -66,6 +56,8 @@ public class Section {
                 Section sec = retrieveSection(course, secCode, completeData, conn);
                 sectionLinkedList.add(sec);
             }
+            rs.close();
+            getSections.close();
             return sectionLinkedList;
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
