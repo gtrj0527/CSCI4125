@@ -37,9 +37,9 @@ public class QualificationTester {
                         JobCategory jobCat = jobCategoryIterator.next();
                         System.out.println("\t\t" +jobCat.getCatCode() + "\n");
                     }
-
                 }
             }
+            conn.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
         }

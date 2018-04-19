@@ -44,6 +44,8 @@ public class Person {
                 personList.add(new Person(pers_id, last_name, first_name, mi, address1, address2, city, state,
                                           zip, email, gender));
             }
+            rs.close();
+            retrPerson.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             return null;
@@ -214,21 +216,6 @@ public class Person {
         }
     }
 
-//    Section keys = new Section (Integer c_code, Integer sect_code, Date complete_date, Integer pers_id);
-//    select KEYS from section join person on section.pers_id = person.pers_id join course on section.c_code = course.c_code where pers_id = ?;
-//    //import c_code, sect_code, complete_date, pers_id
-//    public void getSectionKeys(){
-//        return keys;
-//    }
-
-//    public void setSectionKeys(Section c_code, Section sect_code, Section complete_date, Section pers_id){
-//        this.c_code = c_code;
-//        this.sect_code = sect_code;
-//        this.complete_date = complete_date;
-//        this.pers_id = pers_id;
-//    }
-
-    // TODO
     private void update(Connection conn, Position dbPerson) {
         PreparedStatement updatePerson;
         try {
@@ -241,7 +228,6 @@ public class Person {
         }
     }
 
-    // TODO -- not tested
     private void store(Connection conn) {
         try {
             OraclePreparedStatement preparedStatement =
@@ -287,14 +273,9 @@ public class Person {
                 personSkillsList.add(new String (ks_code));
                System.out.println(pers_id);
                System.out.println(ks_code);
-               // personHasSkillsList.add();
-                //personHasSkillsList.add(new String(ks_code));
-                //personHasSkillsList.add();
-                //return new personHasSkillsList.add()
-                //retrPersonHasSkills.execute();
-                //ResultSet skillReturn = retrPersonHasSkills.getReturnResultSet();
+               rs.close();
+               retrPersonSkills.close();
             }
-
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             return null;
@@ -309,6 +290,7 @@ public class Person {
             addSkill.setInt(1,pers_id);
             addSkill.setString(2, skill.getKs_code());
             addSkill.execute();
+            addSkill.close();
         }
         catch (SQLException sqlEx){
             System.err.println(sqlEx.toString());
@@ -355,6 +337,4 @@ public class Person {
         }
         return qualifiedJobCategories;
     }
-
-
 }

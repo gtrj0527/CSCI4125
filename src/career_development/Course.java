@@ -34,6 +34,8 @@ public class Course {
                 Integer cCode = rs.getInt(7);
                 courseList.add(new Course(cCode, title, trainingLevel, status, retailPrice, trainingType, description));
             }
+            rs.close();
+            retrCourse.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             return null;
@@ -55,6 +57,8 @@ public class Course {
             Double retailPrice = rs.getDouble(4);
             String trainingType = rs.getString(5);
             String description = rs.getString(6);
+            rs.close();
+            retrCourse.close();
             return new Course(cCode, title, trainingLevel, status, retailPrice, trainingType, description);
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
@@ -159,6 +163,7 @@ public class Course {
                     "status = ?, retail_price = ?, train_type = ? WHERE pos_code = ?");
             int rowsAffected = updateCourse.executeUpdate();
             System.out.println(rowsAffected + " were updated.");
+            updateCourse.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
         }
@@ -186,11 +191,11 @@ public class Course {
                 System.out.println (cCode);
                 this.cCode = cCode;
             }
+            lastIDrs.close();
+            preparedStatement.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
         }
         this.dirty = false;
     }
-
-
 }
