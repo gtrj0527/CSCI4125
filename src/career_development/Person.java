@@ -356,5 +356,56 @@ public class Person {
         return qualifiedJobCategories;
     }
 
+    public Position findHighestPayingQualifiedPosition(Connection conn) {
+        String query = "WITH qualified_positions AS (" +
+                "            SELECT pos_code " +
+                "               FROM position_skills ps1" +
+                "               WHERE NOT EXISTS " +
+                "                 (SELECT * " +
+                "                  FROM (SELECT * FROM has_skill WHERE pers_id = ?) hs1 " +
+                "                  WHERE NOT EXISTS " +
+                "                    (SELECT * " +
+                "                     FROM position_skills ps2 " +
+                "                     WHERE ps1.pos_code = ps2.pos_code " +
+                "                     AND ps2.ks_code = hs1.ks_code)))," +
+                "       position_yearly_pay AS (" +
+                "             SELECT pos_code, primary_sector_code, pay_rate AS yearly_pay \n" +
+                "             FROM position \n" +
+                "             NATURAL JOIN company \n" +
+                "             WHERE pay_type = 'S' \n" +
+                "             UNION \n" +
+                "             SELECT pos_code, primary_sector_code, pay_rate*1920 AS pay_rate \n" +
+                "             FROM position\n" +
+                "             NATURAL JOIN company\n" +
+                "             WHERE pay_type = 'W')\n" +
+                "       SELECT pos_code " +
+                "       FROM qualified_positions" +
+                "       NATURAL JOIN position_yearly_pay " +
+                "       WHERE yearly_pay = " +
+                "         (SELECT MAX(yearly_pay) FROM" +
+                "          qualified_positions\n" +
+                "          NATURAL JOIN position_yearly_pay)";
+
+        PreparedStatement highestPayingPositionStatement;
+        try {
+            Position highest;
+            highestPayingPositionStatement = conn.prepareStatement(query);
+            highestPayingPositionStatement.setInt(1,this.pers_id);
+            ResultSet rs = highestPayingPositionStatement.executeQuery();
+            if(rs.next()) {
+                highest = Position.retrievePosition(rs.getInt(1), conn);
+            } else {
+                highest = null;
+            }
+            rs.close();
+            highestPayingPositionStatement.close();
+            return highest;
+        } catch (SQLException sqlEx) {
+            System.err.println(sqlEx);
+        }
+        return null;
+
+
+    }
 
 }

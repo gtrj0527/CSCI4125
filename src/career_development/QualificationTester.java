@@ -12,8 +12,8 @@ public class QualificationTester {
 
     public static void main(String[] args) {
         try {
-            String userName = "";
-            String password = "";
+            String userName = "tbourg";
+            String password = "K3LWXCPt";
 
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
@@ -38,6 +38,18 @@ public class QualificationTester {
                         System.out.println("\t\t" +jobCat.getCatCode() + "\n");
                     }
 
+                }
+            }
+
+            LinkedList<Person> people = Person.retrieveAllPeople(conn);
+            Iterator<Person> peopleIterator = people.iterator();
+            while(peopleIterator.hasNext()) {
+                Person p = peopleIterator.next();
+                Position pos = p.findHighestPayingQualifiedPosition(conn);
+                if(pos != null) {
+                    System.out.println(p.getPersID() + " " + pos.getPosCode());
+                } else {
+                    System.out.println(p.getPersID() + " " + "not qualified for any position");
                 }
             }
         } catch (SQLException sqlEx) {
