@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import oracle.jdbc.OracleTypes;
 import oracle.jdbc.internal.OraclePreparedStatement;
 
+
 public class JobCategory {
 
     private String catCode;
@@ -160,8 +161,19 @@ public class JobCategory {
         }
     }
 
-    // TODO
-    private void update(Connection conn) {
+    // TODO  -jtm
+    private void update(Connection conn, JobCategory jobCategory ) {
+        PreparedStatement updateJobCategory;
+        try{
+            updateJobCategory=conn.prepareStatement("UPDATE job_category SET cat_code = ?, parent_cat_code=?," +
+                    "core_skill = ?, job_category_title = ?, description = ?, pay_range_high=?, pay_range_low=?");
+            int rowsAffected = updateJobCategory.executeUpdate();
+            System.out.println(rowsAffected + "these job categories were updated.");
+
+        } catch(SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+        }
+
 
     }
 
