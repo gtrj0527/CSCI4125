@@ -82,12 +82,13 @@ CREATE VIEW satisfy_skills AS (
              WHERE ps1.c_code = ps2.c_code
              AND   ps2.ks_code = ms1.ks_code)));
 
-/*Used in Query 13*/          
+/*Used in Query 13*/   
+--Results show when we do JOIN ... ON instead of NATURAL JOIN  --GTS
 CREATE VIEW category_skills AS (
     SELECT cat_code, ks_code 
-    FROM know_skill 
-    NATURAL JOIN nwcet
-    JOIN job_category ON nwcet_code = job_category.core_skill);
+    FROM know_skill ks
+    JOIN nwcet n on ks.nwcet_code = n.nwcet_code
+    JOIN job_category j ON n.nwcet_code = j.core_skill);
 
 /*Used in Query 13*/          
 CREATE VIEW relevant_category_skills AS (

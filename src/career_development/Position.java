@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.LinkedList;
 import oracle.jdbc.OracleTypes;
 import oracle.jdbc.internal.OraclePreparedStatement;
+import sun.awt.image.ImageWatched;
 
 public class Position {
     private Integer pos_code;
@@ -137,6 +138,60 @@ public class Position {
     public void setPayType(String pay_type) {
         this.dirty = this.pay_type.equals(pay_type);
         this.pay_type = pay_type;
+    }
+
+    public LinkedList<Person> getQualifiedPeople(Connection conn) {
+        LinkedList<Person> qualifiedPeople = new LinkedList<Person>();
+        try {
+            String query = "SELECT DISTINCT pers_id " +
+                           "FROM has_skill hs1 " +
+                           "WHERE NOT EXISTS " +
+                           "   (SELECT * " +
+                           "    FROM position_skills ps1 " +
+                           "    WHERE pos_code = ? " +
+                           "    AND NOT EXISTS " +
+                           "         (SELECT * " +
+                           "          FROM has_skill hs2 " +
+                           "          WHERE hs1.pers_id = hs2.pers_id " +
+                           "          AND   hs2.ks_code = ps1.ks_code))";
+            PreparedStatement getQualifiedPeople = conn.prepareStatement(query);
+            getQualifiedPeople.setInt(1,this.pos_code);
+            ResultSet rs = getQualifiedPeople.executeQuery();
+            while(rs.next()) {
+                Integer pers_id = rs.getInt(1);
+                Person p = Person.retrievePerson(pers_id, conn);
+                qualifiedPeople.add(p);
+            }
+        } catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+        }
+        return qualifiedPeople;
+    }
+
+    public LinkedList<Person> isQualified(Connection conn){
+        LinkedList<Person> qualifiedPeople = new LinkedList<>();
+        try {
+            String query = "SELECT pers_id " +
+                    "       FROM (SELECT * " +
+                    "             FROM has_skill hs1 " +
+                    "             WHERE pers_id = ?) hs1" +
+                    "       WHERE NOT EXISTS " +
+                    "            (SELECT * " +
+                    "             FROM position_skills ps1 " +
+                    "             WHERE pos_code = ? " +
+                    "             AND NOT EXISTS " +
+                    "            (SELECT * " +
+                    "             FROM has_skill hs2 " +
+                    "             WHERE hs1.pers_id = hs2.pers_id " +
+                    "             AND hs2.ks_code = ps1.ks_code))";
+            PreparedStatement isQualified = conn.prepareStatement(query);
+            isQualified.setInt(1,this.pos_code);
+            ResultSet rs = isQualified.executeQuery();
+        }
+        catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+        }
+        return qualifiedPeople;
     }
 
     // On commit, if there's a new insert, the pos_code, etc will be set to the actual value
