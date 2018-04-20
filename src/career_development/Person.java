@@ -284,8 +284,8 @@ public class Person {
     public void personTakes (Course course, Section section, Person person, Connection conn){
         PreparedStatement personTakesCourse;
         try{
-            personTakesCourse = conn.prepareStatement("INSERT INTO takes VALUES(SELECT c_code, sec_code, " +
-                    "complete_date, pers_id FROM section NATURAL JOIN person ORDER BY pers_id)");
+            personTakesCourse = conn.prepareStatement("INSERT INTO takes(c_code, sec_code, " +
+                    "complete_date, pers_id) VALUES (?,?,?,?)");
             personTakesCourse.setInt(1,course.getCCode());
             personTakesCourse.setInt(2,section.getSecCode());
             personTakesCourse.setDate(3,section.getCompleteDate());
