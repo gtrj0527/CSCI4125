@@ -4,19 +4,23 @@ import javax.tools.JavaCompiler;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
+
 
 /*
  * This was a "set up" class. Don't need to adjust it anymore.
  */
+
 public class Main {
 
     //TODO: Add close for statements and connection
     public static void main(String[] args) {
         try {
-            String userName = "";
-            String password = "";
+            String userName = "jtmarch1";
+            String password = "Tg4zJWx7";
 
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
@@ -37,6 +41,13 @@ public class Main {
             Integer newCCode = c.getCCode();
             Course testCourse = Course.retrieveCourse(newCCode, conn);
             System.out.println("Retail Price: " + testCourse.getRetailPrice());
+
+
+
+
+
+
+
 
             /*PERSON*/
             Person person = Person.retrievePerson(1, conn);
@@ -75,6 +86,31 @@ public class Main {
             Integer newPosCode = pos.getPosCode();
             Position testPosition = Position.retrievePosition(newPosCode, conn);
             System.out.println(testPosition.getPosTitle());
+
+
+
+                                    /*SECTION*/
+            //LocalDate date = new LocalDate (2018,5, 11);
+            //LocalDate date = LocalDate.of(Integer.parseInt(2018), Integer.parseInt(5), Integer.parseInt(11));
+            //java.sql.Date date = new java.sql.Date(2018, 4, 11);
+            Section section = Section.retrieveSection(c, 4, Date.valueOf("2018-04-11"), conn);
+            // System.out.println("ConpleteDate: " + section.getCompleteDate());
+            List<Section> secList = Section.retrieveCourseSections(c,conn);
+            Iterator<Section> sectionIterator = secList.iterator();
+            while (sectionIterator.hasNext()) {
+                Section section1 = sectionIterator.next();
+                System.out.println("seccode: " + section1.getSecCode() + " teacher: " + section1.getTeacher());
+            }
+            Section section2 = new Section (c, 4, Date.valueOf("2018-04-11"), 1,
+                    p, "Traditional", 19.00f );
+             section2.commit();
+            Integer newsecCode = section2.getSecCode();
+            Section testSection = Section.retrieveSection(c, 4, Date.valueOf("2018-05-11"), conn);
+            System.out.println(" Price: " + section2.getPrice());
+
+//
+
+
 
             /*JOB CATEGORY*/
             JobCategory jobCategory = JobCategory.retrieveJobCategory("1", conn);

@@ -5,9 +5,9 @@ import java.util.LinkedList;
 import oracle.jdbc.OracleTypes;
 import oracle.jdbc.internal.OraclePreparedStatement;
 
-/*Just need a retrieve the section information*/
 
 public class Section {
+
     private Course course;
     private Integer secCode;
     private Date completeDate;
@@ -21,7 +21,7 @@ public class Section {
         PreparedStatement retrSection;
         try {
             retrSection = conn.prepareStatement("SELECT offered_by, taught_by, format, price " +
-                    " FROM section WHERE c_code = ?, sec_code = ?, complete_date = ?");
+                    " FROM section WHERE c_code = ? AND sec_code = ? AND complete_date = ?");
             retrSection.setInt(1, course.getCCode());
             retrSection.setInt(2, secCode);
             retrSection.setDate(3, completeDate);
@@ -152,4 +152,28 @@ public class Section {
             return;
         }
     }
+
+
+    //*INSERT SECTION*//
+
+    private void store (Connection conn) {
+        try {
+            OraclePreparedStatement preparedStatement =
+                    (OraclePreparedStatement)conn.prepareStatement("INSERT INTO section (c_code, sec_code" +
+                            "complete_date, offered_by, taught_by, format_price) VALUES(?,?,?,?,?,?,?,?)");
+            preparedStatement.setInt(1,course.getCCode());
+            preparedStatement.setInt(2, secCode);
+            preparedStatement.setDate(3, completeDate);
+            preparedStatement.setInt(4, trainingProviderID);
+            preparedStatement.setInt(5, teacher.getPersID());
+            preparedStatement.setString(6, format);
+            preparedStatement.setFloat(7, price);
+            preparedStatement.execute();
+
+        }catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+        }
+    }
+
+
 }

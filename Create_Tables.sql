@@ -117,12 +117,18 @@ CREATE TABLE provides_skill (
 CREATE TABLE job_category( -- AKA SOC
     cat_code varchar (255) NOT NULL PRIMARY KEY,
     parent_cat_code varchar(255),
+<<<<<<< HEAD
 --    core_skill varchar(255) NOT NULL,
+=======
+>>>>>>> 56cf0f026f453c6f3ee3db13b6bc0a91fdc08bb0
     job_category_title varchar (255) NOT NULL,
     description varchar(255),
     pay_range_high float(15),
     pay_range_low float(15),
+<<<<<<< HEAD
 --    CONSTRAINT cat_nwcet_fk FOREIGN KEY (core_skill) REFERENCES NWCET (nwcet_code),
+=======
+>>>>>>> 56cf0f026f453c6f3ee3db13b6bc0a91fdc08bb0
     CONSTRAINT parent_cat_fk FOREIGN KEY (parent_cat_code) REFERENCES job_category (cat_code)
 );
 
