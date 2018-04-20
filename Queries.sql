@@ -390,10 +390,19 @@ ORDER BY num_missing;
 /*20. Given a position code and its corresponding missing-k list specified in Question 19. Find every skill that is
 needed by at least one person in the given missing-k list. List each skill code and the number of people who need
 it in the descending order of the people counts. ++++*/
+--      NEEDS TO BE CORRECTED PER DR. TU. HE TOOK OFF 2 POINTS AND WROTE "MORE?" NEXT TO THE QUERY.
+WITH missing_skills AS (
+    SELECT pers_id, pos_code, ks_code 
+    FROM person, position_skills 
+    MINUS 
+    SELECT pers_id, pos_code, ks_code
+    FROM relevant_skills)
 SELECT DISTINCT ks_code 
 FROM missing_skills 
-NATURAL JOIN missing_count
-WHERE pos_code = 7
+NATURAL JOIN (SELECT pers_id, pos_code, COUNT(*) AS num_missing 
+              FROM missing_skills 
+              GROUP BY pers_id, pos_code)
+WHERE pos_code = 8
 AND num_missing <= 10;
 
 /*21. In a local or national crisis, we need to find all the people who once held a job position of the special job category
@@ -416,6 +425,12 @@ AND pos_code = 12;
 /*23. Find out the biggest employer in terms of number of employees and the total amount of salaries and wages paid to
 employees. (Two queries) ++++*/
 /*First query*/
+WITH company_employee_count AS (
+    SELECT comp_id, COUNT(*) AS empl_count 
+    FROM works 
+    NATURAL JOIN position 
+    WHERE end_date IS NULL 
+    GROUP BY comp_id)
 SELECT comp_name, empl_count 
 FROM company 
 NATURAL JOIN company_employee_count 
@@ -424,6 +439,12 @@ WHERE empl_count =
                  FROM company_employee_count);
 
 /*Second query*/
+WITH company_labor_cost AS (
+    SELECT comp_id, SUM(yearly_pay) AS labor_cost
+    FROM company 
+    NATURAL JOIN position
+    NATURAL JOIN position_yearly_pay
+    GROUP BY comp_id); 
 SELECT comp_id, comp_name, labor_cost
 FROM company_labor_cost
 NATURAL JOIN company
