@@ -200,11 +200,30 @@ INSERT INTO provides_skill VALUES('Angular3',11);
 INSERT INTO provides_skill VALUES('SQL1',12);
 
 /*JOB CATEGORY*/
-INSERT into job_category VALUES ('15-1200',null,'COMPMATH','Computer and Mathematical Occupations','Occupations specializing in computers and math',20000.00,300000.00);--SOC is parent 15-0000 Computer & Math Occupations, no parent
-INSERT into job_category VALUES ('15-1250','15-1200','PSE','Software and Web Developers, Programmers, and Testers','Occupations specializing in Software and Web Development',20000.00,300000.00);
-INSERT into job_category VALUES ('15-1254','15-1250','WDA','Web Developers','Web Development Occupations',23000.00,100000.00);
-INSERT into job_category VALUES ('15-1240','15-1200','DDA','Database and Network Administratiors and Architects','Occupations specializing Databases',50000.00,250000.00);
+--INSERT into job_category VALUES ('15-1200',null,'COMPMATH','Computer and Mathematical Occupations','Occupations specializing in computers and math',20000.00,300000.00);--SOC is parent 15-0000 Computer & Math Occupations, no parent
+--INSERT into job_category VALUES ('15-1250','15-1200','PSE','Software and Web Developers, Programmers, and Testers','Occupations specializing in Software and Web Development',20000.00,300000.00);
+--INSERT into job_category VALUES ('15-1254','15-1250','WDA','Web Developers','Web Development Occupations',23000.00,100000.00);
+--INSERT into job_category VALUES ('15-1240','15-1200','DDA','Database and Network Administratiors and Architects','Occupations specializing Databases',50000.00,250000.00);
 
+
+INSERT into job_category VALUES ('15-1200',null,'Computer and Mathematical Occupations','Occupations specializing in computers and math',20000.00,300000.00);--SOC is parent 15-0000 Computer & Math Occupations, no parent
+INSERT into job_category VALUES ('15-1250','15-1200','Software and Web Developers, Programmers, and Testers','Occupations specializing in Software and Web Development',20000.00,300000.00);
+INSERT into job_category VALUES ('15-1254','15-1250','Web Developers','Web Development Occupations',23000.00,100000.00);
+INSERT into job_category VALUES ('15-1240','15-1200','Database and Network Administratiors and Architects','Occupations specializing Databases',50000.00,250000.00);
+
+
+
+/*Core_skill*/
+INSERT INTO core_skill VALUES ('Programming Language','15-1200');
+INSERT INTO core_skill VALUES ('DDA','15-1240');
+INSERT INTO core_skill VALUES ('DM','15-1250');
+INSERT INTO core_skill VALUES ('ESAI','15-1250');
+INSERT INTO core_skill VALUES ('NDA','15-1250');
+INSERT INTO core_skill VALUES ('PSE','15-1250');
+INSERT INTO core_skill VALUES ('WDA','15-1254');
+INSERT INTO core_skill VALUES ('COMPMATH','15-1200');
+INSERT INTO core_skill VALUES ('TS','15-1250');
+INSERT INTO core_skill VALUES ('TW','15-1250');
 
 
 
