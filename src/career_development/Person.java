@@ -283,31 +283,23 @@ public class Person {
         return personSkillsList;
     }
 
-    public LinkedList<Integer> personTakes (Section section, Person person, Connection conn){
+    public LinkedList<Integer> personTakes (Course course, Section section, Person person, Connection conn){
         PreparedStatement personTakesCourse;
-        LinkedList<Integer> personTakesCourseList = new LinkedList<>();
+        Section courseCode = new Section(course.getCCode(),7, section.getCompleteDate(),
+            1120, person.getLastName(),"Online", "", "");
 
         try{
             personTakesCourse = conn.prepareStatement("INSERT INTO takes (SELECT c_code, sec_code, complete_date," +
                     "pers_id FROM section NATURAL JOIN person ORDER BY pers_id");
-            personTakesCourse.setInt(1,person.getPersID());
-            ResultSet rs = personTakesCourse.executeQuery();
-            while(rs.next()){
-                Section courseCode = rs.getInt();
-                Integer courseCode = rs.getInt(1);
-                Integer secCode = rs.getInt(2);
-                Date date = rs.getInt(3);
-                Section sec = Section.retrieveSection(course,secCode,date,conn);
-                personTakesCourseList.add(sec);
-                rs.close();
-                personTakesCourse.close();
-                return new Integer(course,section,person,conn);
-            }
-        } catch (SQLException sqlEx) {
+            personTakesCourse.setInt(1,course.getCCode());
+            personTakesCourse.setInt(2,section.getSecCode());
+            personTakesCourse.setDate(3,section.getCompleteDate());
+            personTakesCourse.setInt(4,person.getPersID());
+            personTakesCourse.close();
+        } catch(SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             return null;
         }
-        return personTakesCourseList;
     }
 
     public void addSkill (Skill skill, Connection conn) {
