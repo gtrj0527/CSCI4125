@@ -8,7 +8,6 @@ DROP VIEW sector_employee_count;
 DROP VIEW company_labor_cost;
 DROP VIEW company_employee_count;
 DROP VIEW unemployed_people;
-DROP VIEW cert_qual;        --We never use this one.
 DROP VIEW skill_qual;
 DROP VIEW category_qual;
 DROP VIEW missing_category_skills;
@@ -24,7 +23,7 @@ DROP VIEW pers_full_name;
 
 --Test this view and implement into Query 1,2,15,16,21
 CREATE VIEW pers_full_name AS(
-    SELECT (first_name || ' ' ||  last_name) AS full_name
+    SELECT pers_id, (first_name || ' ' ||  last_name) AS full_name
     FROM person);
 
 /*Used in Query 2,3,14,23,25*/
@@ -215,18 +214,3 @@ CREATE VIEW pay_change AS (
     FROM pay_change_by_sector 
     GROUP BY pers_id);
     
-/*Saved for Queries 26-28
-  Potentially needs changes.*/
-CREATE VIEW cert_qual AS (
-    SELECT DISTINCT pers_id 
-    FROM has_cert hc1
-    WHERE NOT EXISTS
-      (SELECT * 
-       FROM position_cert pc1
-       WHERE pos_code = 10 
-       AND NOT EXISTS
-          (SELECT * 
-           FROM has_cert hc2
-           WHERE hc1.pers_id = hc2.pers_id 
-           AND   hc2.cert_code = pc1.cert_code))
-);
