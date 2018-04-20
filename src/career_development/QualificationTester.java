@@ -12,8 +12,8 @@ public class QualificationTester {
 
     public static void main(String[] args) {
         try {
-            String userName = "tbourg";
-            String password = "K3LWXCPt";
+            String userName = "";
+            String password = "";
 
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
@@ -52,6 +52,7 @@ public class QualificationTester {
                     System.out.println(p.getPersID() + " " + "not qualified for any position");
                 }
             }
+            conn.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
         }

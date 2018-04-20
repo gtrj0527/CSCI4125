@@ -156,29 +156,23 @@ INSERT INTO cert(cert_name,issued_by,tool) VALUES('CLA',1114,'C Programming Lang
 INSERT INTO cert(cert_name,issued_by,tool) VALUES('Oracle Java',1114,'Certified Profession Java SE Programmer');
 
 
-/*has_cert: Run person and cert first!
-    CREATE TABLE has_cert (
-    pers_id number NOT NULL,
-    cert_code number NOT NULL,
-    CONSTRAINT has_cert_pk PRIMARY KEY (pers_id, cert_code),
-    CONSTRAINT pers_cert_fk FOREIGN KEY (pers_id) REFERENCES person (pers_id),
-    CONSTRAINT has_cert_fk FOREIGN KEY (cert_code) REFERENCES cert (cert_code));*/
---INSERT
-/*Test has_cert*/
-SELECT *
-FROM has_cert;
+/*HAS_CERT*/
 
-/*course_cert: Run cert and course first!
-    CREATE TABLE course_cert (
-    cert_code number NOT NULL,
-    c_code number NOT NULL,
-    CONSTRAINT course_cert_pk PRIMARY KEY (cert_code, c_code),
-    CONSTRAINT cert_requires_pk FOREIGN KEY (cert_code) REFERENCES cert (cert_code),
-    CONSTRAINT course_required_pk FOREIGN KEY (c_code) REFERENCES course (c_code));*/
---INSERT
-/*Test course_cert*/
+INSERT INTO has_cert values (2, 1);
+INSERT INTO has_cert values (1, 1);
+INSERT INTO has_cert values (4, 1);
+INSERT INTO has_cert values (4, 2);
+INSERT INTO has_cert values (2, 2);
+INSERT INTO has_cert values (2, 4);
+INSERT INTO has_cert values (1, 2);
+INSERT INTO has_cert values (1, 3);
+INSERT INTO has_cert values (1, 4);
 
-Delete from course_cert;
+
+
+
+/*COURSE_CERT*/
+
 INSERT INTO course_cert values (2, 1);
 INSERT INTO course_cert values (1, 1);
 INSERT INTO course_cert values (4, 1);
@@ -206,11 +200,30 @@ INSERT INTO provides_skill VALUES('Angular3',11);
 INSERT INTO provides_skill VALUES('SQL1',12);
 
 /*JOB CATEGORY*/
-INSERT into job_category VALUES ('15-1200',null,'COMPMATH','Computer and Mathematical Occupations','Occupations specializing in computers and math',20000.00,300000.00);--SOC is parent 15-0000 Computer & Math Occupations, no parent
-INSERT into job_category VALUES ('15-1250','15-1200','PSE','Software and Web Developers, Programmers, and Testers','Occupations specializing in Software and Web Development',20000.00,300000.00);
-INSERT into job_category VALUES ('15-1254','15-1250','WDA','Web Developers','Web Development Occupations',23000.00,100000.00);
-INSERT into job_category VALUES ('15-1240','15-1200','DDA','Database and Network Administratiors and Architects','Occupations specializing Databases',50000.00,250000.00);
+--INSERT into job_category VALUES ('15-1200',null,'COMPMATH','Computer and Mathematical Occupations','Occupations specializing in computers and math',20000.00,300000.00);--SOC is parent 15-0000 Computer & Math Occupations, no parent
+--INSERT into job_category VALUES ('15-1250','15-1200','PSE','Software and Web Developers, Programmers, and Testers','Occupations specializing in Software and Web Development',20000.00,300000.00);
+--INSERT into job_category VALUES ('15-1254','15-1250','WDA','Web Developers','Web Development Occupations',23000.00,100000.00);
+--INSERT into job_category VALUES ('15-1240','15-1200','DDA','Database and Network Administratiors and Architects','Occupations specializing Databases',50000.00,250000.00);
 
+
+INSERT into job_category VALUES ('15-1200',null,'Computer and Mathematical Occupations','Occupations specializing in computers and math',20000.00,300000.00);--SOC is parent 15-0000 Computer & Math Occupations, no parent
+INSERT into job_category VALUES ('15-1250','15-1200','Software and Web Developers, Programmers, and Testers','Occupations specializing in Software and Web Development',20000.00,300000.00);
+INSERT into job_category VALUES ('15-1254','15-1250','Web Developers','Web Development Occupations',23000.00,100000.00);
+INSERT into job_category VALUES ('15-1240','15-1200','Database and Network Administratiors and Architects','Occupations specializing Databases',50000.00,250000.00);
+
+
+
+/*Core_skill*/
+INSERT INTO core_skill VALUES ('Programming Language','15-1200');
+INSERT INTO core_skill VALUES ('DDA','15-1240');
+INSERT INTO core_skill VALUES ('DM','15-1250');
+INSERT INTO core_skill VALUES ('ESAI','15-1250');
+INSERT INTO core_skill VALUES ('NDA','15-1250');
+INSERT INTO core_skill VALUES ('PSE','15-1250');
+INSERT INTO core_skill VALUES ('WDA','15-1254');
+INSERT INTO core_skill VALUES ('COMPMATH','15-1200');
+INSERT INTO core_skill VALUES ('TS','15-1250');
+INSERT INTO core_skill VALUES ('TW','15-1250');
 
 
 
@@ -247,16 +260,8 @@ INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate, pay_type
 
 
 
-/*position_cert: Run cert first!!!
-    CREATE TABLE position_cert (
-    cert_code number NOT NULL,
-    pos_code number NOT NULL,
-    prefer varchar(2), -- R: Required, P: Preferred
-    CONSTRAINT position_cert_pk PRIMARY KEY (cert_code, pos_code),
-    CONSTRAINT pc_cert_fk FOREIGN KEY (cert_code) REFERENCES cert (cert_code),
-    CONSTRAINT pc_pos_fk FOREIGN KEY (pos_code) REFERENCES position (pos_code)
-);*/
---INSERT
+/*position_cert*/
+
 
 INSERT INTO position_cert VALUES (1, 9, 'R' );
 INSERT INTO position_cert VALUES (1, 1, 'P' );
@@ -346,9 +351,7 @@ INSERT INTO has_skill VALUES ('7','Angular2');
 INSERT INTO has_skill VALUES ('7','SQL1');
 INSERT INTO has_skill VALUES ('7','HTML1');
 INSERT INTO has_skill VALUES ('7','HTML2');
- /*Test has_skill*/   
-SELECT * 
-FROM has_skill;
+
 
 /*person_phone_numbers;*/
 INSERT INTO person_phone_numbers VALUES (1, '5048493849', 'Mobile');
@@ -365,9 +368,6 @@ INSERT INTO person_phone_numbers VALUES (6, '5048734839', 'Home');
 INSERT INTO person_phone_numbers VALUES (7, '9856378483', 'Work');
 INSERT INTO person_phone_numbers VALUES (7, '9834738284', 'Home');
 INSERT INTO person_phone_numbers VALUES (7, '5045003849', 'Work');
- /*Test person_phone_numbers*/   
-SELECT * 
-FROM person_phone_numbers;
 
 /*prerequisite;*/
 INSERT INTO prerequisite VALUES (1, 5);
@@ -392,17 +392,7 @@ INSERT INTO company_specialty VALUES ('1119','50');
 INSERT INTO company_specialty VALUES ('1120','35');  
 
 
-/*takes: Run after person and position!
-    CREATE TABLE takes(
-    c_code number NOT NULL,
-    sec_code number(10) NOT NULL,
-    complete_date date NOT NULL,
-    pers_id number NOT NULL,
-    CONSTRAINT takes_pk PRIMARY KEY (c_code, sec_code, complete_date, pers_id),
-    CONSTRAINT sec_takes_fk FOREIGN KEY (c_code, sec_code, complete_date) REFERENCES section (c_code, sec_code, complete_date),
-    CONSTRAINT pers_takes_fk FOREIGN KEY (pers_id) REFERENCES person (pers_id));*/
---INSERT
-/*Test takes*/
+/*takes*/
 
 
 INSERT into TAKES values (1,4,'11-MAY-18', 1);
@@ -419,5 +409,4 @@ INSERT into TAKES values (3,4,'06-MAR-18', 10);
 INSERT into TAKES values (3,4,'06-MAR-18', 11);
 INSERT into TAKES values (3,4,'06-MAR-18', 12);
 INSERT into TAKES values (3,4,'06-MAR-18', 1);
-
 

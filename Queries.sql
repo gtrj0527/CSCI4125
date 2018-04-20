@@ -1,16 +1,33 @@
-/*TASKS*/
---Queries 12,26-28
+/******************************************************************************************************************************/
+/*                                          FINAL PROJECT                                                                     */
+/*                                          CSCI4125-Spring 2018                                                                          */
+/*                                          Queries                                                                           */
+/*                                                                                                                            */
+/*                                          R. N. Guillory                                                                    */
+/*                                          J. T. Marchan                                                                     */
+/*                                          G. T. Swanson                                                                     */
+/******************************************************************************************************************************/
 
 /*1. List a specific company?s workers by names. ++++*/
 SELECT DISTINCT full_name
 FROM works
-NATURAL JOIN person_full_name
+NATURAL JOIN pers_full_name
 NATURAL JOIN position
 WHERE comp_id = 1113
 AND end_date IS NULL
 ORDER BY full_name ASC;
 
 /*2. List a specific company?s staff by salary in descending order. ++++*/
+WITH position_yearly_pay AS(
+    SELECT pos_code, primary_sector_code, pay_rate AS yearly_pay 
+    FROM position 
+    NATURAL JOIN company 
+    WHERE pay_type = 'S' 
+    UNION 
+    SELECT pos_code, primary_sector_code, pay_rate*1920 AS pay_rate 
+    FROM position
+    NATURAL JOIN company
+    WHERE pay_type = 'W')
 SELECT full_name, yearly_pay
 FROM works 
 NATURAL JOIN pers_full_name
@@ -21,6 +38,16 @@ AND end_date IS NULL
 ORDER BY yearly_pay DESC;
 
 /*3. List companies' labor cost (total salaries and wage rates by 1920 hours) in descending order. ++++Both++++*/
+WITH position_yearly_pay AS(
+    SELECT pos_code, primary_sector_code, pay_rate AS yearly_pay 
+    FROM position 
+    NATURAL JOIN company 
+    WHERE pay_type = 'S' 
+    UNION 
+    SELECT pos_code, primary_sector_code, pay_rate*1920 AS pay_rate 
+    FROM position
+    NATURAL JOIN company
+    WHERE pay_type = 'W')
 SELECT comp_id, comp_name, SUM(yearly_pay) AS labor_cost
 FROM company
 NATURAL JOIN works
@@ -31,26 +58,34 @@ GROUP BY comp_id, comp_name
 ORDER BY labor_cost DESC;
 
 /*4. Given a person?s identifier, find all the job positions this person is currently holding and worked in the past. ++++*/
-SELECT pos_code, pos_title, start_date, end_date
-FROM person 
-NATURAL JOIN position 
-NATURAL JOIN works
-WHERE pers_id = 3;
+SELECT p.pos_code, pos_title, start_date, end_date
+FROM position p
+JOIN works w on p.pos_code = w.pos_code
+WHERE pers_id = 7;
 
 /*5. Given a person?s identifier, list this person?s knowledge/skills in a readable format. ++++*/
 SELECT ks_title, description, training_level
-FROM person
-NATURAL JOIN has_skill
-NATURAL JOIN know_skill
+FROM know_skill ks
+JOIN has_skill hs ON ks.ks_code = hs.ks_code
 WHERE pers_id = 7;
 
 /*6. Given a person?s identifier, list the skill gap between the requirements of this worker?s job position(s) and his/her
-skills. +++Both+++*/
--- LISTAGG concatenates all the ks_codes into one row.
+skills.
+    NEED TO REDO THIS ONE. STARTED BUT GOT LOST IN THE WITH STATEMENTS. REVISITING LATER.*/
+WITH relevant_skills AS (
+    SELECT pers_id, pos_code, ks_code 
+    FROM has_skill 
+    NATURAL JOIN position_skills),
+WITH missing_skills AS (
+    SELECT pers_id, pos_code, ks_code 
+    FROM person, position_skills 
+    MINUS 
+    SELECT pers_id, pos_code, ks_code
+    FROM relevant_skills)
 SELECT pos_code, ks_code
 FROM missing_skills
 NATURAL JOIN works
-WHERE pers_id = 1
+WHERE pers_id = 3
 AND end_date IS NULL;
 
 /*7. List the required knowledge/skills of a pos_code and a job category code in a readable format. 
@@ -71,40 +106,82 @@ NATURAL JOIN know_skill
 WHERE cat_code = '15-1250';
 
 /*8. Given a person?s identifier, list a person?s missing knowledge/skills for a specific pos_code in a readable format. +++*/
-SELECT pos_code, ks_title
+WITH missing_skills AS (
+    SELECT pers_id, pos_code, ks_code 
+    FROM person, position_skills 
+    MINUS 
+    SELECT pers_id, pos_code, ks_code
+    FROM relevant_skills)
+SELECT ks_title
 FROM missing_skills 
 NATURAL JOIN know_skill
 WHERE pers_id = 7 
-AND pos_code = 10;
+AND pos_code = 7;
 
 /*9. Given a person?s identifier and a pos_code, list the courses (course id and title) that each alone teaches all the
 missing knowledge/skills for this person to pursue the specific job position.*/
-SELECT c_code, title, description
-FROM satisfy_skills
-NATURAL JOIN course;
-
+WITH missing_ks AS(
+SELECT DISTINCT c_code, title 
+FROM            course c
+WHERE NOT EXISTS(
+                SELECT ks_code
+                FROM position_skills    --No "required_skills" table, so set the position condition for "REQUIRED SKILLS"
+                WHERE prefer = 'R'
+                AND pos_code = 7
+                MINUS
+                SELECT ks_code
+                FROM provides_skill ps
+                WHERE ps.c_code = c.c_code))
+SELECT  c_code, title
+FROM    missing_ks
+NATURAL JOIN person
+WHERE pers_id = 11;
+                
 /*10. Suppose the skill gap of a worker and the requirement of a desired job position can be covered by one course.
 Find the ?quickest? solution for this worker. Show the course, section information and the completion date.*/
-SELECT title, sec_code, complete_date, format
-  FROM section
-  NATURAL JOIN course
-  NATURAL JOIN satisfy_skills
-  WHERE complete_date = (SELECT MIN(complete_date) 
-                         FROM section 
-                         NATURAL JOIN satisfy_skills 
-                         WHERE complete_date > (SELECT SYSDATE FROM DUAL));
+WITH quickest_solution AS (
+SELECT DISTINCT c_code 
+FROM            course c
+WHERE NOT EXISTS(
+                SELECT ks_code
+                FROM position_skills    --No "required_skills" table, so set the position condition for "REQUIRED SKILLS"
+                WHERE prefer = 'R'
+                AND pos_code = 7
+                MINUS
+                SELECT ks_code
+                FROM provides_skill ps
+                WHERE ps.c_code = c.c_code))
+SELECT qs.c_code, sec_code, complete_date
+FROM quickest_solution qs
+JOIN section s ON qs.c_code = s.c_code
+NATURAL JOIN person
+WHERE complete_date = (SELECT MIN(complete_date) FROM section)
+AND pers_id = 15;
 
 /*11. Suppose the skill gap of a worker and the requirement of a desired job position can be covered by one course.
 Find the cheapest course to make up one?s skill gap by showing the course to take and the cost (of the section
 price).*/
-SELECT title, sec_code, complete_date, format
-  FROM section
-  NATURAL JOIN course
-  NATURAL JOIN satisfy_skills
-  WHERE price = (SELECT MIN(price) 
-                        FROM satisfy_skills 
-                        NATURAL JOIN section
-                        WHERE complete_date > (SELECT SYSDATE FROM DUAL));
+--          NEEDS TO BE TINKERED WITH TO RETURN JUST ONE RESULT
+WITH cheapest_solution AS (
+SELECT DISTINCT c_code, title, retail_price 
+FROM            course c
+WHERE NOT EXISTS(
+                SELECT ks_code
+                FROM position_skills    --No "required_skills" table, so set the position condition for "REQUIRED SKILLS"
+                WHERE prefer = 'R'
+                AND pos_code = 1
+                MINUS
+                SELECT ks_code
+                FROM provides_skill ps
+                WHERE ps.c_code = c.c_code)
+ORDER BY        retail_price ASC)
+SELECT      title, MIN(price) course_cost
+FROM        cheapest_solution cs
+JOIN        section s on cs.c_code = s.c_code
+NATURAL JOIN person
+WHERE       pers_id = 9
+GROUP BY    title
+ORDER BY    course_cost ASC;
                  
 /*12. 
 If query #9 returns nothing, then find the course sets that their combination covers all the missing knowledge/
@@ -149,11 +226,11 @@ INSERT INTO courseSkill(
        
 DROP TABLE courseSet_skill;        
 CREATE TABLE courseSet_skill(
-    csetID NUMBER(8,0) PRIMARY KEY,
+    csetID NUMBER(8,0),
     ks_code VARCHAR(8)    
 );
 
-/* This part is broken.    
+-- This part is broken.    
 INSERT INTO courseSet_skill(csetID,ks_code)
     (SELECT csetID, ks_code
     FROM courseSet cSet1
@@ -170,40 +247,66 @@ INSERT INTO courseSet_skill(csetID,ks_code)
     JOIN courseSkill cSkill3
         ON cSet3.c_code3 = cSkill3.c_code);
         
-WITH coverCSet(csetID, size) AS(
-    SELECT csetID
+WITH coverCSet(csetID, cSetSize) AS (
+    SELECT csetID, cSetSize
     FROM courseSet cSet
     WHERE NOT EXISTS(
         SELECT ks_code
-        FROM missingSkill
+        FROM (  SELECT DISTINCT ks_code
+                FROM            courseSet_Skill c
+                WHERE NOT EXISTS(
+                                SELECT ks_code
+                                FROM position_skills    --No "required_skills" table, so set the position condition for "REQUIRED SKILLS"
+                                WHERE prefer = 'R'
+                                AND pos_code = 10
+                                MINUS
+                                SELECT ks_code
+                                FROM has_skill
+                                WHERE pers_id = 20
+                                MINUS
+                                SELECT ks_code
+                                FROM courseSet_Skill cs
+                                WHERE c.cSetID = cs.cSetID))
         MINUS
         SELECT ks_code
         FROM courseSet_skill cSkill
         WHERE cSkill.csetID = cSet.cSetID
     )
 )
-SELECT c_code 1, c_code2, c_code3
-FROM coverCSet NATURAL JOIN courseSet
-WHERE cSetSize = SELECT MIN(SIZE)
-                 FROM coverCSet;
-*/
+SELECT c_code1, c_code2, c_code3
+FROM coverCSet 
+NATURAL JOIN courseSet
+WHERE cSetSize = (SELECT MIN(cSetSize)
+                 FROM coverCSet);
+                 
 /*13. Given a person?s identifier, list all the job categories that a person is qualified for. ++++*/
---SELECT cat_code 
---FROM category_qual 
---WHERE pers_id = 7;
+WITH qualifiedJobCategories AS (
+                SELECT nwcet_code
+                FROM core_skill
+                MINUS
+                SELECT nwcet_code
+                FROM know_skill
+                NATURAL JOIN    (SELECT ks_code
+                                 FROM has_skill
+                                 WHERE pers_id = 10))
+SELECT DISTINCT cat_code
+FROM qualifiedJobCategories
+NATURAL JOIN core_skill;
+
+/*This version of the query took our old views and replaced them with a giant WITH statement. It's too beautiful to delete.
 WITH category_qual AS (
         (SELECT pers_id, cat_code
         FROM person, JOB_CATEGORY)
         MINUS
         (SELECT distinct pers_id, cat_code
         FROM (SELECT pers_id, cat_code, ks_code
-              FROM person, (SELECT cat_code, ks_code 
+              FROM person, (SELECT cat_code, ks_code
                             FROM know_skill ks
                             JOIN nwcet n ON ks.nwcet_code = n.nwcet_code
                             JOIN job_category j ON n.nwcet_code = j.core_skill)
-             MINUS 
+             MINUS
              SELECT pers_id, cat_code, ks_code
-             FROM ( SELECT p.pers_id, j.cat_code, ks.ks_code 
+             FROM ( SELECT p.pers_id, j.cat_code, ks.ks_code
                     FROM person p
                     JOIN has_skill hs ON p.pers_id = hs.pers_id
                     JOIN know_skill ks ON hs.ks_code = ks.ks_code
@@ -212,24 +315,29 @@ WITH category_qual AS (
 SELECT cat_code
 FROM category_qual
 WHERE pers_id = 1;
-
+*/
 /*14. Given a person?s identifier, find the job position with the highest pay rate for this person according to his/her skill
 possession.*/
-SELECT pos_code, pos_title, yearly_pay
-FROM position_qual 
-NATURAL JOIN position_yearly_pay
+--          NEEDS TO BE TINKERED WITH TO RETURN JUST ONE RESULT
+SELECT DISTINCT full_name, pos_title, MAX(pay_rate) highest_salary
+FROM has_skill hs
 NATURAL JOIN position
-WHERE pers_id = 7
-AND yearly_pay = (SELECT MAX(yearly_pay)
-                  FROM position_qual 
-                  NATURAL JOIN position_yearly_pay
-                  WHERE pers_id = 7);
+JOIN pers_full_name p
+    ON hs.pers_id = p.pers_id
+GROUP BY full_name, pos_title
+ORDER BY full_name;
 
-/*15. Given a position code, list all the names along with the emails of the persons who are qualified for this position. ++++ BUT could be better (more generic)*/
-SELECT full_name, email 
-FROM pers_full_name 
-NATURAL JOIN skill_qual; 
-                                                    
+/*15. Given a position code, list all the names along with the emails of the persons who are qualified for this position. */
+SELECT (first_name || ' ' ||  last_name) full_name, email
+FROM person p
+WHERE NOT EXISTS (  SELECT ks_code
+                    FROM position_skills ps
+                    WHERE pos_code = 10
+                    MINUS
+                    SELECT ks_code
+                    FROM has_skill hs
+                    WHERE p.pers_id = hs.pers_id);
+
 /*16. When a company cannot find any qualified person for a job position, a secondary solution is to find a person who
 is almost qualified to the job position. Make a ?missing-one? list that lists people who miss only one skill for a
 specified pos_code. ++++Double check data, but appears to work. */
@@ -237,85 +345,106 @@ SELECT pers_id, full_name
 FROM missing_count
 NATURAL JOIN person
 NATURAL JOIN pers_full_name
-WHERE pos_code = 10 
+WHERE pos_code = 10
 AND num_missing = 1;
 
 /*17. List each of the skill code and the number of people who misses the skill and are in the missing-one list for a
 given position code in the ascending order of the people counts. ++++*/
 WITH missing_one AS (
-    SELECT pers_id 
-    FROM missing_count 
-    WHERE pos_code = 10 
+    SELECT pers_id
+    FROM missing_count
+    WHERE pos_code = 10
     AND num_missing = 1)
-SELECT ks_code, COUNT(pers_id) AS person_count 
-FROM missing_skills 
-NATURAL JOIN missing_one 
-WHERE pos_code = 10  
-GROUP BY ks_code 
+SELECT ks_code, COUNT(pers_id) AS person_count
+FROM missing_skills
+NATURAL JOIN missing_one
+WHERE pos_code = 10
+GROUP BY ks_code
 ORDER BY person_count;
 
 /* For not just missing one... */
-/*SELECT ks_code, COUNT(pers_id) AS person_count 
-FROM missing_skills 
+/*SELECT ks_code, COUNT(pers_id) AS person_count
+FROM missing_skills
 WHERE pos_code = 10
-GROUP BY ks_code 
+GROUP BY ks_code
 ORDER BY person_count;*/
 
 /*18. Suppose there is a new position that has nobody qualified. List the persons who miss the least number of skills
 that are required by this pos_code and report the ?least number?. ++++ */
-SELECT pers_id, num_missing 
-FROM missing_count 
-WHERE num_missing = 
-        (SELECT MIN(num_missing) 
-         FROM missing_count 
-         WHERE pos_code = 10) 
+SELECT pers_id, num_missing
+FROM missing_count
+WHERE num_missing =
+        (SELECT MIN(num_missing)
+         FROM missing_count
+         WHERE pos_code = 10)
 AND pos_code = 10;
 
 /*19. For a specified position code and a given small number k, make a ?missing-k? list that lists the people?s IDs and
 the number of missing skills for the people who miss only up to k skills in the ascending order of missing skills. ++++*/
-SELECT pers_id, num_missing 
-FROM missing_count 
-WHERE num_missing <= 10 
+SELECT pers_id, num_missing
+FROM missing_count
+WHERE num_missing <= 10
 AND pos_code = 7
 ORDER BY num_missing;
 
 /*20. Given a position code and its corresponding missing-k list specified in Question 19. Find every skill that is
 needed by at least one person in the given missing-k list. List each skill code and the number of people who need
 it in the descending order of the people counts. ++++*/
-SELECT DISTINCT ks_code 
-FROM missing_skills 
-NATURAL JOIN missing_count
-WHERE pos_code = 7
+--      NEEDS TO BE CORRECTED PER DR. TU. HE TOOK OFF 2 POINTS AND WROTE "MORE?" NEXT TO THE QUERY.
+WITH missing_skills AS (
+    SELECT pers_id, pos_code, ks_code
+    FROM person, position_skills
+    MINUS
+    SELECT pers_id, pos_code, ks_code
+    FROM relevant_skills)
+SELECT DISTINCT ks_code
+FROM missing_skills
+NATURAL JOIN (SELECT pers_id, pos_code, COUNT(*) AS num_missing
+              FROM missing_skills
+              GROUP BY pers_id, pos_code)
+WHERE pos_code = 8
 AND num_missing <= 10;
 
 /*21. In a local or national crisis, we need to find all the people who once held a job position of the special job category
 identifier. List per_id, name, job position title and the years the person worked (starting year and ending year). ++++*/
-SELECT pers_id, full_name, pos_title, start_date, end_date 
+SELECT pers_id, full_name, pos_title, start_date, end_date
 FROM person
-NATURAL JOIN pers_full_name 
-NATURAL JOIN works 
-NATURAL JOIN position 
-WHERE cat_code = '15-1250' 
+NATURAL JOIN pers_full_name
+NATURAL JOIN works
+NATURAL JOIN position
+WHERE cat_code = '15-1250'
 AND end_date IS NOT NULL;
 
 /*22. Find all the unemployed people who once held a job position of the given pos_code. ++++*/
-SELECT pers_id 
-FROM unemployed_people 
+SELECT pers_id
+FROM unemployed_people
 NATURAL JOIN works
-WHERE end_date IS NOT NULL 
+WHERE end_date IS NOT NULL
 AND pos_code = 12;
 
 /*23. Find out the biggest employer in terms of number of employees and the total amount of salaries and wages paid to
 employees. (Two queries) ++++*/
 /*First query*/
-SELECT comp_name, empl_count 
-FROM company 
-NATURAL JOIN company_employee_count 
-WHERE empl_count = 
-                (SELECT MAX(empl_count) 
+WITH company_employee_count AS (
+    SELECT comp_id, COUNT(*) AS empl_count
+    FROM works
+    NATURAL JOIN position
+    WHERE end_date IS NULL
+    GROUP BY comp_id)
+SELECT comp_name, empl_count
+FROM company
+NATURAL JOIN company_employee_count
+WHERE empl_count =
+                (SELECT MAX(empl_count)
                  FROM company_employee_count);
 
 /*Second query*/
+WITH company_labor_cost AS (
+    SELECT comp_id, SUM(yearly_pay) AS labor_cost
+    FROM company
+    NATURAL JOIN position
+    NATURAL JOIN position_yearly_pay
+    GROUP BY comp_id);
 SELECT comp_id, comp_name, labor_cost
 FROM company_labor_cost
 NATURAL JOIN company

@@ -1,9 +1,11 @@
 package career_development;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -35,6 +37,14 @@ public class Person_Test {
             Person testPerson = Person.retrievePerson(newPersID, conn);
 
             System.out.println(testPerson.getEmail());
+            Course c = new Course ("Testing", "Intermediate", "E", 854.72,
+                    "Online", "Checking the testPerson method.");
+            Section s = new Section (c, 7, Date.valueOf("2018-05-11"), 3,
+                    p, "Online", 23.00f );
+            testPerson.personTakes(c,s,testPerson,conn);
+            System.out.println(s.getSecCode());
+
+
 
         } catch (SQLException e) {
             e.printStackTrace();
