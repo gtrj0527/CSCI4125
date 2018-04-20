@@ -19,8 +19,8 @@ public class Main {
     //TODO: Add close for statements and connection
     public static void main(String[] args) {
         try {
-            String userName = "jtmarch1";
-            String password = "Tg4zJWx7";
+            String userName = "gtswanson";
+            String password = "sNNP9R9R";
 
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
