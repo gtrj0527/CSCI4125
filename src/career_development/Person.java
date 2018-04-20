@@ -270,7 +270,7 @@ public class Person {
                 String pers_id = rs.getString(1);
 
                String ks_code = rs.getString(2);
-                personSkillsList.add(new String (ks_code));
+               personSkillsList.add(new String (ks_code));
                System.out.println(pers_id);
                System.out.println(ks_code);
                rs.close();
@@ -281,6 +281,33 @@ public class Person {
             return null;
         }
         return personSkillsList;
+    }
+
+    public LinkedList<Integer> personTakes (Section section, Person person, Connection conn){
+        PreparedStatement personTakesCourse;
+        LinkedList<Integer> personTakesCourseList = new LinkedList<>();
+
+        try{
+            personTakesCourse = conn.prepareStatement("INSERT INTO takes (SELECT c_code, sec_code, complete_date," +
+                    "pers_id FROM section NATURAL JOIN person ORDER BY pers_id");
+            personTakesCourse.setInt(1,person.getPersID());
+            ResultSet rs = personTakesCourse.executeQuery();
+            while(rs.next()){
+                Section courseCode = rs.getInt();
+                Integer courseCode = rs.getInt(1);
+                Integer secCode = rs.getInt(2);
+                Date date = rs.getInt(3);
+                Section sec = Section.retrieveSection(course,secCode,date,conn);
+                personTakesCourseList.add(sec);
+                rs.close();
+                personTakesCourse.close();
+                return new Integer(course,section,person,conn);
+            }
+        } catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+            return null;
+        }
+        return personTakesCourseList;
     }
 
     public void addSkill (Skill skill, Connection conn) {

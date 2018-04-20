@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -35,6 +36,14 @@ public class Person_Test {
             Person testPerson = Person.retrievePerson(newPersID, conn);
 
             System.out.println(testPerson.getEmail());
+
+            Course course = new Course();
+            Section section = new Section();
+            Person test2 = new Person("Skywalker", "Luke", "", "Middle of Nowhere", "Rock 3", "04496",
+                    "very_lonely_luke@galaxy.com", "M");
+            test2.retrievePerson(newPersID, conn);
+            test2.personTakes(course, section, date, test2, conn);
+
 
         } catch (SQLException e) {
             e.printStackTrace();
