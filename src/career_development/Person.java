@@ -1,9 +1,7 @@
 package career_development;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import oracle.jdbc.OracleTypes;
 import oracle.jdbc.internal.OraclePreparedStatement;
@@ -283,14 +281,14 @@ public class Person {
         return personSkillsList;
     }
 
-    public LinkedList<Integer> personTakes (Course course, Section section, Person person, Connection conn){
+    public void personTakes (Course course, Section section, Person person, Connection conn){
         PreparedStatement personTakesCourse;
-        Section courseCode = new Section(course.getCCode(),7, section.getCompleteDate(),
-            1120, person.getLastName(),"Online", "", "");
+        //Section courseCode = new Section(course.getCCode(),7, section.getCompleteDate(),
+//            1120, person.getLastName(),"Online", "", "");
 
         try{
             personTakesCourse = conn.prepareStatement("INSERT INTO takes (SELECT c_code, sec_code, complete_date," +
-                    "pers_id FROM section NATURAL JOIN person ORDER BY pers_id");
+                    "pers_id FROM section NATURAL JOIN person ORDER BY pers_id)");
             personTakesCourse.setInt(1,course.getCCode());
             personTakesCourse.setInt(2,section.getSecCode());
             personTakesCourse.setDate(3,section.getCompleteDate());
@@ -298,7 +296,6 @@ public class Person {
             personTakesCourse.close();
         } catch(SQLException sqlEx) {
             System.err.println(sqlEx.toString());
-            return null;
         }
     }
 
