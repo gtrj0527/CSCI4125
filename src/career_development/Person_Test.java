@@ -1,6 +1,7 @@
 package career_development;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -36,13 +37,13 @@ public class Person_Test {
             Person testPerson = Person.retrievePerson(newPersID, conn);
 
             System.out.println(testPerson.getEmail());
+            Course c = new Course ("Testing", "Intermediate", "E", 854.72,
+                    "Online", "Checking the testPerson method.");
+            Section s = new Section (c, 7, Date.valueOf("2018-05-11"), 3,
+                    p, "Online", 23.00f );
+            testPerson.personTakes(c,s,testPerson,conn);
+            System.out.println(s.getSecCode());
 
-            Course course = new Course();
-            Section section = new Section();
-            Person test2 = new Person("Skywalker", "Luke", "", "Middle of Nowhere", "Rock 3", "04496",
-                    "very_lonely_luke@galaxy.com", "M");
-            test2.retrievePerson(newPersID, conn);
-            test2.personTakes(course, section, date, test2, conn);
 
 
         } catch (SQLException e) {

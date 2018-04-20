@@ -283,16 +283,14 @@ public class Person {
 
     public void personTakes (Course course, Section section, Person person, Connection conn){
         PreparedStatement personTakesCourse;
-        //Section courseCode = new Section(course.getCCode(),7, section.getCompleteDate(),
-//            1120, person.getLastName(),"Online", "", "");
-
         try{
-            personTakesCourse = conn.prepareStatement("INSERT INTO takes (SELECT c_code, sec_code, complete_date," +
-                    "pers_id FROM section NATURAL JOIN person ORDER BY pers_id)");
+            personTakesCourse = conn.prepareStatement("INSERT INTO takes VALUES(SELECT c_code, sec_code, " +
+                    "complete_date, pers_id FROM section NATURAL JOIN person ORDER BY pers_id)");
             personTakesCourse.setInt(1,course.getCCode());
             personTakesCourse.setInt(2,section.getSecCode());
             personTakesCourse.setDate(3,section.getCompleteDate());
             personTakesCourse.setInt(4,person.getPersID());
+            personTakesCourse.executeQuery();
             personTakesCourse.close();
         } catch(SQLException sqlEx) {
             System.err.println(sqlEx.toString());
