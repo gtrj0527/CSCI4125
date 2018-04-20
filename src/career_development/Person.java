@@ -340,25 +340,20 @@ public class Person {
 
     public Position findHighestPayingQualifiedPosition(Connection conn) {
         String query = "WITH qualified_positions AS (" +
-                "            SELECT pos_code " +
-                "               FROM position_skills ps1" +
-                "               WHERE NOT EXISTS " +
-                "                 (SELECT * " +
-                "                  FROM (SELECT * FROM has_skill WHERE pers_id = ?) hs1 " +
-                "                  WHERE NOT EXISTS " +
-                "                    (SELECT * " +
-                "                     FROM position_skills ps2 " +
-                "                     WHERE ps1.pos_code = ps2.pos_code " +
-                "                     AND ps2.ks_code = hs1.ks_code)))," +
+                "            SELECT pos_code FROM position_skills ps1" +
+                "            WHERE NOT EXISTS (" +
+                "                SELECT ks_code FROM position_skills ps2" +
+                "                WHERE ps1.pos_code = ps2.pos_code" +
+                "                MINUS " +
+                "                SELECT ks_code FROM has_skill " +
+                "                WHERE pers_id = ?))," +
                 "       position_yearly_pay AS (" +
-                "             SELECT pos_code, primary_sector_code, pay_rate AS yearly_pay \n" +
+                "             SELECT pos_code, pay_rate AS yearly_pay \n" +
                 "             FROM position \n" +
-                "             NATURAL JOIN company \n" +
                 "             WHERE pay_type = 'S' \n" +
                 "             UNION \n" +
-                "             SELECT pos_code, primary_sector_code, pay_rate*1920 AS pay_rate \n" +
+                "             SELECT pos_code, pay_rate*1920 AS pay_rate \n" +
                 "             FROM position\n" +
-                "             NATURAL JOIN company\n" +
                 "             WHERE pay_type = 'W')\n" +
                 "       SELECT pos_code " +
                 "       FROM qualified_positions" +
@@ -367,7 +362,6 @@ public class Person {
                 "         (SELECT MAX(yearly_pay) FROM" +
                 "          qualified_positions\n" +
                 "          NATURAL JOIN position_yearly_pay)";
-
         PreparedStatement highestPayingPositionStatement;
         try {
             Position highest;

@@ -14,8 +14,8 @@ import java.util.List;
 public class Person_Test {
     public static void main(String[] args) {
         try {
-            String userName = "gtswanso";
-            String password = "sNNP9R9R";
+            String userName = "tbourg";
+            String password = "K3LWXCPt";
 
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
@@ -41,7 +41,7 @@ public class Person_Test {
                     "Online", "Checking the testPerson method.");
             Section s = new Section (c, 7, Date.valueOf("2018-05-11"), 3,
                     p, "Online", 23.00f );
-            testPerson.personTakes(c,s,testPerson,conn);
+            //testPerson.personTakes(c,s,testPerson,conn);
             System.out.println(s.getSecCode());
 
 

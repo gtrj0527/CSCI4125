@@ -12,8 +12,8 @@ public class QualificationTester {
 
     public static void main(String[] args) {
         try {
-            String userName = "";
-            String password = "";
+            String userName = "tbourg";
+            String password = "K3LWXCPt";
 
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
