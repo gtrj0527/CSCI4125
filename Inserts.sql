@@ -410,4 +410,3 @@ INSERT into TAKES values (3,4,'06-MAR-18', 11);
 INSERT into TAKES values (3,4,'06-MAR-18', 12);
 INSERT into TAKES values (3,4,'06-MAR-18', 1);
 
-

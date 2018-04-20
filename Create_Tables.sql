@@ -121,7 +121,6 @@ CREATE TABLE job_category( -- AKA SOC
     description varchar(255),
     pay_range_high float(15),
     pay_range_low float(15),
-
     CONSTRAINT parent_cat_fk FOREIGN KEY (parent_cat_code) REFERENCES job_category (cat_code)
 );
 
