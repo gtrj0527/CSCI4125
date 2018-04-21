@@ -72,21 +72,18 @@ WHERE pers_id = 7;
 /*6. Given a person?s identifier, list the skill gap between the requirements of this worker?s job position(s) and his/her
 skills.
     NEED TO REDO THIS ONE. STARTED BUT GOT LOST IN THE WITH STATEMENTS. REVISITING LATER.*/
-WITH relevant_skills AS (
-    SELECT pers_id, pos_code, ks_code 
-    FROM has_skill 
-    NATURAL JOIN position_skills),
-WITH missing_skills AS (
-    SELECT pers_id, pos_code, ks_code 
-    FROM person, position_skills 
-    MINUS 
-    SELECT pers_id, pos_code, ks_code
-    FROM relevant_skills)
+WITH worker_current_positions AS (
+SELECT pers_id, pos_code
+FROM works
+WHERE pers_id = 2
+AND end_date IS NULL)
 SELECT pos_code, ks_code
-FROM missing_skills
-NATURAL JOIN works
-WHERE pers_id = 3
-AND end_date IS NULL;
+FROM position_skills
+NATURAL JOIN worker_current_positions
+MINUS
+(SELECT pos_code, ks_code
+FROM has_skill
+NATURAL JOIN worker_current_positions)
 
 /*7. List the required knowledge/skills of a pos_code and a job category code in a readable format. 
      (Two queries) +++Both+++*/
