@@ -72,21 +72,18 @@ WHERE pers_id = 7;
 /*6. Given a person?s identifier, list the skill gap between the requirements of this worker?s job position(s) and his/her
 skills.
     NEED TO REDO THIS ONE. STARTED BUT GOT LOST IN THE WITH STATEMENTS. REVISITING LATER.*/
-WITH relevant_skills AS (
-    SELECT pers_id, pos_code, ks_code 
-    FROM has_skill 
-    NATURAL JOIN position_skills),
-WITH missing_skills AS (
-    SELECT pers_id, pos_code, ks_code 
-    FROM person, position_skills 
-    MINUS 
-    SELECT pers_id, pos_code, ks_code
-    FROM relevant_skills)
+WITH worker_current_positions AS (
+SELECT pers_id, pos_code
+FROM works
+WHERE pers_id = 2
+AND end_date IS NULL)
 SELECT pos_code, ks_code
-FROM missing_skills
-NATURAL JOIN works
-WHERE pers_id = 3
-AND end_date IS NULL;
+FROM position_skills
+NATURAL JOIN worker_current_positions
+MINUS
+(SELECT pos_code, ks_code
+FROM has_skill
+NATURAL JOIN worker_current_positions)
 
 /*7. List the required knowledge/skills of a pos_code and a job category code in a readable format. 
      (Two queries) +++Both+++*/
@@ -341,43 +338,48 @@ WHERE NOT EXISTS (  SELECT ks_code
 /*16. When a company cannot find any qualified person for a job position, a secondary solution is to find a person who
 is almost qualified to the job position. Make a ?missing-one? list that lists people who miss only one skill for a
 specified pos_code. ++++Double check data, but appears to work. */
-SELECT pers_id, full_name
-FROM missing_count
-NATURAL JOIN person
-NATURAL JOIN pers_full_name
-WHERE pos_code = 10
-AND num_missing = 1;
+WITH pos_skills AS (
+SELECT ks_code FROM position_skills WHERE pos_code = 12)
+SELECT pers_id, COUNT(*) FROM
+(SELECT pers_id, ks_code FROM pos_skills, person
+MINUS
+SELECT pers_id, ks_code FROM has_skill)
+GROUP BY pers_id
+HAVING COUNT(*) = 1
 
 /*17. List each of the skill code and the number of people who misses the skill and are in the missing-one list for a
 given position code in the ascending order of the people counts. ++++*/
-WITH missing_one AS (
-    SELECT pers_id
-    FROM missing_count
-    WHERE pos_code = 10
-    AND num_missing = 1)
-SELECT ks_code, COUNT(pers_id) AS person_count
-FROM missing_skills
-NATURAL JOIN missing_one
-WHERE pos_code = 10
+WITH pos_skills AS (
+SELECT ks_code FROM position_skills WHERE pos_code = 12),
+people_missing_one AS (
+SELECT pers_id FROM
+(SELECT pers_id, ks_code FROM pos_skills, person
+MINUS
+SELECT pers_id, ks_code FROM has_skill)
+GROUP BY pers_id
+HAVING COUNT(*) = 1)
+SELECT ks_code, COUNT(*) FROM
+(SELECT ks_code FROM
+    (SELECT pers_id, ks_code FROM pos_skills, person
+    MINUS
+    SELECT pers_id, ks_code FROM has_skill))
 GROUP BY ks_code
-ORDER BY person_count;
-
-/* For not just missing one... */
-/*SELECT ks_code, COUNT(pers_id) AS person_count
-FROM missing_skills
-WHERE pos_code = 10
-GROUP BY ks_code
-ORDER BY person_count;*/
 
 /*18. Suppose there is a new position that has nobody qualified. List the persons who miss the least number of skills
 that are required by this pos_code and report the ?least number?. ++++ */
-SELECT pers_id, num_missing
-FROM missing_count
-WHERE num_missing =
-        (SELECT MIN(num_missing)
-         FROM missing_count
-         WHERE pos_code = 10)
-AND pos_code = 10;
+WITH pos_skills AS (
+SELECT ks_code FROM position_skills WHERE pos_code = 12),
+missing_skills AS (
+SELECT pers_id, COUNT(*) AS missing_skills_count FROM
+(SELECT pers_id, ks_code FROM pos_skills, person
+MINUS
+SELECT pers_id, ks_code FROM has_skill)
+GROUP BY pers_id
+)
+SELECT pers_id, missing_skills_count
+FROM missing_skills
+WHERE missing_skills_count =
+      (SELECT MIN(missing_skills_count) FROM missing_skills)
 
 /*19. For a specified position code and a given small number k, make a ?missing-k? list that lists the people?s IDs and
 the number of missing skills for the people who miss only up to k skills in the ascending order of missing skills. ++++*/

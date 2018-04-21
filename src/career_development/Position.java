@@ -8,7 +8,7 @@ import sun.awt.image.ImageWatched;
 
 public class Position {
     private Integer pos_code;
-    private String comp_id;
+    private Integer comp_id;
     private String pos_title;
     private String emp_mode;
     private String cat_code;
@@ -25,12 +25,38 @@ public class Position {
             ResultSet rs = retrPosition.executeQuery();
             while (rs.next()) {
                 Integer pos_code = rs.getInt(1);
-                String comp_id = rs.getString(2);
+                Integer comp_id = rs.getInt(2);
                 String pos_title = rs.getString(3);
                 String emp_mode = rs.getString(4);
                 String cat_code = rs.getString(5);
                 String pay_rate = rs.getString(6);
                 String pay_type = rs.getString(7);
+                positionList.add(new Position(pos_code, comp_id, pos_title, emp_mode, cat_code, pay_rate, pay_type));
+            }
+            rs.close();
+            retrPosition.close();
+        } catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+            return null;
+        }
+        return positionList;
+    }
+
+    public static LinkedList<Position> retrievePositionsByCompany(Integer comp_id, Connection conn) {
+        PreparedStatement retrPosition;
+        LinkedList<Position> positionList = new LinkedList<Position>();
+        try {
+            retrPosition = conn.prepareStatement("SELECT pos_code, pos_title, emp_mode, cat_code, " +
+                    "pay_rate, pay_type FROM position WHERE comp_id = ?");
+            retrPosition.setInt(1, comp_id);
+            ResultSet rs = retrPosition.executeQuery();
+            while (rs.next()) {
+                Integer pos_code = rs.getInt(1);
+                String pos_title = rs.getString(2);
+                String emp_mode = rs.getString(3);
+                String cat_code = rs.getString(4);
+                String pay_rate = rs.getString(5);
+                String pay_type = rs.getString(6);
                 positionList.add(new Position(pos_code, comp_id, pos_title, emp_mode, cat_code, pay_rate, pay_type));
             }
             rs.close();
@@ -50,7 +76,7 @@ public class Position {
             retrPosition.setInt(1, pos_code);
             ResultSet rs = retrPosition.executeQuery();
             if (rs.next()) {
-                String comp_id = rs.getString(2);
+                Integer comp_id = rs.getInt(2);
                 String pos_title = rs.getString(3);
                 String emp_mode = rs.getString(4);
                 String cat_code = rs.getString(5);
@@ -66,7 +92,7 @@ public class Position {
         }
     }
 
-    public Position(String comp_id, String pos_title, String emp_mode, String cat_code, String pay_rate,
+    public Position(Integer comp_id, String pos_title, String emp_mode, String cat_code, String pay_rate,
                     String pay_type) {
         this.comp_id = comp_id;
         this.pos_title = pos_title;
@@ -77,7 +103,7 @@ public class Position {
         this.dirty = true;
     }
 
-    private Position(int pos_code, String comp_id, String pos_title, String emp_mode, String cat_code, String pay_rate,
+    private Position(int pos_code, Integer comp_id, String pos_title, String emp_mode, String cat_code, String pay_rate,
                    String pay_type) {
         this(comp_id, pos_title, emp_mode, cat_code, pay_rate, pay_type);
         this.pos_code = pos_code;
@@ -88,11 +114,11 @@ public class Position {
         return pos_code;
     }
 
-    public String getCompID() {
+    public Integer getCompID() {
         return comp_id;
     }
 
-    public void setCompID(String comp_id) {
+    public void setCompID(Integer comp_id) {
         this.dirty = this.comp_id.equals(comp_id);
         this.comp_id = comp_id;
     }
@@ -199,6 +225,35 @@ public class Position {
         return false;
     }
 
+    public Integer findAlmostQualifiedPeople(Connection conn, LinkedList<Person> almostQualifiedPeople) {
+        Integer minMissingSkills = 0;
+        String query = "WITH pos_skills AS (\n" +
+                       "   SELECT ks_code FROM position_skills WHERE pos_code = ?),\n" +
+                       "missing_skills AS (\n" +
+                       "   SELECT pers_id, COUNT(*) AS missing_skills_count FROM\n" +
+                       "       (SELECT pers_id, ks_code FROM pos_skills, person\n" +
+                       "        MINUS\n" +
+                       "        SELECT pers_id, ks_code FROM has_skill)\n" +
+                       "        GROUP BY pers_id)\n" +
+                       "SELECT pers_id, missing_skills_count\n" +
+                       "FROM missing_skills\n" +
+                       "WHERE missing_skills_count =\n" +
+                       "      (SELECT MIN(missing_skills_count) FROM missing_skills)";
+        try {
+            PreparedStatement almostQualified = conn.prepareStatement(query);
+            almostQualified.setInt(1, this.pos_code);
+            ResultSet rs = almostQualified.executeQuery();
+            while(rs.next()) {
+                Person person = Person.retrievePerson(rs.getInt(1), conn);
+                minMissingSkills = rs.getInt(2);
+                almostQualifiedPeople.add(person);
+            }
+        } catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+        }
+        return minMissingSkills;
+    }
+
     // On commit, if there's a new insert, the pos_code, etc will be set to the actual value
     public void commit(Connection conn) {
         if (!this.dirty) {
@@ -236,7 +291,7 @@ public class Position {
                             "emp_mode, cat_code, pay_rate, pay_type) VALUES (?, ?, ?, ?, ?, ?) " +
                             "RETURNING pos_code INTO ?");
             preparedStatement.registerReturnParameter(7, OracleTypes.INTEGER);
-            preparedStatement.setString(1, comp_id);
+            preparedStatement.setInt(1, comp_id);
             preparedStatement.setString(2, pos_title);
             preparedStatement.setString(3, emp_mode);
             preparedStatement.setString(4, cat_code);

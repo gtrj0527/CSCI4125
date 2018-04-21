@@ -80,7 +80,7 @@ public class Main {
                 Position pos = positionIterator.next();
                 System.out.println("pos_code: " + pos.getPosCode() + " Position Title: " + pos.getPosTitle());
             }
-            Position pos = new Position("1116", "DB Administrator", "FT",
+            Position pos = new Position(1116, "DB Administrator", "FT",
                     "15-1250", "98000", "S");
             pos.commit(conn);
             Integer newPosCode = pos.getPosCode();
