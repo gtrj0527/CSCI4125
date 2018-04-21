@@ -27,7 +27,7 @@ public class Person {
         LinkedList<Person> personList = new LinkedList<Person>();
         try {
             retrPerson = conn.prepareStatement("SELECT pers_id, last_name, first_name, mi, address1, address2, " +
-                    "city, state, zip, email, gender FROM person NATURAL JOIN zip_code");
+                    "city, state, zip, email, gender FROM person NATURAL JOIN zip_code ORDER BY pers_id");
             ResultSet rs = retrPerson.executeQuery();
             while(rs.next()) {
                 Integer pers_id = rs.getInt(1);
@@ -136,6 +136,14 @@ public class Person {
     public void setMI(String mi) {
         this.dirty = this.mi.equals(mi);
         this.mi = mi;
+    }
+
+    public String getFullName() {
+        String fullName = this.last_name + ", " + this.first_name;
+        if(this.mi != null) {
+            fullName += " " + this.mi;
+        }
+        return fullName;
     }
 
     public String getAddress1() {
