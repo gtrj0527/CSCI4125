@@ -172,32 +172,31 @@ public class Position {
         return qualifiedPeople;
     }
 
-    public LinkedList<Person> isQualified(Connection conn){
-        LinkedList<Person> qualifiedPeople = new LinkedList<>();
+    public boolean isQualified(Person p, Connection conn){
         try {
-            String query = "SELECT pers_id " +
-                    "       FROM (SELECT * " +
-                    "             FROM has_skill hs1 " +
-                    "             WHERE pers_id = ?) hs1" +
-                    "       WHERE NOT EXISTS " +
-                    "            (SELECT * " +
-                    "             FROM position_skills ps1 " +
-                    "             WHERE pos_code = ? " +
-                    "             AND NOT EXISTS " +
-                    "            (SELECT * " +
-                    "             FROM has_skill hs2 " +
-                    "             WHERE hs1.pers_id = hs2.pers_id " +
-                    "             AND hs2.ks_code = ps1.ks_code))";
+            String query = "SELECT DISTINCT pers_id\n" +
+                    "       FROM has_skill hs1\n" +
+                    "       WHERE pers_id = ? AND NOT EXISTS (\n" +
+                    "           (SELECT ks_code\n" +
+                    "            FROM position_skills ps1\n" +
+                    "            WHERE pos_code = ?)\n" +
+                    "            MINUS\n" +
+                    "           (SELECT ks_code\n" +
+                    "            FROM has_skill hs2\n" +
+                    "            WHERE hs1.pers_id = hs2.pers_id))";
             PreparedStatement isQualified = conn.prepareStatement(query);
-            isQualified.setInt(1,this.pos_code);
+            isQualified.setInt(1, p.getPersID());
+            isQualified.setInt(2,this.pos_code);
             ResultSet rs = isQualified.executeQuery();
+            boolean qualified = rs.next();
             rs.close();
             isQualified.close();
+            return qualified;
         }
         catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
         }
-        return qualifiedPeople;
+        return false;
     }
 
     // On commit, if there's a new insert, the pos_code, etc will be set to the actual value
