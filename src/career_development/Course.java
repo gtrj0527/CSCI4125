@@ -47,23 +47,26 @@ public class Course {
         PreparedStatement retrCourse;
         try {
             retrCourse = conn.prepareStatement("SELECT title, training_level, status, retail_price, " +
-                                                    "train_type, description FROM course WHERE c_code = ?");
+                    "train_type, description FROM course WHERE c_code = ?");
             retrCourse.setInt(1, cCode);
             ResultSet rs = retrCourse.executeQuery();
-            rs.next();
-            String title = rs.getString(1);
-            String trainingLevel = rs.getString(2);
-            String status = rs.getString(3);
-            Double retailPrice = rs.getDouble(4);
-            String trainingType = rs.getString(5);
-            String description = rs.getString(6);
-            rs.close();
-            retrCourse.close();
-            return new Course(cCode, title, trainingLevel, status, retailPrice, trainingType, description);
-        } catch (SQLException sqlEx) {
+            if (rs.next()) {
+                String title = rs.getString(1);
+                String trainingLevel = rs.getString(2);
+                String status = rs.getString(3);
+                Double retailPrice = rs.getDouble(4);
+                String trainingType = rs.getString(5);
+                String description = rs.getString(6);
+                rs.close();
+                retrCourse.close();
+                return new Course(cCode, title, trainingLevel, status, retailPrice, trainingType, description);
+            }
+        }
+        catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             return null;
         }
+        return null;
     }
 
     public Course(String title, String trainingLevel, String status, Double retailPrice,
@@ -141,6 +144,27 @@ public class Course {
         this.trainingType = trainingType;
     }
 
+    public LinkedList<Skill> getSkills (Connection conn) {
+        PreparedStatement retrSkillsFromCourse;
+        LinkedList<Skill> courseSkillsList = new LinkedList<>();
+
+        try{
+            retrSkillsFromCourse=conn.prepareStatement("SELECT ks_code FROM provides_skill WHERE c_code=?");
+            retrSkillsFromCourse.setInt(1, cCode);
+            ResultSet rs = retrSkillsFromCourse.executeQuery();
+            if(rs.next()) {
+                String ks_code = rs.getString(1);
+                courseSkillsList.add(Skill.retrieveSkill(ks_code,conn));
+                rs.close();
+                retrSkillsFromCourse.close();
+            }
+        } catch (SQLException sqlEx) {
+            System.err.println(sqlEx.toString());
+            return null;
+        }
+        return courseSkillsList;
+    }
+
     // TODO -- not tested && add "UPDATES" function
     // On commit, if there's a new insert, the cCode, etc will be set to the actual value
     public void commit(Connection conn) {
@@ -194,7 +218,7 @@ public class Course {
             lastIDrs.close();
             preparedStatement.close();
         } catch (SQLException sqlEx) {
-            System.err.println(sqlEx.toString());
+            System.err.println(sqlEx.toString() + ("You made the mistake in Course"));
         }
         this.dirty = false;
     }

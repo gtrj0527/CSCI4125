@@ -392,7 +392,6 @@ ORDER BY num_missing;
 /*20. Given a position code and its corresponding missing-k list specified in Question 19. Find every skill that is
 needed by at least one person in the given missing-k list. List each skill code and the number of people who need
 it in the descending order of the people counts. ++++*/
---      NEEDS TO BE CORRECTED PER DR. TU. HE TOOK OFF 2 POINTS AND WROTE "MORE?" NEXT TO THE QUERY.
 WITH missing_skills AS (
     SELECT pers_id, pos_code, ks_code
     FROM person, position_skills
