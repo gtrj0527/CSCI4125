@@ -279,19 +279,24 @@ INSERT into job_category VALUES ('15-1250','15-1200','Software and Web Developer
 INSERT into job_category VALUES ('15-1254','15-1250','Web Developers','Web Development Occupations',23000.00,100000.00);
 INSERT into job_category VALUES ('15-1240','15-1200','Database and Network Administratiors and Architects','Occupations specializing Databases',50000.00,250000.00);
 
+INSERT into job_category VALUES ('14-1200',null,'IT Non-Programming','Occupations in IT not including coding',50000.00,250000.00);
+INSERT into job_category VALUES ('14-1250','14-1200','Management','Occupations in IT Management',50000.00,250000.00);
+INSERT into job_category VALUES ('14-1244','14-1200','Executive IT', 'Executive Positions in Information Technology',500000.00,2500000.00);
+INSERT into job_category VALUES ('14-1240','14-1200','Human Resources','Occupations specializing in organization',50000.00,250000.00);
+
 
 
 /*Core_skill*/
 INSERT INTO core_skill VALUES ('Programming Language','15-1200');
 INSERT INTO core_skill VALUES ('DDA','15-1240');
-INSERT INTO core_skill VALUES ('DM','15-1250');
-INSERT INTO core_skill VALUES ('ESAI','15-1250');
+INSERT INTO core_skill VALUES ('DM','14-1200');
+INSERT INTO core_skill VALUES ('ESAI','14-1200');
 INSERT INTO core_skill VALUES ('NDA','15-1250');
 INSERT INTO core_skill VALUES ('PSE','15-1250');
 INSERT INTO core_skill VALUES ('WDA','15-1254');
 INSERT INTO core_skill VALUES ('COMPMATH','15-1200');
-INSERT INTO core_skill VALUES ('TS','15-1250');
-INSERT INTO core_skill VALUES ('TW','15-1250');
+INSERT INTO core_skill VALUES ('TS','14-1200');
+INSERT INTO core_skill VALUES ('TW','14-1200');
 
 
 
@@ -364,14 +369,14 @@ INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES (
 INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1119','Software Architect','ft', '15-1250',83000);
 INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1119','Quality Assurance Engineer','ft', '15-1250',26000);
 
-INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1118','Moble Development Coordinator','ft', '15-1250',56000);
-INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1117','Busines Analyst','ft', '15-1250',100000);
-INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1116','Data Science Manager','ft', '15-1250',56000);
-INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1115','Head of Technology','ft', '15-1250',76000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1118','Moble Development Coordinator','ft', '14-1200',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1117','Busines Analyst','ft', '14-1200',100000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1116','Data Science Manager','ft', '14-1200',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1115','Head of Technology','ft', '14-1200',76000);
 INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1114','Networking and Systems Engineer','ft', '15-1250',56000);
 INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1113','Database Architect','ft', '15-1250',89000);
 INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1112','Lead Software Architect','ft', '15-1250',83000);
-INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1111','Entry Level QA','ft', '15-1250',26000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1111','Entry Level QA','ft', '14-1200',26000);
 
 
 /*position_cert*/
@@ -422,6 +427,22 @@ INSERT INTO position_skills VALUES ('Angular3','7','R');
 INSERT INTO position_skills VALUES ('Angular1','8','P');     I
 INSERT INTO position_skills VALUES ('HTML2','12','P');
 
+/*CREATE TABLE position_skills (
+    ks_code varchar (255) NOT NULL,
+    pos_code number NOT NULL,
+    prefer char(1) NOT NULL, -- R: Required, P: Preferred
+    CONSTRAINT position_pk PRIMARY KEY (ks_code, pos_code),
+    CONSTRAINT ps_ks_fk FOREIGN KEY (ks_code) REFERENCES know_skill(ks_code),
+    CONSTRAINT ps_pos_fk FOREIGN KEY (pos_code) REFERENCES position(pos_code)*/
+
+--
+--INSERT INTO position_skills VALUES ('Java2','10','R');
+--INSERT INTO position_skills VALUES ('Java2','15','R');
+--INSERT INTO position_skills VALUES ('Angular3','7','R');
+--INSERT INTO position_skills VALUES ('Angular1','8','P');     I
+--INSERT INTO position_skills VALUES ('HTML2','12','P');
+
+
 /*HAS_SKILL;*/
 INSERT INTO has_skill VALUES ('1','Java');
 INSERT INTO has_skill VALUES ('1','Java2');
@@ -429,65 +450,65 @@ INSERT INTO has_skill VALUES ('1','Java3');
 INSERT INTO has_skill VALUES ('1','C1');
 INSERT INTO has_skill VALUES ('1','.NET1');
 INSERT INTO has_skill VALUES ('2','Java');
-INSERT INTO has_skill VALUES ('2','Java2');
-INSERT INTO has_skill VALUES ('2','Java3');
-INSERT INTO has_skill VALUES ('2','C1');
-INSERT INTO has_skill VALUES ('2','.NET1');
-INSERT INTO has_skill VALUES ('2','SQL1');
-INSERT INTO has_skill VALUES ('2','HTML1');
-INSERT INTO has_skill VALUES ('2','HTML2');
-INSERT INTO has_skill VALUES ('2','Angular1');
-INSERT INTO has_skill VALUES ('2','Angular2');
+--INSERT INTO has_skill VALUES ('2','Java2');
+--INSERT INTO has_skill VALUES ('2','Java3');
+--INSERT INTO has_skill VALUES ('2','C1');
+--INSERT INTO has_skill VALUES ('2','.NET1');
+--INSERT INTO has_skill VALUES ('2','SQL1');
+--INSERT INTO has_skill VALUES ('2','HTML1');
+--INSERT INTO has_skill VALUES ('2','HTML2');
+--INSERT INTO has_skill VALUES ('2','Angular1');
+--INSERT INTO has_skill VALUES ('2','Angular2');
 INSERT INTO has_skill VALUES ('3','Java');
-INSERT INTO has_skill VALUES ('3','Java2');
-INSERT INTO has_skill VALUES ('3','Java3');
-INSERT INTO has_skill VALUES ('3','SQL1');
-INSERT INTO has_skill VALUES ('3','HTML1');
-INSERT INTO has_skill VALUES ('3','HTML2');
-INSERT INTO has_skill VALUES ('3','Angular1');
-INSERT INTO has_skill VALUES ('3','Angular2');
-INSERT INTO has_skill VALUES ('4','Java');
+--INSERT INTO has_skill VALUES ('3','Java2');
+--INSERT INTO has_skill VALUES ('3','Java3');
+--INSERT INTO has_skill VALUES ('3','SQL1');
+--INSERT INTO has_skill VALUES ('3','HTML1');
+--INSERT INTO has_skill VALUES ('3','HTML2');
+--INSERT INTO has_skill VALUES ('3','Angular1');
+--INSERT INTO has_skill VALUES ('3','Angular2');
+--INSERT INTO has_skill VALUES ('4','Java');
 INSERT INTO has_skill VALUES ('4','Java2');
 INSERT INTO has_skill VALUES ('4','Java3');
 INSERT INTO has_skill VALUES ('4','SQL1');
 INSERT INTO has_skill VALUES ('5','HTML1');
-INSERT INTO has_skill VALUES ('5','HTML2');
-INSERT INTO has_skill VALUES ('5','Angular1');
-INSERT INTO has_skill VALUES ('5','Angular2');
-INSERT INTO has_skill VALUES ('6','Java');
+--INSERT INTO has_skill VALUES ('5','HTML2');
+--INSERT INTO has_skill VALUES ('5','Angular1');
+--INSERT INTO has_skill VALUES ('5','Angular2');
+--INSERT INTO has_skill VALUES ('6','Java');
 INSERT INTO has_skill VALUES ('6','3D Mod 2');
-INSERT INTO has_skill VALUES ('6','C1');
-INSERT INTO has_skill VALUES ('6','SQL1');
-INSERT INTO has_skill VALUES ('6','HTML1');
-INSERT INTO has_skill VALUES ('6','HTML2');
+--INSERT INTO has_skill VALUES ('6','C1');
+--INSERT INTO has_skill VALUES ('6','SQL1');
+--INSERT INTO has_skill VALUES ('6','HTML1');
+--INSERT INTO has_skill VALUES ('6','HTML2');
 INSERT INTO has_skill VALUES ('7','Angular1');
-INSERT INTO has_skill VALUES ('7','Angular2');
-INSERT INTO has_skill VALUES ('7','SQL1');
-INSERT INTO has_skill VALUES ('7','HTML1');
-INSERT INTO has_skill VALUES ('7','HTML2');
+--INSERT INTO has_skill VALUES ('7','Angular2');
+--INSERT INTO has_skill VALUES ('7','SQL1');
+--INSERT INTO has_skill VALUES ('7','HTML1');
+--INSERT INTO has_skill VALUES ('7','HTML2');
 
 
 INSERT INTO has_skill VALUES ('8','Admin');
 INSERT INTO has_skill VALUES ('8','AGILE');
-INSERT INTO has_skill VALUES ('8','PHP');
+--INSERT INTO has_skill VALUES ('8','PHP');
 
 
 INSERT INTO has_skill VALUES ('9','SYSTEMS');
-INSERT INTO has_skill VALUES ('9','C1');
-INSERT INTO has_skill VALUES ('9','.NET1');
+--INSERT INTO has_skill VALUES ('9','C1');
+--INSERT INTO has_skill VALUES ('9','.NET1');
 
 
-INSERT INTO has_skill VALUES ('10','Angular2');
-INSERT INTO has_skill VALUES ('10','PHP');
-INSERT INTO has_skill VALUES ('10','SYSTEMS');
-INSERT INTO has_skill VALUES ('10','Admin');
+--INSERT INTO has_skill VALUES ('10','Angular2');
+--INSERT INTO has_skill VALUES ('10','PHP');
+--INSERT INTO has_skill VALUES ('10','SYSTEMS');
+--INSERT INTO has_skill VALUES ('10','Admin');
 
-
-INSERT INTO has_skill VALUES ('11','Admin');
-INSERT INTO has_skill VALUES ('11','AGILE');
-
-
-INSERT INTO has_skill VALUES ('12','Angular1');
+--
+--INSERT INTO has_skill VALUES ('11','Admin');
+--INSERT INTO has_skill VALUES ('11','AGILE');
+--
+--
+--INSERT INTO has_skill VALUES ('12','Angular1');
 
 /*person_phone_numbers;*/
 INSERT INTO person_phone_numbers VALUES (1, '5048493849', 'Mobile');
@@ -542,8 +563,8 @@ INSERT into TAKES values (2,6,'25-JUN-18', 8);
 INSERT into TAKES values (2,6,'25-JUN-18', 9);
 
 INSERT into TAKES values (3,4,'06-MAR-18', 10);
-INSERT into TAKES values (3,4,'06-MAR-18', 11);
-INSERT into TAKES values (3,4,'06-MAR-18', 12);
+--INSERT into TAKES values (3,4,'06-MAR-18', 11);
+--INSERT into TAKES values (3,4,'06-MAR-18', 12);
 INSERT into TAKES values (3,4,'06-MAR-18', 1);
 
 INSERT into TAKES values (17,1,'17-JUL-18', 1);
@@ -553,7 +574,7 @@ INSERT into TAKES values (14,4,'21-MAY-18', 4);
 INSERT into TAKES values (14,1,'17-JUL-18', 5);
 
 INSERT into TAKES values (17,4,'21-MAY-18', 9);
-INSERT into TAKES values (13,3,'19-AUG-18', 11);
-INSERT into TAKES values (13,2,'31-JAN-18', 12);
+--INSERT into TAKES values (13,3,'19-AUG-18', 11);
+--INSERT into TAKES values (13,2,'31-JAN-18', 12);
 INSERT into TAKES values (13,1,'17-JUL-18', 8);
 
