@@ -545,19 +545,15 @@ INSERT into TAKES values (3,4,'06-MAR-18', 10);
 INSERT into TAKES values (3,4,'06-MAR-18', 11);
 INSERT into TAKES values (3,4,'06-MAR-18', 12);
 INSERT into TAKES values (3,4,'06-MAR-18', 1);
---
---INSERT into TAKES values (25,1,'17-JUL-18', 1);
---INSERT into TAKES values (24,1,'11-MAY-18', 2);
---INSERT into TAKES values (23,1,'06-MAR-18', 3);
---INSERT into TAKES values (22,4,'21-MAY-18', 4);
---INSERT into TAKES values (22,1,'17-JUL-18', 5);
---INSERT into TAKES values (24,1,'11-MAY-18', 6);
---INSERT into TAKES values (24,2,'25-JUN-18', 7);
---INSERT into TAKES values (24,2,'25-JUN-18', 8);
---INSERT into TAKES values (25,4,'21-MAY-18', 9);
---
---INSERT into TAKES values (21,2,'17-JUL-18', 10);
---INSERT into TAKES values (21,3,'19-AUG-18', 11);
---INSERT into TAKES values (21,2,'31-JAN-18', 12);
---INSERT into TAKES values (21,1,'17-JUL-18', 8);
+
+INSERT into TAKES values (17,1,'17-JUL-18', 1);
+INSERT into TAKES values (16,1,'11-MAY-18', 2);
+INSERT into TAKES values (15,1,'06-MAR-18', 3);
+INSERT into TAKES values (14,4,'21-MAY-18', 4);
+INSERT into TAKES values (14,1,'17-JUL-18', 5);
+
+INSERT into TAKES values (17,4,'21-MAY-18', 9);
+INSERT into TAKES values (13,3,'19-AUG-18', 11);
+INSERT into TAKES values (13,2,'31-JAN-18', 12);
+INSERT into TAKES values (13,1,'17-JUL-18', 8);
 
