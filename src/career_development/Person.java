@@ -390,27 +390,18 @@ public class Person {
     public LinkedList<JobCategory> listQualifiedJobCategories(Connection conn){
         LinkedList<JobCategory> qualifiedJobCategories = new LinkedList<>();
         try {
-            String query = "WITH category_qual AS (\n" +
-                    "        (SELECT pers_id, cat_code\n" +
-                    "        FROM person, job_category)\n" +
-                    "        MINUS\n" +
-                    "        (SELECT distinct pers_id, cat_code\n" +
-                    "        FROM (SELECT pers_id, cat_code, ks_code\n" +
-                    "              FROM person, (SELECT cat_code, ks_code \n" +
-                    "                            FROM know_skill ks\n" +
-                    "                            JOIN nwcet n ON ks.nwcet_code = n.nwcet_code\n" +
-                    "                            JOIN job_category j ON n.nwcet_code = j.core_skill)\n" +
-                    "              MINUS \n" +
-                    "              SELECT pers_id, cat_code, ks_code\n" +
-                    "              FROM ( SELECT p.pers_id, j.cat_code, ks.ks_code \n" +
-                    "                     FROM person p\n" +
-                    "                     JOIN has_skill hs ON p.pers_id = hs.pers_id\n" +
-                    "                     JOIN know_skill ks ON hs.ks_code = ks.ks_code\n" +
-                    "                     JOIN nwcet n ON ks.nwcet_code = n.nwcet_code\n" +
-                    "                     JOIN job_category j ON n.nwcet_code = j.core_skill))))\n" +
-                    "SELECT cat_code\n" +
-                    "FROM category_qual\n" +
-                    "WHERE pers_id = ?";
+            String query = "WITH qualifiedJobCategories AS (\n" +
+                    "                SELECT nwcet_code\n" +
+                    "                FROM core_skill\n" +
+                    "                MINUS\n" +
+                    "                SELECT nwcet_code\n" +
+                    "                FROM know_skill\n" +
+                    "                NATURAL JOIN    (SELECT ks_code\n" +
+                    "                                 FROM has_skill\n" +
+                    "                                 WHERE pers_id = ?))\n" +
+                    "SELECT DISTINCT cat_code\n" +
+                    "FROM qualifiedJobCategories\n" +
+                    "NATURAL JOIN core_skill";
             PreparedStatement listQualifiedJobCategories = conn.prepareStatement(query);
             listQualifiedJobCategories.setInt(1,this.pers_id);
             ResultSet rs = listQualifiedJobCategories.executeQuery();
