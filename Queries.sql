@@ -302,13 +302,18 @@ NATURAL JOIN core_skill;
 /*14. Given a person?s identifier, find the job position with the highest pay rate for this person according to his/her skill
 possession.*/
 --          NEEDS TO BE TINKERED WITH TO RETURN JUST ONE RESULT
+WITH highest_pay AS(
 SELECT DISTINCT full_name, pos_title, MAX(pay_rate) highest_salary
 FROM has_skill hs
 NATURAL JOIN position
 JOIN pers_full_name p
     ON hs.pers_id = p.pers_id
+WHERE hs.pers_id = 9
 GROUP BY full_name, pos_title
-ORDER BY full_name;
+ORDER BY highest_salary DESC)
+SELECT * 
+FROM highest_pay
+WHERE ROWNUM <= 1;
 
 /*15. Given a position code, list all the names along with the emails of the persons who are qualified for this position. */
 SELECT (first_name || ' ' ||  last_name) full_name, email
@@ -485,17 +490,41 @@ FROM pay_change_by_sector
 WHERE primary_sector_code = '45102010';
 
 /*26. Find the leaf-node job categories that have the most openings due to lack of qualified workers. If there are many
-opening positions of a job category but at the same time there are many qualified jobless people. Then training
+opening positions of a job category but at the same time there are many qualified jobless people, then training
 cannot help fill up this type of job position. What we want to find is such a job category that has the largest
 difference between vacancies (the unfilled job positions of this category) and the number of jobless people who
 are qualified for the job positions of this category.*/
-WITH find_Leaf_Node AS(
+WITH leafNodes AS(
     SELECT cat_code
     FROM job_category child
     WHERE NOT EXISTS (
         SELECT *
         FROM job_category
-        WHERE parent_cat_code = child.cat_code))
+        WHERE parent_cat_code = child.cat_code)),
+vacancies AS(
+    SELECT w.pers_id,p.pos_code,cat_code
+    FROM position p
+    JOIN works w
+        ON p.pos_code = w.pos_code
+    WHERE end_date IS NOT NULL),
+qualifiedJobCategories AS (
+                SELECT nwcet_code
+                FROM core_skill
+                MINUS
+                SELECT nwcet_code
+                FROM know_skill
+                NATURAL JOIN    (SELECT ks_code
+                                 FROM has_skill
+                                 WHERE pers_id = 2))
+SELECT cat_code
+FROM position p
+JOIN works w ON p.pos_code = w.pos_code
+NATURAL JOIN core_skill cs
+JOIN qualifiedJobCategories q ON cs.nwcet_code = q.nwcet_code
+NATURAL JOIN vacancies  --ON p.cat_code = v.cat_code
+NATURAL JOIN leafNodes  --ON p.cat_code = l.cat_code
+WHERE end_date IS NOT NULL;
+
 
 /*27. Find the courses that can help most jobless people find a job position by training them toward the jobs of this
 category that have the most openings due to lack of qualified workers.*/
