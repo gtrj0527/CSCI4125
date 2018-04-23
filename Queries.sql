@@ -160,7 +160,7 @@ Find the cheapest course to make up one?s skill gap by showing the course to tak
 price).*/
 --          NEEDS TO BE TINKERED WITH TO RETURN JUST ONE RESULT
 WITH cheapest_solution AS (
-SELECT DISTINCT c_code, title, retail_price 
+SELECT DISTINCT c_code, title, retail_price AS course_cost
 FROM            course c
 WHERE NOT EXISTS(
                 SELECT ks_code
@@ -172,12 +172,13 @@ WHERE NOT EXISTS(
                 FROM provides_skill ps
                 WHERE ps.c_code = c.c_code)
 ORDER BY        retail_price ASC)
-SELECT      title, MIN(price) course_cost
+
+SELECT      title, price AS course_cost
 FROM        cheapest_solution cs
 JOIN        section s on cs.c_code = s.c_code
 NATURAL JOIN person
 WHERE       pers_id = 9
-GROUP BY    title
+AND ROWNUM <=1
 ORDER BY    course_cost ASC;
                  
 /*12. 
@@ -298,29 +299,6 @@ SELECT DISTINCT cat_code
 FROM qualifiedJobCategories
 NATURAL JOIN core_skill;
 
-/*This version of the query took our old views and replaced them with a giant WITH statement. It's too beautiful to delete.
-WITH category_qual AS (
-        (SELECT pers_id, cat_code
-        FROM person, JOB_CATEGORY)
-        MINUS
-        (SELECT distinct pers_id, cat_code
-        FROM (SELECT pers_id, cat_code, ks_code
-              FROM person, (SELECT cat_code, ks_code
-                            FROM know_skill ks
-                            JOIN nwcet n ON ks.nwcet_code = n.nwcet_code
-                            JOIN job_category j ON n.nwcet_code = j.core_skill)
-             MINUS
-             SELECT pers_id, cat_code, ks_code
-             FROM ( SELECT p.pers_id, j.cat_code, ks.ks_code
-                    FROM person p
-                    JOIN has_skill hs ON p.pers_id = hs.pers_id
-                    JOIN know_skill ks ON hs.ks_code = ks.ks_code
-                    JOIN nwcet n ON ks.nwcet_code = n.nwcet_code
-                    JOIN job_category j ON n.nwcet_code = j.core_skill))))
-SELECT cat_code
-FROM category_qual
-WHERE pers_id = 1;
-*/
 /*14. Given a person?s identifier, find the job position with the highest pay rate for this person according to his/her skill
 possession.*/
 --          NEEDS TO BE TINKERED WITH TO RETURN JUST ONE RESULT
@@ -506,20 +484,24 @@ SELECT AVG(pay_diff)
 FROM pay_change_by_sector 
 WHERE primary_sector_code = '45102010';
 
-/*BONUS: NOT REQUIRED FOR 05APR18 TURN IN*/
 /*26. Find the leaf-node job categories that have the most openings due to lack of qualified workers. If there are many
 opening positions of a job category but at the same time there are many qualified jobless people. Then training
 cannot help fill up this type of job position. What we want to find is such a job category that has the largest
 difference between vacancies (the unfilled job positions of this category) and the number of jobless people who
 are qualified for the job positions of this category.*/
+WITH find_Leaf_Node AS(
+    SELECT cat_code
+    FROM job_category child
+    WHERE NOT EXISTS (
+        SELECT *
+        FROM job_category
+        WHERE parent_cat_code = child.cat_code))
 
-
-/*BONUS: NOT REQUIRED FOR 05APR18 TURN IN*/
 /*27. Find the courses that can help most jobless people find a job position by training them toward the jobs of this
 category that have the most openings due to lack of qualified workers.*/
 
 
-/*Have fun with this one, Rachel!!! :)*/
+/*Graduate requirement*/
 /*28. NOT REQUIRED FOR 05APR18 TURN IN
 List all the courses, directly or indirectly required, that a person has to take in order to be qualified for a job
 position of the given category, according to his/her skills possessed and courses taken. (required for graduate
