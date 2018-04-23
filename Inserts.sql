@@ -101,6 +101,27 @@ INSERT INTO know_skill (ks_code, nwcet_code, ks_title, description, training_lev
 INSERT INTO know_skill (ks_code, nwcet_code, ks_title, description, training_level) 
     VALUES('SQL1', 'DDA', 'SQL', 'Basics of SQL', 'Beginner');
 
+
+INSERT INTO know_skill (ks_code, nwcet_code, ks_title, description, training_level) 
+    VALUES('Python1', 'Programming Language', 'Python', 'Advanced Python Skills', 'Advanced');
+INSERT INTO know_skill (ks_code, nwcet_code, ks_title, description, training_level) 
+    VALUES('Python2', 'PSE', 'Python', 'Advanced Python Skills', 'Advanced');
+INSERT INTO know_skill (ks_code, nwcet_code, ks_title, description, training_level) 
+    VALUES('Python3', 'PSE', 'Python', 'Advanced Python Skills', 'Advanced');
+    
+    
+INSERT INTO know_skill (ks_code, nwcet_code, ks_title, description, training_level) 
+    VALUES('PHP', 'PSE', 'PJP', 'PHP programming language', 'Intermediate');
+INSERT INTO know_skill (ks_code, nwcet_code, ks_title, description, training_level) 
+    VALUES('AGILE', 'PSE', '.Agile methodologies', 'Skills in Agile methodologies', 'Intermediate');
+INSERT INTO know_skill (ks_code, nwcet_code, ks_title, description, training_level) 
+    VALUES('Admin', 'WDA', 'Web Management', 'Website and Web application management', 'Advanced');
+INSERT INTO know_skill (ks_code, nwcet_code, ks_title, description, training_level) 
+    VALUES('SYSTEMS', 'WDA', 'Systems Administrator', 'Knowledge of systems adminstration and engineering', 'intermediate');
+    
+    
+    
+    
 /*COURSE*/
 INSERT INTO course (title, training_level, description, status, retail_price, train_type) 
     VALUES('Java','Beginner','Learn the basics of programming in Java','A',1770.80 ,'University-Traditional');
@@ -126,7 +147,18 @@ INSERT INTO course (title, training_level, description, status, retail_price, tr
     VALUES('Angular3','Advanced','Master-level course for programming in Angular','E',1895,'Online course');
 INSERT INTO course (title, training_level, description, status, retail_price, train_type) 
     VALUES('SQL1','Beginner','Learn the basics of database programming in SQL','A',1870.80 ,'University-Traditional');
+    
+INSERT INTO course (title, training_level, description, status, retail_price, train_type) 
+    VALUES('Data Analysis','Advanced','Data Analytics','A',1870.80 ,'University-Traditional');
+INSERT INTO course (title, training_level, description, status, retail_price, train_type) 
+    VALUES('Systems Programming','Intermediate','Intermediate Systems programming concepts','A',1870.80 ,'University-Traditional');
+INSERT INTO course (title, training_level, description, status, retail_price, train_type) 
+    VALUES('Networks','Advanced','Learn network management','A',1870.80 ,'University-Traditional');
+INSERT INTO course (title, training_level, description, status, retail_price, train_type) 
+    VALUES('IT Management','Advanced','Learn advanced management methodologies for Information Technology','A',1870.80 ,'University-Traditional');
 
+INSERT INTO course (title, training_level, description, status, retail_price, train_type) 
+    VALUES('Python','Advanced','Learn advanced python','A',1870.80 ,'University-Traditional');
 
 /*TRAINING PROVIDER*/
 INSERT INTO training_provider VALUES(1111, 'Training Company');
@@ -148,6 +180,28 @@ INSERT INTO section VALUES(9,3,'31-JAN-18',1114,3,'Online',999.99);
 INSERT INTO section VALUES(10,4,'19-AUG-18',1111,2,'In-class',1000);
 INSERT INTO section VALUES(11,1,'21-MAY-18',1114,1,'Online',1650.75);
 
+
+INSERT INTO section VALUES(16,1,'11-MAY-18',1111,11,'In-class',1500.00);
+INSERT INTO section VALUES(16,2,'25-JUN-18',1117,10,'Online',1650.50);
+INSERT INTO section VALUES(15,1,'06-MAR-18',1114,9,'In-class',2000);
+INSERT INTO section VALUES(15,2,'31-DEC-18',1114,8,'In-class',595.99);
+INSERT INTO section VALUES(15,3,'15-NOV-18',1117,7,'Online',700);
+INSERT INTO section VALUES(15,4,'05-SEP-18',1111,6,'Online',1500.75);
+INSERT INTO section VALUES(15,4,'15-MAY-18',1117,5,'In-class',2000);
+INSERT INTO section VALUES(14,1,'17-JUL-18',1111,4,'In-class',925.25);
+INSERT INTO section VALUES(14,2,'31-JAN-18',1114,3,'Online',999.99);
+INSERT INTO section VALUES(14,3,'19-AUG-18',1111,2,'In-class',1000);
+INSERT INTO section VALUES(14,4,'21-MAY-18',1114,1,'Online',1650.75);
+
+INSERT INTO section VALUES(17,1,'17-JUL-18',1111,4,'In-class',925.25);
+INSERT INTO section VALUES(17,2,'31-JAN-18',1114,3,'Online',999.99);
+INSERT INTO section VALUES(17,3,'19-AUG-18',1111,2,'In-class',1000);
+INSERT INTO section VALUES(17,4,'21-MAY-18',1114,1,'Online',1650.75);
+
+INSERT INTO section VALUES(13,1,'17-JUL-18',1111,4,'In-class',925.25);
+INSERT INTO section VALUES(13,2,'31-JAN-18',1114,3,'Online',999.99);
+INSERT INTO section VALUES(13,3,'19-AUG-18',1111,2,'In-class',1000);
+INSERT INTO section VALUES(13,4,'21-MAY-18',1114,1,'Online',1650.75);
 
 /*CERT*/
 INSERT INTO cert(cert_name,issued_by,tool) VALUES('Oracle Database',1111,'SQL for Oracle DB 12c');
@@ -199,12 +253,26 @@ INSERT INTO provides_skill VALUES('Angular2',10);
 INSERT INTO provides_skill VALUES('Angular3',11);
 INSERT INTO provides_skill VALUES('SQL1',12);
 
-/*JOB CATEGORY*/
---INSERT into job_category VALUES ('15-1200',null,'COMPMATH','Computer and Mathematical Occupations','Occupations specializing in computers and math',20000.00,300000.00);--SOC is parent 15-0000 Computer & Math Occupations, no parent
---INSERT into job_category VALUES ('15-1250','15-1200','PSE','Software and Web Developers, Programmers, and Testers','Occupations specializing in Software and Web Development',20000.00,300000.00);
---INSERT into job_category VALUES ('15-1254','15-1250','WDA','Web Developers','Web Development Occupations',23000.00,100000.00);
---INSERT into job_category VALUES ('15-1240','15-1200','DDA','Database and Network Administratiors and Architects','Occupations specializing Databases',50000.00,250000.00);
 
+INSERT INTO provides_skill VALUES('Python1',17);
+INSERT INTO provides_skill VALUES('Python2',17);
+INSERT INTO provides_skill VALUES('Python3',17);
+INSERT INTO provides_skill VALUES('Admin',15);
+INSERT INTO provides_skill VALUES('Admin',16);
+INSERT INTO provides_skill VALUES('C1',13);
+INSERT INTO provides_skill VALUES('C1',14);
+INSERT INTO provides_skill VALUES('3D Mod 2',14);
+INSERT INTO provides_skill VALUES('AGILE',16);
+INSERT INTO provides_skill VALUES('AGILE',17);
+INSERT INTO provides_skill VALUES('AGILE',1);
+INSERT INTO provides_skill VALUES('SYSTEMS',14);
+
+INSERT INTO provides_skill VALUES('3D Mod 2',15);
+INSERT INTO provides_skill VALUES('SQL1',13);
+INSERT INTO provides_skill VALUES('AGILE',13);
+INSERT INTO provides_skill VALUES('SYSTEMS',16);
+
+/*JOB CATEGORY*/
 
 INSERT into job_category VALUES ('15-1200',null,'Computer and Mathematical Occupations','Occupations specializing in computers and math',20000.00,300000.00);--SOC is parent 15-0000 Computer & Math Occupations, no parent
 INSERT into job_category VALUES ('15-1250','15-1200','Software and Web Developers, Programmers, and Testers','Occupations specializing in Software and Web Development',20000.00,300000.00);
@@ -257,7 +325,53 @@ INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate, pay_type
     VALUES ('1113','Sr JavaDev','ft', '15-1250',18.0, 'W');
 INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate, pay_type) 
     VALUES ('1114','jr HTML dev','ft', '15-1254',16.0, 'W');
+    
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1120','IT Coordinator','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1120','Networks Manager','ft', '15-1250',100000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1119','Director of Technology','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1118','Systems Engineer','ft', '15-1250',76000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1118','Networking Assistant','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1118','Network Administrator','ft', '15-1250',89000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1119','Software Architect','ft', '15-1250',83000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1119','Quality Assurance Engineer','ft', '15-1250',26000);
 
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1113','IT Coordinator','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1113','Networks Manager','ft', '15-1250',100000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1113','Director of Technology','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1113','Systems Engineer','ft', '15-1250',76000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1113','Networking Assistant','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1113','Network Administrator','ft', '15-1250',89000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1113','Software Architect','ft', '15-1250',83000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1113','Quality Assurance Engineer','ft', '15-1250',26000);
+
+
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1115','IT Coordinator','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1115','Networks Manager','ft', '15-1250',100000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1115','Director of Technology','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1115','Systems Engineer','ft', '15-1250',76000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1115','Networking Assistant','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1115','Network Administrator','ft', '15-1250',89000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1115','Software Architect','ft', '15-1250',83000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1115','Quality Assurance Engineer','ft', '15-1250',26000);
+
+
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1119','Software Teams Coordinator','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1119','Networks Analyst','ft', '15-1250',100000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1119','Director of Data Analysis','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1119','Systems Coordinator','ft', '15-1250',76000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1119','Networking and Systems Administrator','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1119','Database Administrator','ft', '15-1250',89000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1119','Software Architect','ft', '15-1250',83000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1119','Quality Assurance Engineer','ft', '15-1250',26000);
+
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1118','Moble Development Coordinator','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1117','Busines Analyst','ft', '15-1250',100000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1116','Data Science Manager','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1115','Head of Technology','ft', '15-1250',76000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1114','Networking and Systems Engineer','ft', '15-1250',56000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1113','Database Architect','ft', '15-1250',89000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1112','Lead Software Architect','ft', '15-1250',83000);
+INSERT INTO position (comp_id, pos_title, emp_mode, cat_code, pay_rate) VALUES ('1111','Entry Level QA','ft', '15-1250',26000);
 
 
 /*position_cert*/
@@ -301,7 +415,7 @@ INSERT INTO works VALUES (15,3,'3/2/2017','');
 INSERT INTO works VALUES (16,2,'8/18/2012','');
 
 
-/*POSITION_SKILS*/ 
+/*POSITION_SKIlLS*/ 
 INSERT INTO position_skills VALUES ('Java2','10','R');
 INSERT INTO position_skills VALUES ('Java2','15','R');
 INSERT INTO position_skills VALUES ('Angular3','7','R');
@@ -352,6 +466,28 @@ INSERT INTO has_skill VALUES ('7','SQL1');
 INSERT INTO has_skill VALUES ('7','HTML1');
 INSERT INTO has_skill VALUES ('7','HTML2');
 
+
+INSERT INTO has_skill VALUES ('8','Admin');
+INSERT INTO has_skill VALUES ('8','AGILE');
+INSERT INTO has_skill VALUES ('8','PHP');
+
+
+INSERT INTO has_skill VALUES ('9','SYSTEMS');
+INSERT INTO has_skill VALUES ('9','C1');
+INSERT INTO has_skill VALUES ('9','.NET1');
+
+
+INSERT INTO has_skill VALUES ('10','Angular2');
+INSERT INTO has_skill VALUES ('10','PHP');
+INSERT INTO has_skill VALUES ('10','SYSTEMS');
+INSERT INTO has_skill VALUES ('10','Admin');
+
+
+INSERT INTO has_skill VALUES ('11','Admin');
+INSERT INTO has_skill VALUES ('11','AGILE');
+
+
+INSERT INTO has_skill VALUES ('12','Angular1');
 
 /*person_phone_numbers;*/
 INSERT INTO person_phone_numbers VALUES (1, '5048493849', 'Mobile');
@@ -409,4 +545,15 @@ INSERT into TAKES values (3,4,'06-MAR-18', 10);
 INSERT into TAKES values (3,4,'06-MAR-18', 11);
 INSERT into TAKES values (3,4,'06-MAR-18', 12);
 INSERT into TAKES values (3,4,'06-MAR-18', 1);
+
+INSERT into TAKES values (17,1,'17-JUL-18', 1);
+INSERT into TAKES values (16,1,'11-MAY-18', 2);
+INSERT into TAKES values (15,1,'06-MAR-18', 3);
+INSERT into TAKES values (14,4,'21-MAY-18', 4);
+INSERT into TAKES values (14,1,'17-JUL-18', 5);
+
+INSERT into TAKES values (17,4,'21-MAY-18', 9);
+INSERT into TAKES values (13,3,'19-AUG-18', 11);
+INSERT into TAKES values (13,2,'31-JAN-18', 12);
+INSERT into TAKES values (13,1,'17-JUL-18', 8);
 
