@@ -185,6 +185,7 @@ If query #9 returns nothing, then find the course sets that their combination co
 skills for a person to pursue a pos_code. The considered course sets will not include more than three courses. If
 multiple course sets are found, list the course sets (with their course IDs) in the order of the ascending order of the
 course sets? total costs.*/
+DROP SEQUENCE courseSet_seq;
 CREATE SEQUENCE courseSet_seq
     START WITH 1
     INCREMENT BY 1
@@ -197,19 +198,24 @@ CREATE TABLE courseSet(
     c_code1 NUMBER(6,0),
     c_code2 NUMBER(6,0),
     c_code3 NUMBER(6,0),
-    cSetSize NUMBER(2,0));
+    cSetSize NUMBER(2,0),
+    cSetCost NUMBER(10,2));
     
 INSERT INTO courseSet(
-        SELECT courseSet_seq.NEXTVAL, c1.c_code, c2.c_code, null, 2
+    SELECT courseSet_seq.NEXTVAL, c1.c_code, null, null, 1, c1.retail_price
+    FROM course c1);
+    
+INSERT INTO courseSet(
+        SELECT courseSet_seq.NEXTVAL, c1.c_code, c2.c_code, null, 2, c1.retail_price + c2.retail_price
         FROM course c1, course c2
         WHERE c1.c_code < c2.c_code);
         
 INSERT INTO courseSet(
-        SELECT courseSet_seq.NEXTVAL, c1.c_code, c2.c_code, c3.c_code, 3
+        SELECT courseSet_seq.NEXTVAL, c1.c_code, c2.c_code, c3.c_code, 3,  c1.retail_price + c2.retail_price + c3.retail_price
         FROM course c1, course c2, course c3
         WHERE c1.c_code < c2.c_code
         AND c2.c_code < c3.c_code);  
-       
+          
 DROP TABLE courseSkill;
 CREATE TABLE courseSkill(
     c_code NUMBER(6,0),
@@ -219,15 +225,14 @@ CREATE TABLE courseSkill(
 INSERT INTO courseSkill(
         SELECT c_code, ks_code
         FROM course, know_skill
-);            
-       
+);               
+          
 DROP TABLE courseSet_skill;        
 CREATE TABLE courseSet_skill(
     csetID NUMBER(8,0),
     ks_code VARCHAR(8)    
 );
-
--- This part is broken.    
+   
 INSERT INTO courseSet_skill(csetID,ks_code)
     (SELECT csetID, ks_code
     FROM courseSet cSet1
@@ -259,7 +264,7 @@ WITH coverCSet(csetID, cSetSize) AS (
                                 MINUS
                                 SELECT ks_code
                                 FROM has_skill
-                                WHERE pers_id = 20
+                                WHERE pers_id = 9
                                 MINUS
                                 SELECT ks_code
                                 FROM courseSet_Skill cs
@@ -270,11 +275,14 @@ WITH coverCSet(csetID, cSetSize) AS (
         WHERE cSkill.csetID = cSet.cSetID
     )
 )
-SELECT c_code1, c_code2, c_code3
+SELECT c_code1, c_code2, c_code3, cSetCost
 FROM coverCSet 
 NATURAL JOIN courseSet
 WHERE cSetSize = (SELECT MIN(cSetSize)
-                 FROM coverCSet);
+                 FROM coverCSet)
+ORDER BY cSetCost ASC;
+ 
+select * from courseSet_Skill where ks_code = 'Java2';
                  
 /*13. Given a person?s identifier, list all the job categories that a person is qualified for. ++++*/
 WITH qualifiedJobCategories AS (
