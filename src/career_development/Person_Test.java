@@ -1,9 +1,6 @@
 package career_development;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,8 +11,8 @@ import java.util.List;
 public class Person_Test {
     public static void main(String[] args) {
         try {
-            String userName = "tbourg";
-            String password = "K3LWXCPt";
+            String userName = "gtswanso";
+            String password = "sNNP9R9R";
 
             String hostName = "dbsvcs.cs.uno.edu";
             int port = 1521;
@@ -35,14 +32,32 @@ public class Person_Test {
             p.commit(conn);
             Integer newPersID = p.getPersID();
             Person testPerson = Person.retrievePerson(newPersID, conn);
-
             System.out.println(testPerson.getEmail());
-            Course c = new Course ("Testing", "Intermediate", "E", 854.72,
-                    "Online", "Checking the testPerson method.");
-            Section s = new Section (c, 7, Date.valueOf("2018-05-11"), 3,
-                    p, "Online", 23.00f );
-            //testPerson.personTakes(c,s,testPerson,conn);
-            System.out.println(s.getSecCode());
+
+            Course c = Course.retrieveCourse(12,conn);
+            Section s = Section.retrieveSection(c,2,Date.valueOf("2018-05-11"),conn);
+            System.out.println(s);
+            p.personTakes(s,conn);
+//
+//            PreparedStatement ps = conn.prepareStatement("SELECT * FROM SECTION");
+//            ResultSet rs = ps.executeQuery();
+//            while(rs.next()){
+//                Integer cCode = rs.getInt("c_code");
+//                Integer secCode = rs.getInt("sec_code");
+//                Date d = rs.getDate("complete_date");
+//                System.out.println(d);
+//                Course c = Course.retrieveCourse(cCode,conn);
+//                Date today = Date.valueOf("2018-05-11");
+//                Section s = Section.retrieveSection(c,secCode,today,conn);
+//                System.out.println(secCode);
+//                System.out.println(today.equals(d));
+//            }
+
+
+//            Date d = Date.valueOf("2018-05-11");
+//            System.out.println(d);
+
+//            System.out.println(s.getFirst().getSecCode());
 
 
 

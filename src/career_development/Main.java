@@ -103,7 +103,7 @@ public class Main {
             }
             Section section2 = new Section (c, 4, Date.valueOf("2018-04-11"), 1,
                     p, "Traditional", 19.00f );
-             section2.commit();
+             section2.commit(conn);
             Integer newsecCode = section2.getSecCode();
             Section testSection = Section.retrieveSection(c, 4, Date.valueOf("2018-05-11"), conn);
             System.out.println(" Price: " + section2.getPrice());

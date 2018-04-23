@@ -52,8 +52,8 @@ public class Section {
             ResultSet rs = getSections.executeQuery();
             while(rs.next()) {
                 Integer secCode = rs.getInt(1);
-                Date completeData = rs.getDate(2);
-                Section sec = retrieveSection(course, secCode, completeData, conn);
+                Date completeDate = rs.getDate(2);
+                Section sec = retrieveSection(course, secCode, completeDate, conn);
                 sectionLinkedList.add(sec);
             }
             rs.close();
@@ -147,10 +147,11 @@ public class Section {
         this.price = price;
     }
 
-    public void commit() {
-        if(!dirty) {
+    public void commit(Connection conn) {
+        if(!this.dirty) {
             return;
         }
+        this.store(conn);
     }
 
 
@@ -159,8 +160,8 @@ public class Section {
     private void store (Connection conn) {
         try {
             OraclePreparedStatement preparedStatement =
-                    (OraclePreparedStatement)conn.prepareStatement("INSERT INTO section (c_code, sec_code" +
-                            "complete_date, offered_by, taught_by, format_price) VALUES(?,?,?,?,?,?,?,?)");
+                    (OraclePreparedStatement)conn.prepareStatement("INSERT INTO section (c_code, sec_code," +
+                            "complete_date, offered_by, taught_by, format, price) VALUES(?,?,?,?,?,?,?)");
             preparedStatement.setInt(1,course.getCCode());
             preparedStatement.setInt(2, secCode);
             preparedStatement.setDate(3, completeDate);
@@ -169,9 +170,9 @@ public class Section {
             preparedStatement.setString(6, format);
             preparedStatement.setFloat(7, price);
             preparedStatement.execute();
-
+            preparedStatement.close();
         }catch (SQLException sqlEx) {
-            System.err.println(sqlEx.toString());
+            System.err.println(sqlEx.toString()+("You messed up in Section"));
         }
     }
 

@@ -2,6 +2,7 @@ package career_development;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -266,21 +267,17 @@ public class Person {
     }
 
 
-    public LinkedList<String> getSkills (Connection conn) {
+    public LinkedList<Skill> getSkills (Connection conn) {
         PreparedStatement retrPersonSkills;
-        LinkedList<String> personSkillsList = new LinkedList<>();
+        LinkedList<Skill> personSkillsList = new LinkedList<>();
 
         try{
             retrPersonSkills=conn.prepareStatement("SELECT ks_code FROM has_skill WHERE pers_id=?");
             retrPersonSkills.setInt(1, pers_id);
             ResultSet rs = retrPersonSkills.executeQuery();
             if(rs.next()) {
-                String pers_id = rs.getString(1);
-
-               String ks_code = rs.getString(2);
-                personSkillsList.add(new String (ks_code));
-               System.out.println(pers_id);
-               System.out.println(ks_code);
+               String ks_code = rs.getString(1);
+               personSkillsList.add(Skill.retrieveSkill(ks_code,conn));
                rs.close();
                retrPersonSkills.close();
             }
@@ -299,6 +296,30 @@ public class Person {
             addSkill.setString(2, skill.getKs_code());
             addSkill.execute();
             addSkill.close();
+        }
+        catch (SQLException sqlEx){
+            System.err.println(sqlEx.toString());
+        }
+    }
+
+    public void personTakes(Section section, Connection conn){
+        PreparedStatement personTakes;
+        try{
+            personTakes = conn.prepareStatement("INSERT INTO takes(c_code, sec_code, complete_date, pers_id)" +
+                    "VALUES(?,?,?,?)");
+            personTakes.setInt(1, section.getCourse().getCCode());
+            personTakes.setInt(2, section.getSecCode());
+            personTakes.setDate(3, section.getCompleteDate());
+            personTakes.setInt(4, getPersID());
+            personTakes.executeQuery();
+            personTakes.close();
+
+            LinkedList<Skill> courseSkills = section.getCourse().getSkills(conn);
+            Iterator<Skill> courseSkillsIterator = courseSkills.iterator();
+            while(courseSkillsIterator.hasNext()) {
+                Skill skill = courseSkillsIterator.next();
+                addSkill(skill, conn);
+            }
         }
         catch (SQLException sqlEx){
             System.err.println(sqlEx.toString());
