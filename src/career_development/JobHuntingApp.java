@@ -16,8 +16,8 @@ public class JobHuntingApp {
     public static BufferedReader in;
 
     public static void main(String[] args) {
-        String userName = "tbourg";
-        String password = "K3LWXCPt";
+        String userName = "gtswanso";
+        String password = "sNNP9R9R";
 
         String hostName = "dbsvcs.cs.uno.edu";
         int port = 1521;
@@ -34,9 +34,14 @@ public class JobHuntingApp {
                     choice = Integer.parseInt(line);
                     if(choice == 1) {
                         Position position = loggedInUser.findHighestPayingQualifiedPosition(conn);
-                        System.out.println("Highest Paying Position:");
-                        System.out.println("Position code: " + position.getPosCode());
-                        System.out.println("Job Title: " + position.getPosTitle());
+                        if(position == null){
+                            System.out.println("Person not qualified for any job.");
+                        }
+                        else {
+                            System.out.println("Highest Paying Position Code: " + position.getPosCode());
+                            System.out.println("Job Title: " + position.getPosTitle());
+                            System.out.println("Position Pay: " +  position.getPayRate());
+                        }
                     } else if(choice == 2) {
                         LinkedList<JobCategory> jobCats = loggedInUser.listQualifiedJobCategories(conn);
                         Iterator<JobCategory> iterator = jobCats.iterator();

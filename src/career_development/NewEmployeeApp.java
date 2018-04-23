@@ -17,8 +17,8 @@ public class NewEmployeeApp {
     public static Person activePerson;
 
     public static void main(String[] args) {
-        String userName = "tbourg";
-        String password = "K3LWXCPt";
+        String userName = "gtswanso";
+        String password = "sNNP9R9R";
 
         String hostName = "dbsvcs.cs.uno.edu";
         int port = 1521;
@@ -52,7 +52,6 @@ public class NewEmployeeApp {
                             LinkedList<Course> trainingPlan = activePerson.trainingPlan(activePosition, conn);
                             Iterator<Course> trainingPlanIterator = trainingPlan.iterator();
                             System.out.println("Suggested training plan: ");
-                            System.out.println(trainingPlan.size());
                             Double totalPrice = 0.00;
                             while(trainingPlanIterator.hasNext()){
                                 Course course = trainingPlanIterator.next();
