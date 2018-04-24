@@ -104,16 +104,17 @@ WHERE cat_code = '15-1250';
 
 /*8. Given a person?s identifier, list a person?s missing knowledge/skills for a specific pos_code in a readable format. +++*/
 WITH missing_skills AS (
-    SELECT pers_id, pos_code, ks_code 
-    FROM person, position_skills 
-    MINUS 
-    SELECT pers_id, pos_code, ks_code
-    FROM relevant_skills)
+    SELECT ks_code
+    FROM position_skills    --No "required_skills" table, so set the position condition for "REQUIRED SKILLS"
+    WHERE prefer = 'R'
+    AND pos_code = 10
+    MINUS
+    SELECT ks_code
+    FROM has_skill
+    WHERE pers_id = 9)
 SELECT ks_title
 FROM missing_skills 
-NATURAL JOIN know_skill
-WHERE pers_id = 7 
-AND pos_code = 7;
+NATURAL JOIN know_skill;
 
 /*9. Given a person?s identifier and a pos_code, list the courses (course id and title) that each alone teaches all the
 missing knowledge/skills for this person to pursue the specific job position.*/
@@ -381,19 +382,16 @@ ORDER BY num_missing;
 /*20. Given a position code and its corresponding missing-k list specified in Question 19. Find every skill that is
 needed by at least one person in the given missing-k list. List each skill code and the number of people who need
 it in the descending order of the people counts. ++++*/
-WITH missing_skills AS (
-    SELECT pers_id, pos_code, ks_code
-    FROM person, position_skills
-    MINUS
-    SELECT pers_id, pos_code, ks_code
-    FROM relevant_skills)
-SELECT DISTINCT ks_code
+  
+SELECT ks_code, COUNT(*)
 FROM missing_skills
 NATURAL JOIN (SELECT pers_id, pos_code, COUNT(*) AS num_missing
               FROM missing_skills
               GROUP BY pers_id, pos_code)
 WHERE pos_code = 8
-AND num_missing <= 10;
+AND num_missing <= 10
+GROUP BY ks_code
+ORDER BY COUNT(*) DESC;
 
 /*21. In a local or national crisis, we need to find all the people who once held a job position of the special job category
 identifier. List per_id, name, job position title and the years the person worked (starting year and ending year). ++++*/
