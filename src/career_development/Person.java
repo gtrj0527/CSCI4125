@@ -328,38 +328,23 @@ public class Person {
 
     public LinkedList<Course> trainingPlan (Position pos, Connection conn){
         LinkedList<Course> trainingCoursesList = new LinkedList<Course>();
-        String query = "WITH coverCSet(csetID, cSetSize) AS (\n" +
-                "    SELECT csetID, cSetSize\n" +
-                "    FROM courseSet cSet\n" +
-                "    WHERE NOT EXISTS(\n" +
-                "        SELECT ks_code\n" +
-                "        FROM (  SELECT DISTINCT ks_code\n" +
-                "                FROM            courseSet_Skill c\n" +
-                "                WHERE NOT EXISTS(\n" +
-                "                                SELECT ks_code\n" +
-                "                                FROM position_skills    --No \"required_skills\" table, so set the position condition for \"REQUIRED SKILLS\"\n" +
-                "                                WHERE prefer = 'R'\n" +
-                "                                AND pos_code = ?\n" +
-                "                                MINUS\n" +
-                "                                SELECT ks_code\n" +
-                "                                FROM has_skill\n" +
-                "                                WHERE pers_id = ?\n" +
-                "                                MINUS\n" +
-                "                                SELECT ks_code\n" +
-                "                                FROM courseSet_Skill cs\n" +
-                "                                WHERE c.cSetID = cs.cSetID))\n" +
-                "        MINUS\n" +
-                "        SELECT ks_code\n" +
-                "        FROM courseSet_skill cSkill\n" +
-                "        WHERE cSkill.csetID = cSet.cSetID\n" +
-                "    )\n" +
-                ")\n" +
-                "SELECT c_code1, c_code2, c_code3, cSetCost\n" +
-                "FROM coverCSet \n" +
-                "NATURAL JOIN courseSet\n" +
-                "WHERE cSetSize = (SELECT MIN(cSetSize)\n" +
-                "                 FROM coverCSet)" +
-                "ORDER BY cSetCost ASC\n";
+        String query = "WITH coverCSET AS (\n " +
+                "SELECT csetID, csetSize FROM courseSet\n" +
+        "WHERE NOT EXISTS (\n" +
+                "SELECT ks_code FROM position_skills WHERE pos_code = ?\n" +
+                "MINUS\n" +
+                "SELECT ks_code FROM has_skill WHERE pers_id = ?\n" +
+                "MINUS\n" +
+                "SELECT ks_code FROM courseSet_skill\n" +
+                "WHERE\n" +
+                "courseSet.csetID = courseSet_skill.csetID\n" +
+"        )\n" +
+")\n" +
+        "SELECT c_code1, c_code2, c_code3, csetsize, csetcost\n" +
+        "FROM coverCSET\n" +
+        "NATURAL JOIN courseSet\n" +
+        "WHERE csetsize = (SELECT MIN(csetsize) FROM covercset NATURAL JOIN courseSet)\n";
+
         try {
             PreparedStatement trainingPlan = conn.prepareStatement(query);
             trainingPlan.setInt(1, pos.getPosCode());
