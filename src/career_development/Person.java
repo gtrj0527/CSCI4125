@@ -326,6 +326,41 @@ public class Person {
         }
     }
 
+    public LinkedList<Course> preTrngPlan (Position pos, Connection conn){
+        LinkedList<Course> preTrngPlanList = new LinkedList<>();
+        String query = "WITH missing_ks AS(\n" +
+                "SELECT DISTINCT c_code, title \n" +
+                "FROM            course c\n" +
+                "WHERE NOT EXISTS(\n" +
+                "                SELECT ks_code\n" +
+                "                FROM position_skills    --No \"required_skills\" table, so set the position condition for \"REQUIRED SKILLS\"\n" +
+                "                WHERE prefer = 'R'\n" +
+                "                AND pos_code = 7\n" +
+                "                MINUS\n" +
+                "                SELECT ks_code\n" +
+                "                FROM provides_skill ps\n" +
+                "                WHERE ps.c_code = c.c_code))\n" +
+                "SELECT  c_code, title\n" +
+                "FROM    missing_ks\n" +
+                "NATURAL JOIN person\n" +
+                "WHERE pers_id = 11;";
+        try {
+            PreparedStatement preTrngPlan = conn.prepareStatement(query);
+            preTrngPlan.setInt(1, pos.getPosCode());
+            preTrngPlan.setInt(2, pers_id);
+            ResultSet rs = preTrngPlan.executeQuery();
+            if(rs.next()) {
+                Integer cCode = rs.getInt(1);
+                String title = rs.getString(2);
+                preTrngPlanList.add(Course.retrieveCourse(cCode,conn));
+            }
+            rs.close();
+            preTrngPlan.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } return preTrngPlanList;
+    }
+
     public LinkedList<Course> trainingPlan (Position pos, Connection conn){
         LinkedList<Course> trainingCoursesList = new LinkedList<Course>();
         String query = "WITH coverCSet(csetID, cSetSize) AS (\n" +
