@@ -541,7 +541,7 @@ INSERT INTO prerequisite VALUES (1, 6);
 INSERT INTO prerequisite VALUES (1, 7);
 INSERT INTO prerequisite VALUES (2, 5);
 INSERT INTO prerequisite VALUES (4, 1);
-INSERT INTO prerequisite VALUES (2, 4);
+--INSERT INTO prerequisite VALUES (2, 4);  Causes a loop!
 
 /*COMPANY SPECIALTY*/
 INSERT INTO company_specialty VALUES ('1111','10');
