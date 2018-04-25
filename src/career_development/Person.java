@@ -43,7 +43,7 @@ public class Person {
                 String email = rs.getString(10);
                 String gender = rs.getString(11);
                 personList.add(new Person(pers_id, last_name, first_name, mi, address1, address2, city, state,
-                                          zip, email, gender));
+                        zip, email, gender));
             }
             rs.close();
             retrPerson.close();
@@ -241,8 +241,8 @@ public class Person {
         try {
             OraclePreparedStatement preparedStatement =
                     (OraclePreparedStatement)conn.prepareStatement("INSERT INTO person(last_name, first_name, mi," +
-                                    "address1, address2, zip, email, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
-                                    "RETURNING pers_id INTO ?");
+                            "address1, address2, zip, email, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
+                            "RETURNING pers_id INTO ?");
             preparedStatement.registerReturnParameter(9, OracleTypes.INTEGER);
             preparedStatement.setString(1, last_name);
             preparedStatement.setString(2, first_name);
@@ -276,10 +276,10 @@ public class Person {
             retrPersonSkills.setInt(1, pers_id);
             ResultSet rs = retrPersonSkills.executeQuery();
             if(rs.next()) {
-               String ks_code = rs.getString(1);
-               personSkillsList.add(Skill.retrieveSkill(ks_code,conn));
-               rs.close();
-               retrPersonSkills.close();
+                String ks_code = rs.getString(1);
+                personSkillsList.add(Skill.retrieveSkill(ks_code,conn));
+                rs.close();
+                retrPersonSkills.close();
             }
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
@@ -386,8 +386,10 @@ public class Person {
                     if (!rs.wasNull()) {
                         trainingCoursesList.add(Course.retrieveCourse(cCode3, conn));
                     }
+
+                    rs.close();
                 }
-                rs.close();
+                rs9.close();
                 trainingPlanSet.close();
             }
             rs9.close();

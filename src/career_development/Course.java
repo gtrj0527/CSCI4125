@@ -22,7 +22,7 @@ public class Course {
         LinkedList<Course> courseList = new LinkedList<Course>();
         try {
             retrCourse = conn.prepareStatement("SELECT title, training_level, status, retail_price, " +
-                                                    "train_type, description, c_code FROM course");
+                    "train_type, description, c_code FROM course");
             ResultSet rs = retrCourse.executeQuery();
             while(rs.next()) {
                 String title = rs.getString(1);
@@ -199,7 +199,7 @@ public class Course {
 
             OraclePreparedStatement preparedStatement =
                     (OraclePreparedStatement)conn.prepareStatement("INSERT INTO course (title, training_level, description, status, retail_price, train_type) " +
-                                               "VALUES (?, ?, ?, ?, ?, ?) RETURNING c_code INTO ?");
+                            "VALUES (?, ?, ?, ?, ?, ?) RETURNING c_code INTO ?");
             preparedStatement.registerReturnParameter(7, OracleTypes.INTEGER);
             preparedStatement.setString(1, title);
             preparedStatement.setString(2, trainingLevel);

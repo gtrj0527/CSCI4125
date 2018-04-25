@@ -107,11 +107,11 @@ WITH missing_skills AS (
     SELECT ks_code
     FROM position_skills    --No "required_skills" table, so set the position condition for "REQUIRED SKILLS"
     WHERE prefer = 'R'
-    AND pos_code = 10
+    AND pos_code = 15
     MINUS
     SELECT ks_code
     FROM has_skill
-    WHERE pers_id = 9)
+    WHERE pers_id = 11)
 SELECT ks_title
 FROM missing_skills 
 NATURAL JOIN know_skill;
@@ -165,7 +165,7 @@ WHERE NOT EXISTS(
                 SELECT ks_code
                 FROM position_skills    --No "required_skills" table, so set the position condition for "REQUIRED SKILLS"
                 WHERE prefer = 'R'
-                AND pos_code = 1
+                AND pos_code = 7
                 MINUS
                 SELECT ks_code
                 FROM provides_skill ps
@@ -239,7 +239,8 @@ SELECT csetID, csetSize FROM courseSet
 WHERE NOT EXISTS (
 SELECT ks_code FROM position_skills WHERE pos_code = 7
 MINUS
-SELECT ks_code FROM has_skill WHERE pers_id = 11
+SELECT ks_code FROM has_skill WHERE pers_id = 7
+
 MINUS
 SELECT ks_code FROM courseSet_skill
 WHERE
@@ -249,6 +250,7 @@ FROM coverCSET
 NATURAL JOIN courseSet
 WHERE csetsize = (SELECT MIN(csetsize)
                   FROM covercset NATURAL JOIN courseSet);
+
 ORDER BY csetcost ASC;
 /*13. Given a person?s identifier, list all the job categories that a person is qualified for. ++++*/
 WITH qualifiedJobCategories AS (
@@ -259,14 +261,12 @@ WITH qualifiedJobCategories AS (
                 FROM know_skill
                 NATURAL JOIN    (SELECT ks_code
                                  FROM has_skill
-                                 WHERE pers_id = 10))
+                                 WHERE pers_id = 7))
 SELECT DISTINCT cat_code
 FROM qualifiedJobCategories
 NATURAL JOIN core_skill;
-
 /*14. Given a person?s identifier, find the job position with the highest pay rate for this person according to his/her skill
 possession.*/
---          NEEDS TO BE TINKERED WITH TO RETURN JUST ONE RESULT
 WITH highest_pay AS(
 SELECT DISTINCT full_name, pos_title, MAX(pay_rate) highest_salary
 FROM has_skill hs
@@ -295,18 +295,18 @@ WHERE NOT EXISTS (  SELECT ks_code
 is almost qualified to the job position. Make a ?missing-one? list that lists people who miss only one skill for a
 specified pos_code. ++++Double check data, but appears to work. */
 WITH pos_skills AS (
-SELECT ks_code FROM position_skills WHERE pos_code = 12)
+SELECT ks_code FROM position_skills WHERE pos_code = 7)
 SELECT pers_id, COUNT(*) FROM
 (SELECT pers_id, ks_code FROM pos_skills, person
 MINUS
 SELECT pers_id, ks_code FROM has_skill)
 GROUP BY pers_id
-HAVING COUNT(*) = 1
+HAVING COUNT(*) = 1;
 
 /*17. List each of the skill code and the number of people who misses the skill and are in the missing-one list for a
 given position code in the ascending order of the people counts. ++++*/
 WITH pos_skills AS (
-SELECT ks_code FROM position_skills WHERE pos_code = 12),
+SELECT ks_code FROM position_skills WHERE pos_code = 7),
 people_missing_one AS (
 SELECT pers_id FROM
 (SELECT pers_id, ks_code FROM pos_skills, person
@@ -319,12 +319,12 @@ SELECT ks_code, COUNT(*) FROM
     (SELECT pers_id, ks_code FROM pos_skills, person
     MINUS
     SELECT pers_id, ks_code FROM has_skill))
-GROUP BY ks_code
+GROUP BY ks_code;
 
 /*18. Suppose there is a new position that has nobody qualified. List the persons who miss the least number of skills
 that are required by this pos_code and report the ?least number?. ++++ */
 WITH pos_skills AS (
-SELECT ks_code FROM position_skills WHERE pos_code = 12),
+SELECT ks_code FROM position_skills WHERE pos_code = 7),
 missing_skills AS (
 SELECT pers_id, COUNT(*) AS missing_skills_count FROM
 (SELECT pers_id, ks_code FROM pos_skills, person
@@ -335,7 +335,7 @@ GROUP BY pers_id
 SELECT pers_id, missing_skills_count
 FROM missing_skills
 WHERE missing_skills_count =
-      (SELECT MIN(missing_skills_count) FROM missing_skills)
+      (SELECT MIN(missing_skills_count) FROM missing_skills);
 
 /*19. For a specified position code and a given small number k, make a ?missing-k? list that lists the people?s IDs and
 the number of missing skills for the people who miss only up to k skills in the ascending order of missing skills. ++++*/
@@ -354,7 +354,7 @@ FROM missing_skills
 NATURAL JOIN (SELECT pers_id, pos_code, COUNT(*) AS num_missing
               FROM missing_skills
               GROUP BY pers_id, pos_code)
-WHERE pos_code = 8
+WHERE pos_code = 7
 AND num_missing <= 10
 GROUP BY ks_code
 ORDER BY COUNT(*) DESC;
@@ -398,7 +398,7 @@ WITH company_labor_cost AS (
     FROM company
     NATURAL JOIN position
     NATURAL JOIN position_yearly_pay
-    GROUP BY comp_id);
+    GROUP BY comp_id)
 SELECT comp_id, comp_name, labor_cost
 FROM company_labor_cost
 NATURAL JOIN company
