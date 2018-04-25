@@ -16,8 +16,8 @@ public class JobHuntingApp {
     public static BufferedReader in;
 
     public static void main(String[] args) {
-        String userName = "tbourg";
-        String password = "K3LWXCPt";
+        String userName = "jtmarch1";
+        String password = "Tg4zJWx7";
 
         String hostName = "dbsvcs.cs.uno.edu";
         int port = 1521;
