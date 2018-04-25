@@ -17,8 +17,8 @@ public class NewEmployeeApp {
     public static Person activePerson;
 
     public static void main(String[] args) {
-        String userName = "gtswanso";
-        String password = "sNNP9R9R";
+        String userName = "";
+        String password = "";
 
         String hostName = "dbsvcs.cs.uno.edu";
         int port = 1521;

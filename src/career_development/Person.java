@@ -328,47 +328,74 @@ public class Person {
 
     public LinkedList<Course> trainingPlan (Position pos, Connection conn){
         LinkedList<Course> trainingCoursesList = new LinkedList<Course>();
-        String query = "WITH coverCSET AS (\n " +
+        String query9 = "SELECT DISTINCT c_code\n" +
+                "FROM provides_skill ps1\n" +
+                "WHERE NOT EXISTS (\n" +
+                "  SELECT ks_code \n" +
+                "  FROM position_skills\n" +
+                "  WHERE pos_code = ?\n" +
+                "  MINUS\n" +
+                "  SELECT ks_code\n" +
+                "  FROM has_skill\n" +
+                "  WHERE pers_id = ?\n" +
+                "  MINUS\n" +
+                "  SELECT ks_code\n" +
+                "  FROM provides_skill ps2\n" +
+                "  WHERE ps1.c_code = ps2.c_code)";
+        String query12 = "WITH coverCSET AS (\n " +
                 "SELECT csetID, csetSize FROM courseSet\n" +
-        "WHERE NOT EXISTS (\n" +
+                "WHERE NOT EXISTS (\n" +
                 "SELECT ks_code FROM position_skills WHERE pos_code = ?\n" +
                 "MINUS\n" +
                 "SELECT ks_code FROM has_skill WHERE pers_id = ?\n" +
                 "MINUS\n" +
                 "SELECT ks_code FROM courseSet_skill\n" +
                 "WHERE\n" +
-                "courseSet.csetID = courseSet_skill.csetID\n" +
-"        )\n" +
-")\n" +
-        "SELECT c_code1, c_code2, c_code3, csetsize, csetcost\n" +
-        "FROM coverCSET\n" +
-        "NATURAL JOIN courseSet\n" +
-        "WHERE csetsize = (SELECT MIN(csetsize) FROM covercset NATURAL JOIN courseSet)\n";
+                "courseSet.csetID = courseSet_skill.csetID))\n" +
+                "SELECT c_code1, c_code2, c_code3, csetsize, csetcost\n" +
+                "FROM coverCSET\n" +
+                "NATURAL JOIN courseSet\n" +
+                "WHERE csetsize = (SELECT MIN(csetsize)" +
+                "                  FROM covercset" +
+                "                  NATURAL JOIN courseSet)" +
+                "ORDER BY csetcode ASC\n";
 
         try {
-            PreparedStatement trainingPlan = conn.prepareStatement(query);
+            PreparedStatement trainingPlan = conn.prepareStatement(query9);
             trainingPlan.setInt(1, pos.getPosCode());
             trainingPlan.setInt(2, pers_id);
-            ResultSet rs = trainingPlan.executeQuery();
-            if(rs.next()) {
-                Integer cCode1 = rs.getInt(1);
-                if (!rs.wasNull()) {
-                    trainingCoursesList.add(Course.retrieveCourse(cCode1, conn));
+            ResultSet rs9 = trainingPlan.executeQuery();
+            if(rs9.next()) {
+                Integer cCode = rs9.getInt(1);
+                trainingCoursesList.add(Course.retrieveCourse(cCode, conn));
+            } else {
+                PreparedStatement trainingPlanSet = conn.prepareStatement(query12);
+                trainingPlanSet.setInt(1, pos.getPosCode());
+                trainingPlanSet.setInt(2, pers_id);
+                ResultSet rs = trainingPlanSet.executeQuery();
+                if(rs.next()) {
+                    Integer cCode1 = rs.getInt(1);
+                    if (!rs.wasNull()) {
+                        trainingCoursesList.add(Course.retrieveCourse(cCode1, conn));
+                    }
+                    Integer cCode2 = rs.getInt(2);
+                    if (!rs.wasNull()) {
+                        trainingCoursesList.add(Course.retrieveCourse(cCode2, conn));
+                    }
+                    Integer cCode3 = rs.getInt(3);
+                    if (!rs.wasNull()) {
+                        trainingCoursesList.add(Course.retrieveCourse(cCode3, conn));
+                    }
                 }
-                Integer cCode2 = rs.getInt(2);
-                if (!rs.wasNull()) {
-                    trainingCoursesList.add(Course.retrieveCourse(cCode2, conn));
-                }
-                Integer cCode3 = rs.getInt(3);
-                if (!rs.wasNull()) {
-                    trainingCoursesList.add(Course.retrieveCourse(cCode3, conn));
-                }
+                rs.close();
+                trainingPlanSet.close();
             }
-            rs.close();
+            rs9.close();
             trainingPlan.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } return trainingCoursesList;
+        }
+        return trainingCoursesList;
     }
 
     // Needs to be listQualifiedJobCategories
