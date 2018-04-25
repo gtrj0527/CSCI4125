@@ -152,12 +152,12 @@ public class Course {
             retrSkillsFromCourse=conn.prepareStatement("SELECT ks_code FROM provides_skill WHERE c_code=?");
             retrSkillsFromCourse.setInt(1, cCode);
             ResultSet rs = retrSkillsFromCourse.executeQuery();
-            if(rs.next()) {
+            while(rs.next()) {
                 String ks_code = rs.getString(1);
                 courseSkillsList.add(Skill.retrieveSkill(ks_code,conn));
-                rs.close();
-                retrSkillsFromCourse.close();
             }
+            rs.close();
+            retrSkillsFromCourse.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             return null;

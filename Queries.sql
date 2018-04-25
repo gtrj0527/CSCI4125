@@ -104,35 +104,34 @@ WHERE cat_code = '15-1250';
 
 /*8. Given a person?s identifier, list a person?s missing knowledge/skills for a specific pos_code in a readable format. +++*/
 WITH missing_skills AS (
-    SELECT pers_id, pos_code, ks_code 
-    FROM person, position_skills 
-    MINUS 
-    SELECT pers_id, pos_code, ks_code
-    FROM relevant_skills)
+    SELECT ks_code
+    FROM position_skills    --No "required_skills" table, so set the position condition for "REQUIRED SKILLS"
+    WHERE prefer = 'R'
+    AND pos_code = 10
+    MINUS
+    SELECT ks_code
+    FROM has_skill
+    WHERE pers_id = 9)
 SELECT ks_title
 FROM missing_skills 
-NATURAL JOIN know_skill
-WHERE pers_id = 7 
-AND pos_code = 7;
+NATURAL JOIN know_skill;
 
 /*9. Given a person?s identifier and a pos_code, list the courses (course id and title) that each alone teaches all the
 missing knowledge/skills for this person to pursue the specific job position.*/
-WITH missing_ks AS(
-SELECT DISTINCT c_code, title 
-FROM            course c
-WHERE NOT EXISTS(
-                SELECT ks_code
-                FROM position_skills    --No "required_skills" table, so set the position condition for "REQUIRED SKILLS"
-                WHERE prefer = 'R'
-                AND pos_code = 7
-                MINUS
-                SELECT ks_code
-                FROM provides_skill ps
-                WHERE ps.c_code = c.c_code))
-SELECT  c_code, title
-FROM    missing_ks
-NATURAL JOIN person
-WHERE pers_id = 11;
+SELECT DISTINCT c_code
+FROM provides_skill ps1
+WHERE NOT EXISTS (
+  SELECT ks_code
+  FROM position_skills
+  WHERE pos_code = 7
+  MINUS
+  SELECT ks_code
+  FROM has_skill
+  WHERE pers_id = 12
+  MINUS
+  SELECT ks_code
+  FROM provides_skill ps2
+  WHERE ps1.c_code = ps2.c_code)
                 
 /*10. Suppose the skill gap of a worker and the requirement of a desired job position can be covered by one course.
 Find the ?quickest? solution for this worker. Show the course, section information and the completion date.*/
@@ -160,7 +159,7 @@ Find the cheapest course to make up one?s skill gap by showing the course to tak
 price).*/
 --          NEEDS TO BE TINKERED WITH TO RETURN JUST ONE RESULT
 WITH cheapest_solution AS (
-SELECT DISTINCT c_code, title, retail_price 
+SELECT DISTINCT c_code, title, retail_price AS course_cost
 FROM            course c
 WHERE NOT EXISTS(
                 SELECT ks_code
@@ -172,12 +171,13 @@ WHERE NOT EXISTS(
                 FROM provides_skill ps
                 WHERE ps.c_code = c.c_code)
 ORDER BY        retail_price ASC)
-SELECT      title, MIN(price) course_cost
+
+SELECT      title, price AS course_cost
 FROM        cheapest_solution cs
 JOIN        section s on cs.c_code = s.c_code
 NATURAL JOIN person
 WHERE       pers_id = 9
-GROUP BY    title
+AND ROWNUM <=1
 ORDER BY    course_cost ASC;
                  
 /*12. 
@@ -187,103 +187,69 @@ multiple course sets are found, list the course sets (with their course IDs) in 
 course sets? total costs.*/
 DROP SEQUENCE courseSet_seq;
 CREATE SEQUENCE courseSet_seq
-    START WITH 1
-    INCREMENT BY 1
-    MAXVALUE 999999999
-    NOCYCLE;
-    
+START WITH 1
+INCREMENT BY 1
+MAXVALUE 999999999
+NOCYCLE;
+
 DROP TABLE courseSet;
 CREATE TABLE courseSet(
-    csetID NUMBER(8,0) PRIMARY KEY,
-    c_code1 NUMBER(6,0),
-    c_code2 NUMBER(6,0),
-    c_code3 NUMBER(6,0),
-    cSetSize NUMBER(2,0),
-    cSetCost NUMBER(10,2));
-    
+csetID NUMBER(8,0) PRIMARY KEY,
+c_code1 NUMBER(6,0),
+c_code2 NUMBER(6,0),
+c_code3 NUMBER(6,0),
+cSetSize NUMBER(2,0),
+cSetCost NUMBER(10,2));
+
 INSERT INTO courseSet(
-    SELECT courseSet_seq.NEXTVAL, c1.c_code, null, null, 1, c1.retail_price
-    FROM course c1);
-    
+SELECT courseSet_seq.NEXTVAL, c1.c_code, c2.c_code, null, 2, c1.retail_price + c2.retail_price
+FROM course c1, course c2
+WHERE c1.c_code < c2.c_code);
+
 INSERT INTO courseSet(
-        SELECT courseSet_seq.NEXTVAL, c1.c_code, c2.c_code, null, 2, c1.retail_price + c2.retail_price
-        FROM course c1, course c2
-        WHERE c1.c_code < c2.c_code);
-        
-INSERT INTO courseSet(
-        SELECT courseSet_seq.NEXTVAL, c1.c_code, c2.c_code, c3.c_code, 3,  c1.retail_price + c2.retail_price + c3.retail_price
-        FROM course c1, course c2, course c3
-        WHERE c1.c_code < c2.c_code
-        AND c2.c_code < c3.c_code);  
-          
-DROP TABLE courseSkill;
-CREATE TABLE courseSkill(
-    c_code NUMBER(6,0),
-    ks_code VARCHAR(8)
+SELECT courseSet_seq.NEXTVAL, c1.c_code, c2.c_code, c3.c_code, 3, c1.retail_price + c2.retail_price + c3.retail_price
+FROM course c1, course c2, course c3
+WHERE c1.c_code < c2.c_code
+AND c2.c_code < c3.c_code);
+
+DROP TABLE courseSet_skill;
+CREATE TABLE courseSet_skill(
+csetID NUMBER(8,0),
+ks_code VARCHAR(8)
 );
 
-INSERT INTO courseSkill(
-        SELECT c_code, ks_code
-        FROM course, know_skill
-);               
-          
-DROP TABLE courseSet_skill;        
-CREATE TABLE courseSet_skill(
-    csetID NUMBER(8,0),
-    ks_code VARCHAR(8)    
-);
-   
 INSERT INTO courseSet_skill(csetID,ks_code)
-    (SELECT csetID, ks_code
-    FROM courseSet cSet1
-    JOIN courseSkill cSkill1
-        ON cSet1.c_code1 = cSkill1.c_code)
-    UNION
-    (SELECT csetID, ks_code
-    FROM courseSet cSet2
-    JOIN courseSkill cSkill2
-        ON cSet2.c_code2 = cSkill2.c_code)
-    UNION 
-    (SELECT csetID, ks_code
-    FROM courseSet cSet3
-    JOIN courseSkill cSkill3
-        ON cSet3.c_code3 = cSkill3.c_code);
-        
-WITH coverCSet(csetID, cSetSize) AS (
-    SELECT csetID, cSetSize
-    FROM courseSet cSet
-    WHERE NOT EXISTS(
-        SELECT ks_code
-        FROM (  SELECT DISTINCT ks_code
-                FROM            courseSet_Skill c
-                WHERE NOT EXISTS(
-                                SELECT ks_code
-                                FROM position_skills    --No "required_skills" table, so set the position condition for "REQUIRED SKILLS"
-                                WHERE prefer = 'R'
-                                AND pos_code = 10
-                                MINUS
-                                SELECT ks_code
-                                FROM has_skill
-                                WHERE pers_id = 9
-                                MINUS
-                                SELECT ks_code
-                                FROM courseSet_Skill cs
-                                WHERE c.cSetID = cs.cSetID))
-        MINUS
-        SELECT ks_code
-        FROM courseSet_skill cSkill
-        WHERE cSkill.csetID = cSet.cSetID
-    )
-)
-SELECT c_code1, c_code2, c_code3, cSetCost
-FROM coverCSet 
+(SELECT csetID, ks_code
+FROM courseSet cSet1
+JOIN provides_skill cSkill1
+ON cSet1.c_code1 = cSkill1.c_code)
+UNION
+(SELECT csetID, ks_code
+FROM courseSet cSet2
+JOIN provides_skill cSkill2
+ON cSet2.c_code2 = cSkill2.c_code)
+UNION
+(SELECT csetID, ks_code
+FROM courseSet cSet3
+JOIN provides_skill cSkill3
+ON cSet3.c_code3 = cSkill3.c_code);
+
+WITH coverCSET AS (
+SELECT csetID, csetSize FROM courseSet
+WHERE NOT EXISTS (
+SELECT ks_code FROM position_skills WHERE pos_code = 7
+MINUS
+SELECT ks_code FROM has_skill WHERE pers_id = 11
+MINUS
+SELECT ks_code FROM courseSet_skill
+WHERE
+courseSet.csetID = courseSet_skill.csetID))
+SELECT c_code1, c_code2, c_code3, csetsize, csetcost
+FROM coverCSET
 NATURAL JOIN courseSet
-WHERE cSetSize = (SELECT MIN(cSetSize)
-                 FROM coverCSet)
-ORDER BY cSetCost ASC;
- 
-select * from courseSet_Skill where ks_code = 'Java2';
-                 
+WHERE csetsize = (SELECT MIN(csetsize)
+                  FROM covercset NATURAL JOIN courseSet);
+ORDER BY csetcost ASC;
 /*13. Given a person?s identifier, list all the job categories that a person is qualified for. ++++*/
 WITH qualifiedJobCategories AS (
                 SELECT nwcet_code
@@ -298,39 +264,21 @@ SELECT DISTINCT cat_code
 FROM qualifiedJobCategories
 NATURAL JOIN core_skill;
 
-/*This version of the query took our old views and replaced them with a giant WITH statement. It's too beautiful to delete.
-WITH category_qual AS (
-        (SELECT pers_id, cat_code
-        FROM person, JOB_CATEGORY)
-        MINUS
-        (SELECT distinct pers_id, cat_code
-        FROM (SELECT pers_id, cat_code, ks_code
-              FROM person, (SELECT cat_code, ks_code
-                            FROM know_skill ks
-                            JOIN nwcet n ON ks.nwcet_code = n.nwcet_code
-                            JOIN job_category j ON n.nwcet_code = j.core_skill)
-             MINUS
-             SELECT pers_id, cat_code, ks_code
-             FROM ( SELECT p.pers_id, j.cat_code, ks.ks_code
-                    FROM person p
-                    JOIN has_skill hs ON p.pers_id = hs.pers_id
-                    JOIN know_skill ks ON hs.ks_code = ks.ks_code
-                    JOIN nwcet n ON ks.nwcet_code = n.nwcet_code
-                    JOIN job_category j ON n.nwcet_code = j.core_skill))))
-SELECT cat_code
-FROM category_qual
-WHERE pers_id = 1;
-*/
 /*14. Given a person?s identifier, find the job position with the highest pay rate for this person according to his/her skill
 possession.*/
 --          NEEDS TO BE TINKERED WITH TO RETURN JUST ONE RESULT
+WITH highest_pay AS(
 SELECT DISTINCT full_name, pos_title, MAX(pay_rate) highest_salary
 FROM has_skill hs
 NATURAL JOIN position
 JOIN pers_full_name p
     ON hs.pers_id = p.pers_id
+WHERE hs.pers_id = 9
 GROUP BY full_name, pos_title
-ORDER BY full_name;
+ORDER BY highest_salary DESC)
+SELECT * 
+FROM highest_pay
+WHERE ROWNUM <= 1;
 
 /*15. Given a position code, list all the names along with the emails of the persons who are qualified for this position. */
 SELECT (first_name || ' ' ||  last_name) full_name, email
@@ -400,19 +348,16 @@ ORDER BY num_missing;
 /*20. Given a position code and its corresponding missing-k list specified in Question 19. Find every skill that is
 needed by at least one person in the given missing-k list. List each skill code and the number of people who need
 it in the descending order of the people counts. ++++*/
-WITH missing_skills AS (
-    SELECT pers_id, pos_code, ks_code
-    FROM person, position_skills
-    MINUS
-    SELECT pers_id, pos_code, ks_code
-    FROM relevant_skills)
-SELECT DISTINCT ks_code
+  
+SELECT ks_code, COUNT(*)
 FROM missing_skills
 NATURAL JOIN (SELECT pers_id, pos_code, COUNT(*) AS num_missing
               FROM missing_skills
               GROUP BY pers_id, pos_code)
 WHERE pos_code = 8
-AND num_missing <= 10;
+AND num_missing <= 10
+GROUP BY ks_code
+ORDER BY COUNT(*) DESC;
 
 /*21. In a local or national crisis, we need to find all the people who once held a job position of the special job category
 identifier. List per_id, name, job position title and the years the person worked (starting year and ending year). ++++*/
@@ -506,20 +451,181 @@ SELECT AVG(pay_diff)
 FROM pay_change_by_sector 
 WHERE primary_sector_code = '45102010';
 
-/*BONUS: NOT REQUIRED FOR 05APR18 TURN IN*/
 /*26. Find the leaf-node job categories that have the most openings due to lack of qualified workers. If there are many
-opening positions of a job category but at the same time there are many qualified jobless people. Then training
+opening positions of a job category but at the same time there are many qualified jobless people, then training
 cannot help fill up this type of job position. What we want to find is such a job category that has the largest
 difference between vacancies (the unfilled job positions of this category) and the number of jobless people who
 are qualified for the job positions of this category.*/
+WITH leafNodes AS(
+    SELECT cat_code
+    FROM job_category child
+    WHERE NOT EXISTS (
+        SELECT *
+        FROM job_category
+        WHERE parent_cat_code = child.cat_code)),
+vacancies AS(
+    SELECT w.pers_id,p.pos_code,cat_code
+    FROM position p
+    JOIN works w
+        ON p.pos_code = w.pos_code
+    WHERE end_date IS NOT NULL),
+qualifiedJobCategories AS (
+                SELECT nwcet_code
+                FROM core_skill
+                MINUS
+                SELECT nwcet_code
+                FROM know_skill
+                NATURAL JOIN    (SELECT ks_code
+                                 FROM has_skill
+                                 WHERE pers_id = 2))
+SELECT DISTINCT cat_code
+FROM position p
+JOIN works w ON p.pos_code = w.pos_code
+NATURAL JOIN core_skill cs
+JOIN qualifiedJobCategories q ON cs.nwcet_code = q.nwcet_code
+NATURAL JOIN vacancies  --ON p.cat_code = v.cat_code
+NATURAL JOIN leafNodes  --ON p.cat_code = l.cat_code
+WHERE end_date IS NOT NULL;
 
-
-/*BONUS: NOT REQUIRED FOR 05APR18 TURN IN*/
 /*27. Find the courses that can help most jobless people find a job position by training them toward the jobs of this
 category that have the most openings due to lack of qualified workers.*/
+DROP SEQUENCE courseSet_seq;
+CREATE SEQUENCE courseSet_seq
+    START WITH 1
+    INCREMENT BY 1
+    MAXVALUE 999999999
+    NOCYCLE;
+    
+DROP TABLE courseSet;
+CREATE TABLE courseSet(
+    csetID NUMBER(8,0) PRIMARY KEY,
+    c_code1 NUMBER(6,0),
+    c_code2 NUMBER(6,0),
+    c_code3 NUMBER(6,0),
+    cSetSize NUMBER(2,0),
+    cSetCost NUMBER(10,2));
+    
+INSERT INTO courseSet(
+    SELECT courseSet_seq.NEXTVAL, c1.c_code, null, null, 1, c1.retail_price
+    FROM course c1);
+    
+INSERT INTO courseSet(
+        SELECT courseSet_seq.NEXTVAL, c1.c_code, c2.c_code, null, 2, c1.retail_price + c2.retail_price
+        FROM course c1, course c2
+        WHERE c1.c_code < c2.c_code);
+        
+INSERT INTO courseSet(
+        SELECT courseSet_seq.NEXTVAL, c1.c_code, c2.c_code, c3.c_code, 3,  c1.retail_price + c2.retail_price + c3.retail_price
+        FROM course c1, course c2, course c3
+        WHERE c1.c_code < c2.c_code
+        AND c2.c_code < c3.c_code);  
+          
+DROP TABLE courseSkill;
+CREATE TABLE courseSkill(
+    c_code NUMBER(6,0),
+    ks_code VARCHAR(8)
+);
+
+INSERT INTO courseSkill(
+        SELECT c_code, ks_code
+        FROM course, know_skill
+);               
+          
+DROP TABLE courseSet_skill;        
+CREATE TABLE courseSet_skill(
+    csetID NUMBER(8,0),
+    ks_code VARCHAR(8)    
+);
+   
+INSERT INTO courseSet_skill(csetID,ks_code)
+    (SELECT csetID, ks_code
+    FROM courseSet cSet1
+    JOIN courseSkill cSkill1
+        ON cSet1.c_code1 = cSkill1.c_code)
+    UNION
+    (SELECT csetID, ks_code
+    FROM courseSet cSet2
+    JOIN courseSkill cSkill2
+        ON cSet2.c_code2 = cSkill2.c_code)
+    UNION 
+    (SELECT csetID, ks_code
+    FROM courseSet cSet3
+    JOIN courseSkill cSkill3
+        ON cSet3.c_code3 = cSkill3.c_code);
+        
+WITH leafNodes AS(
+    SELECT cat_code
+    FROM job_category child
+    WHERE NOT EXISTS (
+        SELECT *
+        FROM job_category
+        WHERE parent_cat_code = child.cat_code)),
+vacancies AS(
+    SELECT w.pers_id,p.pos_code,cat_code
+    FROM position p
+    JOIN works w
+        ON p.pos_code = w.pos_code
+    WHERE end_date IS NOT NULL),
+qualifiedJobCategories AS (
+                SELECT nwcet_code
+                FROM core_skill
+                MINUS
+                SELECT nwcet_code
+                FROM know_skill
+                NATURAL JOIN    (SELECT ks_code
+                                 FROM has_skill
+                                 WHERE pers_id = 2)),
+qualifiedCatCodes AS(
+    SELECT DISTINCT cat_code
+    FROM position p
+    JOIN works w ON p.pos_code = w.pos_code
+    NATURAL JOIN core_skill cs
+    JOIN qualifiedJobCategories q ON cs.nwcet_code = q.nwcet_code
+    NATURAL JOIN vacancies  --ON p.cat_code = v.cat_code
+    NATURAL JOIN leafNodes  --ON p.cat_code = l.cat_code
+    WHERE end_date IS NOT NULL),
+coverCSet(csetID, cSetSize) AS (
+    SELECT csetID, cSetSize
+    FROM courseSet cSet
+    WHERE NOT EXISTS(
+        SELECT ks_code
+        FROM (  SELECT DISTINCT ks_code
+                FROM            courseSet_Skill c
+                WHERE NOT EXISTS(
+                                SELECT ks_code
+                                FROM position_skills    --No "required_skills" table, so set the position condition for "REQUIRED SKILLS"
+                                WHERE prefer = 'R'
+                                AND pos_code = 10
+                                MINUS
+                                SELECT ks_code
+                                FROM has_skill
+                                WHERE pers_id = 9
+                                MINUS
+                                SELECT ks_code
+                                FROM courseSet_Skill cs
+                                WHERE c.cSetID = cs.cSetID))
+        MINUS
+        SELECT ks_code
+        FROM courseSet_skill cSkill
+        WHERE cSkill.csetID = cSet.cSetID
+    )
+),
+coursesNeeded AS(
+    SELECT c_code1, c_code2, c_code3, cSetCost
+    FROM coverCSet 
+    NATURAL JOIN courseSet
+    WHERE cSetSize = (SELECT MIN(cSetSize)
+                     FROM coverCSet)
+    ORDER BY cSetCost ASC)
+SELECT DISTINCT pos_code, pos_title, c_code1 AS c_code, title
+FROM qualifiedCatCodes q 
+JOIN position p ON q.cat_code = p.cat_code
+NATURAL JOIN coursesNeeded cn
+JOIN course c ON cn.c_code1 = c.c_code;
 
 
-/*Have fun with this one, Rachel!!! :)*/
+
+/*Graduate requirement*/
 /*28. NOT REQUIRED FOR 05APR18 TURN IN
 List all the courses, directly or indirectly required, that a person has to take in order to be qualified for a job
 position of the given category, according to his/her skills possessed and courses taken. (required for graduate
