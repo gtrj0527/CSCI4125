@@ -285,7 +285,7 @@ SELECT (first_name || ' ' ||  last_name) full_name, email
 FROM person p
 WHERE NOT EXISTS (  SELECT ks_code
                     FROM position_skills ps
-                    WHERE pos_code = 10
+                    WHERE pos_code = 1
                     MINUS
                     SELECT ks_code
                     FROM has_skill hs
@@ -295,7 +295,7 @@ WHERE NOT EXISTS (  SELECT ks_code
 is almost qualified to the job position. Make a ?missing-one? list that lists people who miss only one skill for a
 specified pos_code. ++++Double check data, but appears to work. */
 WITH pos_skills AS (
-SELECT ks_code FROM position_skills WHERE pos_code = 7)
+SELECT ks_code FROM position_skills WHERE pos_code = 47)
 SELECT pers_id, COUNT(*) FROM
 (SELECT pers_id, ks_code FROM pos_skills, person
 MINUS

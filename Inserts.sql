@@ -427,6 +427,12 @@ INSERT INTO position_skills VALUES ('Angular1','8','P');     I
 INSERT INTO position_skills VALUES ('HTML2','12','P');
 INSERT INTO position_skills VALUES ('SQL1','7','R');
 
+INSERT INTO position_skills VALUES ('Admin','47','R');
+INSERT INTO position_skills VALUES ('Angular3','47','R');
+INSERT INTO position_skills VALUES ('AGILE','47','R');
+
+INSERT INTO position_skills VALUES ('Java2','1','R');
+
 /*CREATE TABLE position_skills (
     ks_code varchar (255) NOT NULL,
     pos_code number NOT NULL,
@@ -488,9 +494,10 @@ INSERT INTO has_skill VALUES ('7','Angular1');
 --INSERT INTO has_skill VALUES ('7','HTML2');
 
 
-INSERT INTO has_skill VALUES ('8','Admin');
+INSERT INTO has_skill VALUES ('8','Admin');  
 INSERT INTO has_skill VALUES ('8','AGILE');
---INSERT INTO has_skill VALUES ('8','PHP');
+--INSERT INTO has_skill VALUES ('8','Angular3');
+--use pers_id: 8 for pos_code 47. should only be missing 1 skill, Angular3
 
 
 INSERT INTO has_skill VALUES ('9','SYSTEMS');
