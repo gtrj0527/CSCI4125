@@ -30,7 +30,6 @@ public class NewEmployeeApp {
             int choice = 99;
             while (choice > 0) {
                 printMenu();
-                /*NEED TO ADD preTrngPlan() from Person, which is Query 9 and handles just one course filling the need*/
                 try {
                     String line = in.readLine();
                     choice = Integer.parseInt(line);

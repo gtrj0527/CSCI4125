@@ -43,7 +43,7 @@ public class Person {
                 String email = rs.getString(10);
                 String gender = rs.getString(11);
                 personList.add(new Person(pers_id, last_name, first_name, mi, address1, address2, city, state,
-                                          zip, email, gender));
+                        zip, email, gender));
             }
             rs.close();
             retrPerson.close();
@@ -241,8 +241,8 @@ public class Person {
         try {
             OraclePreparedStatement preparedStatement =
                     (OraclePreparedStatement)conn.prepareStatement("INSERT INTO person(last_name, first_name, mi," +
-                                    "address1, address2, zip, email, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
-                                    "RETURNING pers_id INTO ?");
+                            "address1, address2, zip, email, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
+                            "RETURNING pers_id INTO ?");
             preparedStatement.registerReturnParameter(9, OracleTypes.INTEGER);
             preparedStatement.setString(1, last_name);
             preparedStatement.setString(2, first_name);
@@ -276,10 +276,10 @@ public class Person {
             retrPersonSkills.setInt(1, pers_id);
             ResultSet rs = retrPersonSkills.executeQuery();
             if(rs.next()) {
-               String ks_code = rs.getString(1);
-               personSkillsList.add(Skill.retrieveSkill(ks_code,conn));
-               rs.close();
-               retrPersonSkills.close();
+                String ks_code = rs.getString(1);
+                personSkillsList.add(Skill.retrieveSkill(ks_code,conn));
+                rs.close();
+                retrPersonSkills.close();
             }
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
@@ -326,99 +326,77 @@ public class Person {
         }
     }
 
-    public LinkedList<Course> preTrngPlan (Position pos, Connection conn){
-        LinkedList<Course> preTrngPlanList = new LinkedList<>();
-        String query = "WITH missing_ks AS(\n" +
-                "SELECT DISTINCT c_code, title \n" +
-                "FROM            course c\n" +
-                "WHERE NOT EXISTS(\n" +
-                "                SELECT ks_code\n" +
-                "                FROM position_skills    --No \"required_skills\" table, so set the position condition for \"REQUIRED SKILLS\"\n" +
-                "                WHERE prefer = 'R'\n" +
-                "                AND pos_code = 7\n" +
-                "                MINUS\n" +
-                "                SELECT ks_code\n" +
-                "                FROM provides_skill ps\n" +
-                "                WHERE ps.c_code = c.c_code))\n" +
-                "SELECT  c_code, title\n" +
-                "FROM    missing_ks\n" +
-                "NATURAL JOIN person\n" +
-                "WHERE pers_id = 11;";
-        try {
-            PreparedStatement preTrngPlan = conn.prepareStatement(query);
-            preTrngPlan.setInt(1, pos.getPosCode());
-            preTrngPlan.setInt(2, pers_id);
-            ResultSet rs = preTrngPlan.executeQuery();
-            if(rs.next()) {
-                Integer cCode = rs.getInt(1);
-                String title = rs.getString(2);
-                preTrngPlanList.add(Course.retrieveCourse(cCode,conn));
-            }
-            rs.close();
-            preTrngPlan.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } return preTrngPlanList;
-    }
-
     public LinkedList<Course> trainingPlan (Position pos, Connection conn){
         LinkedList<Course> trainingCoursesList = new LinkedList<Course>();
-        String query = "WITH coverCSet(csetID, cSetSize) AS (\n" +
-                "    SELECT csetID, cSetSize\n" +
-                "    FROM courseSet cSet\n" +
-                "    WHERE NOT EXISTS(\n" +
-                "        SELECT ks_code\n" +
-                "        FROM (  SELECT DISTINCT ks_code\n" +
-                "                FROM            courseSet_Skill c\n" +
-                "                WHERE NOT EXISTS(\n" +
-                "                                SELECT ks_code\n" +
-                "                                FROM position_skills    --No \"required_skills\" table, so set the position condition for \"REQUIRED SKILLS\"\n" +
-                "                                WHERE prefer = 'R'\n" +
-                "                                AND pos_code = ?\n" +
-                "                                MINUS\n" +
-                "                                SELECT ks_code\n" +
-                "                                FROM has_skill\n" +
-                "                                WHERE pers_id = ?\n" +
-                "                                MINUS\n" +
-                "                                SELECT ks_code\n" +
-                "                                FROM courseSet_Skill cs\n" +
-                "                                WHERE c.cSetID = cs.cSetID))\n" +
-                "        MINUS\n" +
-                "        SELECT ks_code\n" +
-                "        FROM courseSet_skill cSkill\n" +
-                "        WHERE cSkill.csetID = cSet.cSetID\n" +
-                "    )\n" +
-                ")\n" +
-                "SELECT c_code1, c_code2, c_code3, cSetCost\n" +
-                "FROM coverCSet \n" +
+        String query9 = "SELECT DISTINCT c_code\n" +
+                "FROM provides_skill ps1\n" +
+                "WHERE NOT EXISTS (\n" +
+                "  SELECT ks_code \n" +
+                "  FROM position_skills\n" +
+                "  WHERE pos_code = ?\n" +
+                "  MINUS\n" +
+                "  SELECT ks_code\n" +
+                "  FROM has_skill\n" +
+                "  WHERE pers_id = ?\n" +
+                "  MINUS\n" +
+                "  SELECT ks_code\n" +
+                "  FROM provides_skill ps2\n" +
+                "  WHERE ps1.c_code = ps2.c_code)";
+        String query12 = "WITH coverCSET AS (\n " +
+                "SELECT csetID, csetSize FROM courseSet\n" +
+                "WHERE NOT EXISTS (\n" +
+                "SELECT ks_code FROM position_skills WHERE pos_code = ?\n" +
+                "MINUS\n" +
+                "SELECT ks_code FROM has_skill WHERE pers_id = ?\n" +
+                "MINUS\n" +
+                "SELECT ks_code FROM courseSet_skill\n" +
+                "WHERE\n" +
+                "courseSet.csetID = courseSet_skill.csetID))\n" +
+                "SELECT c_code1, c_code2, c_code3, csetsize, csetcost\n" +
+                "FROM coverCSET\n" +
                 "NATURAL JOIN courseSet\n" +
-                "WHERE cSetSize = (SELECT MIN(cSetSize)\n" +
-                "                 FROM coverCSet)" +
-                "ORDER BY cSetCost ASC\n";
+                "WHERE csetsize = (SELECT MIN(csetsize)" +
+                "                  FROM covercset" +
+                "                  NATURAL JOIN courseSet)" +
+                "ORDER BY csetcode ASC\n";
+
         try {
-            PreparedStatement trainingPlan = conn.prepareStatement(query);
+            PreparedStatement trainingPlan = conn.prepareStatement(query9);
             trainingPlan.setInt(1, pos.getPosCode());
             trainingPlan.setInt(2, pers_id);
-            ResultSet rs = trainingPlan.executeQuery();
-            if(rs.next()) {
-                Integer cCode1 = rs.getInt(1);
-                if (!rs.wasNull()) {
-                    trainingCoursesList.add(Course.retrieveCourse(cCode1, conn));
+            ResultSet rs9 = trainingPlan.executeQuery();
+            if(rs9.next()) {
+                Integer cCode = rs9.getInt(1);
+                trainingCoursesList.add(Course.retrieveCourse(cCode, conn));
+            } else {
+                PreparedStatement trainingPlanSet = conn.prepareStatement(query12);
+                trainingPlanSet.setInt(1, pos.getPosCode());
+                trainingPlanSet.setInt(2, pers_id);
+                ResultSet rs = trainingPlanSet.executeQuery();
+                if(rs.next()) {
+                    Integer cCode1 = rs.getInt(1);
+                    if (!rs.wasNull()) {
+                        trainingCoursesList.add(Course.retrieveCourse(cCode1, conn));
+                    }
+                    Integer cCode2 = rs.getInt(2);
+                    if (!rs.wasNull()) {
+                        trainingCoursesList.add(Course.retrieveCourse(cCode2, conn));
+                    }
+                    Integer cCode3 = rs.getInt(3);
+                    if (!rs.wasNull()) {
+                        trainingCoursesList.add(Course.retrieveCourse(cCode3, conn));
+                    }
+                    rs.close();
                 }
-                Integer cCode2 = rs.getInt(2);
-                if (!rs.wasNull()) {
-                    trainingCoursesList.add(Course.retrieveCourse(cCode2, conn));
-                }
-                Integer cCode3 = rs.getInt(3);
-                if (!rs.wasNull()) {
-                    trainingCoursesList.add(Course.retrieveCourse(cCode3, conn));
-                }
+                rs9.close();
+                trainingPlanSet.close();
             }
-            rs.close();
+            rs9.close();
             trainingPlan.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } return trainingCoursesList;
+        }
+        return trainingCoursesList;
     }
 
     // Needs to be listQualifiedJobCategories

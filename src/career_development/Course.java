@@ -22,7 +22,7 @@ public class Course {
         LinkedList<Course> courseList = new LinkedList<Course>();
         try {
             retrCourse = conn.prepareStatement("SELECT title, training_level, status, retail_price, " +
-                                                    "train_type, description, c_code FROM course");
+                    "train_type, description, c_code FROM course");
             ResultSet rs = retrCourse.executeQuery();
             while(rs.next()) {
                 String title = rs.getString(1);
@@ -152,12 +152,12 @@ public class Course {
             retrSkillsFromCourse=conn.prepareStatement("SELECT ks_code FROM provides_skill WHERE c_code=?");
             retrSkillsFromCourse.setInt(1, cCode);
             ResultSet rs = retrSkillsFromCourse.executeQuery();
-            if(rs.next()) {
+            while(rs.next()) {
                 String ks_code = rs.getString(1);
                 courseSkillsList.add(Skill.retrieveSkill(ks_code,conn));
-                rs.close();
-                retrSkillsFromCourse.close();
             }
+            rs.close();
+            retrSkillsFromCourse.close();
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx.toString());
             return null;
@@ -199,7 +199,7 @@ public class Course {
 
             OraclePreparedStatement preparedStatement =
                     (OraclePreparedStatement)conn.prepareStatement("INSERT INTO course (title, training_level, description, status, retail_price, train_type) " +
-                                               "VALUES (?, ?, ?, ?, ?, ?) RETURNING c_code INTO ?");
+                            "VALUES (?, ?, ?, ?, ?, ?) RETURNING c_code INTO ?");
             preparedStatement.registerReturnParameter(7, OracleTypes.INTEGER);
             preparedStatement.setString(1, title);
             preparedStatement.setString(2, trainingLevel);

@@ -268,7 +268,6 @@ INSERT INTO provides_skill VALUES('AGILE',1);
 INSERT INTO provides_skill VALUES('SYSTEMS',14);
 
 INSERT INTO provides_skill VALUES('3D Mod 2',15);
-INSERT INTO provides_skill VALUES('SQL1',13);
 INSERT INTO provides_skill VALUES('AGILE',13);
 INSERT INTO provides_skill VALUES('SYSTEMS',16);
 
@@ -426,6 +425,7 @@ INSERT INTO position_skills VALUES ('Java2','15','R');
 INSERT INTO position_skills VALUES ('Angular3','7','R');
 INSERT INTO position_skills VALUES ('Angular1','8','P');     I
 INSERT INTO position_skills VALUES ('HTML2','12','P');
+INSERT INTO position_skills VALUES ('SQL1','7','R');
 
 /*CREATE TABLE position_skills (
     ks_code varchar (255) NOT NULL,
@@ -577,4 +577,3 @@ INSERT into TAKES values (17,4,'21-MAY-18', 9);
 --INSERT into TAKES values (13,3,'19-AUG-18', 11);
 --INSERT into TAKES values (13,2,'31-JAN-18', 12);
 INSERT into TAKES values (13,1,'17-JUL-18', 8);
-
