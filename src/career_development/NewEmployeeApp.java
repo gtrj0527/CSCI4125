@@ -17,8 +17,8 @@ public class NewEmployeeApp {
     public static Person activePerson;
 
     public static void main(String[] args) {
-        String userName = "gtswanso";
-        String password = "sNNP9R9R";
+        String userName = "tbourg";
+        String password = "K3LWXCPt";
 
         String hostName = "dbsvcs.cs.uno.edu";
         int port = 1521;
@@ -140,10 +140,14 @@ public class NewEmployeeApp {
         while (rs.next()) {
             System.out.println(rs.getInt(1) + ". " + rs.getString(2));
         }
+        System.out.println("Press 0 to exit.");
         while (loggedInCompanyID == null) {
             try {
                 String line = in.readLine();
                 loggedInCompanyID = Integer.parseInt(line);
+                if(loggedInCompanyID == 0){
+                    System.exit(0);
+                }
                 companyPositions = Position.retrievePositionsByCompany(loggedInCompanyID, conn);
                 if (companyPositions.isEmpty()) {
                     System.err.println("Non-existent company or company has no positions, select again.");
@@ -165,11 +169,15 @@ public class NewEmployeeApp {
             Position position = positionIterator.next();
             System.out.println(position.getPosCode() + ". " + position.getPosTitle());
         }
+        System.out.println("Press 0 to exit.");
         Integer positionID = null;
         while (activePosition == null && positionID == null) {
             try {
                 String line = in.readLine();
                 positionID = Integer.parseInt(line);
+                if(positionID == 0){
+                    System.exit(0);
+                }
                 activePosition = Position.retrievePosition(positionID, conn);
                 if (activePosition == null || activePosition.getCompID().equals(loggedInCompanyID) == false) {
                     System.err.println("Invalid position code, select again.");
@@ -188,10 +196,14 @@ public class NewEmployeeApp {
             System.out.println(person.getPersID() + ". " + person.getFullName());
         }
         Integer personID = null;
+        System.out.println("Press 0 to exit.");
         while (activePerson == null || personID == null) {
             try {
                 String line = in.readLine();
                 personID = Integer.parseInt(line);
+                if(personID == 0){
+                    System.exit(0);
+                }
                 activePerson = Person.retrievePerson(personID, conn);
                 if (activePerson == null) {
                     System.err.println("Invalid person code, select again.");

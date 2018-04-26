@@ -268,7 +268,6 @@ INSERT INTO provides_skill VALUES('AGILE',1);
 INSERT INTO provides_skill VALUES('SYSTEMS',14);
 
 INSERT INTO provides_skill VALUES('3D Mod 2',15);
-INSERT INTO provides_skill VALUES('SQL1',13);
 INSERT INTO provides_skill VALUES('AGILE',13);
 INSERT INTO provides_skill VALUES('SYSTEMS',16);
 
@@ -426,6 +425,13 @@ INSERT INTO position_skills VALUES ('Java2','15','R');
 INSERT INTO position_skills VALUES ('Angular3','7','R');
 INSERT INTO position_skills VALUES ('Angular1','8','P');     I
 INSERT INTO position_skills VALUES ('HTML2','12','P');
+INSERT INTO position_skills VALUES ('SQL1','7','R');
+
+INSERT INTO position_skills VALUES ('Admin','47','R');
+INSERT INTO position_skills VALUES ('Angular3','47','R');
+INSERT INTO position_skills VALUES ('AGILE','47','R');
+
+INSERT INTO position_skills VALUES ('Java2','1','R');
 
 /*CREATE TABLE position_skills (
     ks_code varchar (255) NOT NULL,
@@ -488,9 +494,10 @@ INSERT INTO has_skill VALUES ('7','Angular1');
 --INSERT INTO has_skill VALUES ('7','HTML2');
 
 
-INSERT INTO has_skill VALUES ('8','Admin');
+INSERT INTO has_skill VALUES ('8','Admin');  
 INSERT INTO has_skill VALUES ('8','AGILE');
---INSERT INTO has_skill VALUES ('8','PHP');
+--INSERT INTO has_skill VALUES ('8','Angular3');
+--use pers_id: 8 for pos_code 47. should only be missing 1 skill, Angular3
 
 
 INSERT INTO has_skill VALUES ('9','SYSTEMS');
@@ -534,7 +541,9 @@ INSERT INTO prerequisite VALUES (1, 6);
 INSERT INTO prerequisite VALUES (1, 7);
 INSERT INTO prerequisite VALUES (2, 5);
 INSERT INTO prerequisite VALUES (4, 1);
-INSERT INTO prerequisite VALUES (2, 4);
+INSERT INTO prerequisite VALUES (12, 1);
+
+--INSERT INTO prerequisite VALUES (2, 4);  Causes a loop!
 
 /*COMPANY SPECIALTY*/
 INSERT INTO company_specialty VALUES ('1111','10');
@@ -577,4 +586,3 @@ INSERT into TAKES values (17,4,'21-MAY-18', 9);
 --INSERT into TAKES values (13,3,'19-AUG-18', 11);
 --INSERT into TAKES values (13,2,'31-JAN-18', 12);
 INSERT into TAKES values (13,1,'17-JUL-18', 8);
-

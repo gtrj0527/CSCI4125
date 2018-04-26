@@ -16,6 +16,7 @@ public class JobHuntingApp {
     public static BufferedReader in;
 
     public static void main(String[] args) {
+
         String userName = "gtswanso";
         String password = "sNNP9R9R";
 

@@ -13,28 +13,26 @@ AND pos_code = 7;
 
 /*9. Given a person?s identifier and a pos_code, list the courses (course id and title) that each alone teaches all the
 missing knowledge/skills for this person to pursue the specific job position.*/
-WITH missing_ks AS(
-SELECT DISTINCT c_code, title 
-FROM            course c
-WHERE NOT EXISTS(
-                SELECT ks_code
-                FROM position_skills    --No "required_skills" table, so set the position condition for "REQUIRED SKILLS"
-                WHERE prefer = 'R'
-                AND pos_code = 7
-                MINUS
-                SELECT ks_code
-                FROM provides_skill ps
-                WHERE ps.c_code = c.c_code))
-SELECT  c_code, title
-FROM    missing_ks
-NATURAL JOIN person
-WHERE pers_id = 11;
+SELECT DISTINCT c_code
+FROM provides_skill ps1
+WHERE NOT EXISTS (
+  SELECT ks_code
+  FROM position_skills
+  WHERE pos_code = 7
+  MINUS
+  SELECT ks_code
+  FROM has_skill
+  WHERE pers_id = 12
+  MINUS
+  SELECT ks_code
+  FROM provides_skill ps2
+  WHERE ps1.c_code = ps2.c_code);
                 
 /*10. Suppose the skill gap of a worker and the requirement of a desired job position can be covered by one course.
 Find the ?quickest? solution for this worker. Show the course, section information and the completion date.*/
 WITH quickest_solution AS (
 SELECT DISTINCT c_code 
-FROM            course c
+FROM            provides_skill c
 WHERE NOT EXISTS(
                 SELECT ks_code
                 FROM position_skills    --No "required_skills" table, so set the position condition for "REQUIRED SKILLS"
@@ -49,7 +47,7 @@ FROM quickest_solution qs
 JOIN section s ON qs.c_code = s.c_code
 NATURAL JOIN person
 WHERE complete_date = (SELECT MIN(complete_date) FROM section)
-AND pers_id = 15;
+AND pers_id = 12;
 
 /*11. Suppose the skill gap of a worker and the requirement of a desired job position can be covered by one course.
 Find the cheapest course to make up one?s skill gap by showing the course to take and the cost (of the section
