@@ -249,7 +249,7 @@ SELECT c_code1, c_code2, c_code3, csetsize, csetcost
 FROM coverCSET
 NATURAL JOIN courseSet
 WHERE csetsize = (SELECT MIN(csetsize)
-                  FROM covercset NATURAL JOIN courseSet);
+                  FROM covercset NATURAL JOIN courseSet)
 
 ORDER BY csetcost ASC;
 /*13. Given a person?s identifier, list all the job categories that a person is qualified for. ++++*/
