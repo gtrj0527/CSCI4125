@@ -626,7 +626,49 @@ JOIN course c ON cn.c_code1 = c.c_code;
 
 
 /*Graduate requirement*/
-/*28. NOT REQUIRED FOR 05APR18 TURN IN
+/*28.
 List all the courses, directly or indirectly required, that a person has to take in order to be qualified for a job
 position of the given category, according to his/her skills possessed and courses taken. (required for graduate
 students only)*/
+WITH category_skills AS (
+SELECT cat_code, ks_code
+FROM job_category
+NATURAL JOIN core_skill
+JOIN nwcet ON core_skill.nwcet_code = nwcet.nwcet_code
+JOIN know_skill ON know_skill.nwcet_code = nwcet.nwcet_code
+UNION
+SELECT DISTINCT cat_code, ks_code
+FROM position
+NATURAL JOIN position_skills),
+cat_pers_course AS (
+SELECT DISTINCT c_code
+FROM provides_skill ps1
+WHERE NOT EXISTS (
+  SELECT ks_code
+  FROM category_skills
+  WHERE cat_code = '15-1240'
+  MINUS
+  SELECT ks_code
+  FROM has_skill hs2
+  WHERE pers_id = 1
+  MINUS
+  SELECT ks_code
+  FROM provides_skill ps2
+  WHERE ps1.c_code = ps2.c_code
+  ) AND ROWNUM <= 1),
+required_prereqs AS (
+SELECT c2.c_code
+FROM course c1
+JOIN prerequisite pre1 ON pre1.c_code = c1.c_code
+JOIN course c2 ON pre1.prereq_code = c2.c_code
+START WITH c1.c_code IN (SELECT c_code FROM cat_pers_course)
+CONNECT BY PRIOR pre1.prereq_code = c1.c_code)
+SELECT *
+FROM required_prereqs
+UNION
+SELECT *
+FROM cat_pers_course
+MINUS
+SELECT c_code
+FROM takes
+WHERE pers_id = 1;
