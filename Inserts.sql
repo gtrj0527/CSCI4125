@@ -426,7 +426,7 @@ INSERT INTO position_skills VALUES ('Angular3','7','R');
 INSERT INTO position_skills VALUES ('Angular1','8','P');     I
 INSERT INTO position_skills VALUES ('HTML2','12','P');
 INSERT INTO position_skills VALUES ('SQL1','7','R');
-
+INSERT INTO position_skills VALUES ('Angular1','42','R');
 INSERT INTO position_skills VALUES ('Admin','47','R');
 INSERT INTO position_skills VALUES ('Angular3','47','R');
 INSERT INTO position_skills VALUES ('AGILE','47','R');
@@ -455,6 +455,7 @@ INSERT INTO has_skill VALUES ('1','Java2');
 INSERT INTO has_skill VALUES ('1','Java3');
 INSERT INTO has_skill VALUES ('1','C1');
 INSERT INTO has_skill VALUES ('1','.NET1');
+INSERT INTO has_skill VALUES ('1','Angular1');
 INSERT INTO has_skill VALUES ('2','Java');
 --INSERT INTO has_skill VALUES ('2','Java2');
 --INSERT INTO has_skill VALUES ('2','Java3');

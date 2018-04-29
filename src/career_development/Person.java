@@ -305,6 +305,7 @@ public class Person {
     public void personTakes(Section section, Connection conn){
         PreparedStatement personTakes;
         try{
+            conn.setAutoCommit(false);
             personTakes = conn.prepareStatement("INSERT INTO takes(c_code, sec_code, complete_date, pers_id)" +
                     "VALUES(?,?,?,?)");
             personTakes.setInt(1, section.getCourse().getCCode());
@@ -320,6 +321,8 @@ public class Person {
                 Skill skill = courseSkillsIterator.next();
                 addSkill(skill, conn);
             }
+            conn.commit();
+            conn.setAutoCommit(true);
         }
         catch (SQLException sqlEx){
             System.err.println(sqlEx.toString());
@@ -358,7 +361,7 @@ public class Person {
                 "WHERE csetsize = (SELECT MIN(csetsize)" +
                 "                  FROM covercset" +
                 "                  NATURAL JOIN courseSet)" +
-                "ORDER BY csetcode ASC\n";
+                "ORDER BY csetcost ASC\n";
 
         try {
             PreparedStatement trainingPlan = conn.prepareStatement(query9);
@@ -437,14 +440,14 @@ public class Person {
                 "            SELECT pos_code FROM position_skills ps1" +
                 "            WHERE NOT EXISTS (" +
                 "                SELECT ks_code FROM position_skills ps2" +
-                "                WHERE ps1.pos_code = ps2.pos_code" +
+                "                WHERE ps1.pos_code = ps2.pos_code AND prefer = 'R'" +
                 "                MINUS " +
                 "                SELECT ks_code FROM has_skill " +
                 "                WHERE pers_id = ?))," +
                 "       position_yearly_pay AS (" +
                 "             SELECT pos_code, pay_rate AS yearly_pay \n" +
                 "             FROM position \n" +
-                "             WHERE pay_type = 'S' \n" +
+                "             WHERE pay_type = 'S' OR pay_type IS NULL\n" +
                 "             UNION \n" +
                 "             SELECT pos_code, pay_rate*1920 AS pay_rate \n" +
                 "             FROM position\n" +

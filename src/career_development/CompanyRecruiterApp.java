@@ -16,8 +16,8 @@ public class CompanyRecruiterApp {
     public static Position activePosition;
 
     public static void main(String[] args) {
-        String userName = "jtmarch1";
-        String password = "Tg4zJWx7";
+        String userName = "";
+        String password = "";
 
         String hostName = "dbsvcs.cs.uno.edu";
         int port = 1521;
